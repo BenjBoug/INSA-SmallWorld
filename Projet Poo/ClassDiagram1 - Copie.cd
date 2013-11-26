@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Observateur">
+    <Position X="14.902" Y="8.554" Height="0.75" Width="1.266" />
+  </Comment>
+  <Comment CommentText="fabrique abstraite">
+    <Position X="0.5" Y="12.99" Height="0.75" Width="1.435" />
+  </Comment>
+  <Comment CommentText="strategie">
+    <Position X="14.879" Y="13.566" Height="0.75" Width="1.074" />
+  </Comment>
+  <Comment CommentText="strategie">
+    <Position X="18.859" Y="1.989" Height="0.75" Width="1.146" />
+  </Comment>
+  <Comment CommentText="poids/mouche">
+    <Position X="6.503" Y="5.87" Height="0.75" Width="1.122" />
+  </Comment>
+  <Class Name="Projet_Poo.CaseMontagne">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CaseMontagne.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.CasePlaine">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CasePlaine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.CaseDesert">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CaseDesert.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.CaseForet">
+    <Position X="5.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CaseForet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.Case">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CaseAbstraite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.CaseEau">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CaseEau.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.Carte">
+    <Position X="11.5" Y="2" Width="2.25" />
+    <AssociationLine Name="Unites" Type="Projet_Poo.IUnite" ManuallyRouted="true">
+      <Path>
+        <Point X="11.5" Y="3.86" />
+        <Point X="9.721" Y="3.86" />
+        <Point X="9.721" Y="6.688" />
+        <Point X="10.906" Y="6.688" />
+        <Point X="10.906" Y="11.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>ACAAgEAAAAEABAAAAASAAAAEAAAEAAGAAAAQAAAAgAA=</HashCode>
+      <FileName>CarteAbstraite.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Cases" />
+      <Field Name="FabriqueCase" />
+      <Field Name="ICreationCarte" />
+      <Field Name="Unites" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.FabriqueCase">
+    <Position X="8" Y="5" Width="1.5" />
+    <AssociationLine Name="CaseDesert" Type="Projet_Poo.CaseDesert" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8" Y="5.079" />
+        <Point X="6.583" Y="5.079" Type="JumpStart" />
+        <Point X="6.417" Y="5.079" Type="JumpEnd" />
+        <Point X="4.75" Y="5.079" />
+        <Point X="4.75" Y="3.997" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="CasePlaine" Type="Projet_Poo.CasePlaine" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8" Y="5.477" />
+        <Point X="6.583" Y="5.477" Type="JumpStart" />
+        <Point X="6.417" Y="5.477" Type="JumpEnd" />
+        <Point X="3" Y="5.477" />
+        <Point X="3" Y="3.997" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAACAAAACAAAAABABAAAAAAAAACA=</HashCode>
+      <FileName>FabriqueCase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="CaseEau" />
+      <Field Name="CaseForet" />
+      <Field Name="CaseDesert" />
+      <Field Name="CasePlaine" />
+      <Field Name="CaseMontagne" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projet_Poo.Joueur">
+    <Position X="6.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAiAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>JoueurAbstrait.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="FabriquePeupleAbstraite" />
+      <Field Name="Peuple" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.Peuple">
+    <Position X="2.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PeupleAbstrait.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.Unite">
+    <Position X="9.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAkyAAACAAAAAAAAAAAAEAAAAAAAAACAAAAkAAAAA=</HashCode>
+      <FileName>UniteAbstraite.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="UniteMode" />
+      <Field Name="proprietaire" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.Vue">
+    <Position X="16.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VueAbstraite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.PeupleGaulois">
+    <Position X="0.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PeupleGaulois.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.PeupleViking">
+    <Position X="2.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PeupleViking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.PeupleNain">
+    <Position X="4" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PeupleNain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.FabriquePeuple">
+    <Position X="2.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FabriquePeupleAbstraite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.Aleatoire">
+    <Position X="16" Y="3.25" Width="1.5" />
+    <AssociationLine Name="Carte" Type="Projet_Poo.ICarte" ManuallyRouted="true">
+      <Path>
+        <Point X="16" Y="3.802" />
+        <Point X="15.485" Y="3.802" />
+        <Point X="15.485" Y="0.682" />
+        <Point X="13.25" Y="0.682" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Aleatoire.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Carte" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.LectureFichier">
+    <Position X="18" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LectureFichier.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Carte" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.Partie">
+    <Position X="12" Y="8.5" Width="1.5" />
+    <InheritanceLine Type="Projet_Poo.Modele" ManuallyRouted="true">
+      <Path>
+        <Point X="14.75" Y="7.738" />
+        <Point X="14.75" Y="7.974" />
+        <Point X="12.75" Y="7.974" />
+        <Point X="12.75" Y="8.5" />
+      </Path>
+    </InheritanceLine>
+    <AssociationLine Name="Carte" Type="Projet_Poo.ICarte" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.344" Y="8.5" />
+        <Point X="12.344" Y="8.003" />
+        <Point X="11.641" Y="8.003" />
+        <Point X="11.641" Y="5.478" />
+        <Point X="15.18" Y="5.478" />
+        <Point X="15.18" Y="0.904" />
+        <Point X="13.25" Y="0.904" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAEAAAAAAAAAAAgAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>PartieAbstraite.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Carte" />
+      <Field Name="joueur1" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.MonteurPartie">
+    <Position X="9" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAABAAAAAIAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MonteurPartie.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Partie" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projet_Poo.MonteurPartie1v1">
+    <Position X="7" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MonteurPartie1v1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.Partie1v1">
+    <Position X="12" Y="10.75" Width="1.5" />
+    <AssociationLine Name="Joueur2" Type="Projet_Poo.IJoueur" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12" Y="11.146" />
+        <Point X="11.625" Y="11.146" />
+        <Point X="11.625" Y="9.938" />
+        <Point X="10.989" Y="9.938" Type="JumpStart" />
+        <Point X="10.823" Y="9.938" Type="JumpEnd" />
+        <Point X="9.458" Y="9.938" Type="JumpStart" />
+        <Point X="9.292" Y="9.938" Type="JumpEnd" />
+        <Point X="8.25" Y="9.938" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Partie1v1.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Joueur2" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projet_Poo.UniteJoueur">
+    <Position X="9.75" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UniteJoueur.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.ModeDefense">
+    <Position X="12.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModeDefense.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.ModeAttaque">
+    <Position X="14" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModeAttaque.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projet_Poo.JoueurConcret">
+    <Position X="6.75" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>JoueurConcret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.VueConcrete">
+    <Position X="16.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VueConcrete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.Modele">
+    <Position X="14" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACABAAAAAAAAAEAAAAAAAAAAQAAAAAAAACA=</HashCode>
+      <FileName>Modele.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="Observateur" />
+      <Field Name="Vue" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Projet_Poo.FabriquePeupleGaulois">
+    <Position X="0.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FabriquePeupleGaulois.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.FabriquePeupleViking">
+    <Position X="2.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FabriquePeupleViking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projet_Poo.FabriquePeupleNain">
+    <Position X="4" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FabriquePeupleNain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Projet_Poo.ICase">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Case.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.ICarte" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgEAAAAEAAAAAAACAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Carte.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.IPeuple">
+    <Position X="2.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.IUnite" Collapsed="true">
+    <Position X="9.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAkgAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAEAAAAA=</HashCode>
+      <FileName>Unite.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.IVue">
+    <Position X="16.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Vue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.IJoueur">
+    <Position X="6.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Joueur.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.ICreationCarte">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CreationCarte.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.IPartie">
+    <Position X="12" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Partie.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.IUniteMode">
+    <Position X="13" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UniteMode.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projet_Poo.IObservateur">
+    <Position X="16.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Observateur.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

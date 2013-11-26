@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Comment CommentText="fabrique abstraite&#xD;&#xA;">
+    <Position X="0.552" Y="9.698" Height="0.75" Width="1.435" />
+  </Comment>
+  <Comment CommentText="strategie">
+    <Position X="16.086" Y="0.856" Height="0.75" Width="1.146" />
+  </Comment>
+  <Comment CommentText="poids/mouche">
+    <Position X="10.233" Y="5.219" Height="0.75" Width="1.122" />
+  </Comment>
+  <Comment CommentText="monteur&#xD;&#xA;">
+    <Position X="19.025" Y="4.05" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="Modele.CaseMontagne" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\CaseMontagne.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.CasePlaine" Collapsed="true">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\CasePlaine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.CaseDesert" Collapsed="true">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\CaseDesert.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.CaseForet" Collapsed="true">
+    <Position X="5.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\CaseForet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.Case">
+    <Position X="0.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\Case.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Modele.CaseEau" Collapsed="true">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\CaseEau.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.CarteClassique">
+    <Position X="9.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgEAAAAEABAAAAAQAAAAAAAAgAAAgAAAAAAAAgAA=</HashCode>
+      <FileName>Carte\CarteClassique.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.FabriqueCase" Collapsed="true">
+    <Position X="7.25" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAIACAAAAAEAAAAgAAAAAAAQAAAAA=</HashCode>
+      <FileName>Carte\FabriqueCase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.Joueur">
+    <Position X="7.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAiAAIAIgAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Joueur.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="fabriquePeuple" />
+      <Field Name="_peuple" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Modele.Peuple" Collapsed="true">
+    <Position X="2.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\Peuple.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Modele.Unite">
+    <Position X="9.5" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgSAAAAAAAQAEAAAAAAEAAAAAAAAACAAAAkAAAAA=</HashCode>
+      <FileName>Unite.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="proprietaire" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Modele.PeupleGaulois" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\PeupleGaulois.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.PeupleViking" Collapsed="true">
+    <Position X="2.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\PeupleViking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.PeupleNain" Collapsed="true">
+    <Position X="4.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\PeupleNain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.FabriquePeuple">
+    <Position X="2.5" Y="9.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\FabriquePeupleAbstraite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.Aleatoire">
+    <Position X="12.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\Aleatoire.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Modele.LectureFichier">
+    <Position X="14.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\LectureFichier.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Modele.Partie">
+    <Position X="12.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAACIAAAAAAAAASAAAAAAgAAAAAAAIAAAAAABAA=</HashCode>
+      <FileName>Partie.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="carte" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Modele.MonteurPartie">
+    <Position X="14.75" Y="5.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAEAAAABAEAAAIAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MonteurPartie.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Partie" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Modele.MonteurPartie1v1">
+    <Position X="14.75" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAEAAAIAAAAAAggAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MonteurPartie1v1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.Partie1v1">
+    <Position X="12.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Partie1v1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.JoueurConcret">
+    <Position X="7.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>JoueurConcret.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.MonteurCarte">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIABAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\MonteurCarte.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="carte" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Modele.MonteurDemo">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\MonteurDemo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.MonteurPetite">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\MonteurPetite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.MonteurNormale">
+    <Position X="20.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\MonteurNormale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.FabriquePeupleNain">
+    <Position X="4.5" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\FabriquePeupleNain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.FabriquePeupleViking">
+    <Position X="2.5" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\FabriquePeupleViking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.FabriquePeupleGaulois">
+    <Position X="0.5" Y="7.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\FabriquePeupleGaulois.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.Carte" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgEAAAEEABAACAAyAAAAEAYgEAFGgAAAQAAAAgAA=</HashCode>
+      <FileName>Carte\Carte.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Modele.ICarte" Collapsed="true">
+    <Position X="10.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgEAAAAEAAAAAAACAAAAAAAAAAEAAAAAAAAAAgAA=</HashCode>
+      <FileName>Interface\ICarte.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Modele.IPeuple" Collapsed="true">
+    <Position X="4.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IPeuple.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Modele.IUnite" Collapsed="true">
+    <Position X="10" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAEAAAAA=</HashCode>
+      <FileName>Interface\IUnite.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Modele.IJoueur">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IJoueur.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Modele.ICreationCarte">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\ICreationCarte.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Modele.IPartie" Collapsed="true">
+    <Position X="12.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAABAA=</HashCode>
+      <FileName>Interface\IPartie.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Modele.ICase" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\ICase.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
