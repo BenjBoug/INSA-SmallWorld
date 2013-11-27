@@ -8,11 +8,10 @@ namespace Modele
     public interface IPartie
     {
 
-        void initialisation();
 
         void tourSuivant();
 
-        void joueurSuivant(IJoueur j);
+        IJoueur joueurSuivant();
 
     }
 }

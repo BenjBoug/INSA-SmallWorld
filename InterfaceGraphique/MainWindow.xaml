@@ -2,12 +2,28 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="600" Width="700" Loaded="Window_Loaded" MouseDown="Window_MouseDown">
-    <DockPanel>
-        <ScrollViewer Height="450" DockPanel.Dock="Top" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" MouseDown="ScrollViewer_MouseDown">
+    <StackPanel>
+        <Menu IsMainMenu="False">
+            <MenuItem Header="_Fichier">
+                <MenuItem Header="_Nouveau">
+                    <MenuItem Header="_Partie 1vs1..." Click="MenuItem_Click"/>
+                    <MenuItem Header="_Partie 1vsCOM..." IsEnabled="False"/>
+                    <MenuItem Header="_Partie en ligne..." IsEnabled="False"/>
+                    </MenuItem>
+                <Separator />
+                <MenuItem Header="_Ouvrir..." />
+                <Separator />
+                <MenuItem Header="_Sauvegarder" />
+                <MenuItem Header="_Sauvegarder sous..." />
+                <Separator />
+                <MenuItem Header="_Quitter" />
+            </MenuItem>
+        </Menu>
+        <ScrollViewer Height="450" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" MouseDown="ScrollViewer_MouseDown">
         <Grid x:Name="gridMap" VerticalAlignment="Center" HorizontalAlignment="Center" Width="650" Height="450">
         </Grid>
         </ScrollViewer>
-        <DockPanel x:Name="dockBas" DockPanel.Dock="Bottom">
+        <DockPanel x:Name="dockBas">
             <DockPanel.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFC5C5C5" Offset="0"/>
@@ -15,5 +31,5 @@
                 </LinearGradientBrush>
             </DockPanel.Background>
         </DockPanel>
-    </DockPanel>
+    </StackPanel>
 </Window>

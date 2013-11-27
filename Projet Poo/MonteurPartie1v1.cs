@@ -13,7 +13,7 @@ namespace Modele
         {
             partie = new Partie1v1();
             partie.Carte = creerCarte(monteurCarte);
-            partie.nbTours = 0;
+            partie.NbTours = 0;
             creerJoueurs(fabPeuple);
         }
 

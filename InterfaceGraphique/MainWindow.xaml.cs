@@ -47,7 +47,7 @@ namespace InterfaceGraphique
                 for (int c = 0; c < partie.Carte.Largeur; c++)
                 {
                     var tile = partie.Carte.Cases[c][l];
-                    var rect = createRectangle(c, l, tile, partie.Carte.Unites[c][l]);
+                    var rect = createRectangle(c, l, tile);
                     gridMap.Children.Add(rect);
                 }
             }
@@ -66,7 +66,7 @@ namespace InterfaceGraphique
 
         }
             
-        private Rectangle createRectangle(int c, int l, ICase tile, List<Unite> unites)
+        private Rectangle createRectangle(int c, int l, ICase tile)
         {
             var rectangle = new Rectangle();
             if (tile is CaseDesert)
@@ -154,6 +154,13 @@ namespace InterfaceGraphique
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
 
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            NouvellePartie fen = new NouvellePartie();
+            
+            fen.ShowDialog();
         }
 
     }

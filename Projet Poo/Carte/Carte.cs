@@ -20,6 +20,7 @@ namespace Modele
         public List<Unite>[][] Unites
         {
             get { return unites; }
+            set { unites = value; }
         }
 
         protected ICase[][] cases;
@@ -93,10 +94,7 @@ namespace Modele
 
         public abstract void selectionneCase(int x, int y);
 
-        public void placeUnite(List<Unite> list)
-        {
-
-        }
+        public abstract void placeUnite(List<Unite> list);
 
         public void actualiseDeplacement()
         {

@@ -14,6 +14,12 @@ namespace Modele
         }
 
         private int nbTours;
+
+        public int NbTours
+        {
+            get { return nbTours; }
+            set { nbTours = value; }
+        }
         private List<IJoueur> listJoueurs;
         private Carte carte;
 

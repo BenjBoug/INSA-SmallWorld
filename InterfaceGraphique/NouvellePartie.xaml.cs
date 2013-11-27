@@ -10,26 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Modele;
 
 namespace InterfaceGraphique
 {
     /// <summary>
-    /// Logique d'interaction pour RectangleCase.xaml
+    /// Logique d'interaction pour NouvellePartie.xaml
     /// </summary>
-    public partial class RectangleCase : UIElement
+    public partial class NouvellePartie : Window
     {
-        public RectangleCase()
+        public NouvellePartie()
         {
             InitializeComponent();
         }
-        /*
-        public void onMouseDown()
-        {
-
-        }*/
-        
     }
 }

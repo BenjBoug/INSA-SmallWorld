@@ -58,7 +58,7 @@
   <Class Name="Modele.CarteClassique">
     <Position X="9.25" Y="0.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAgEAAAAEABAAAAAQAAAAAAAAgAAAgAAAAAAAAgAA=</HashCode>
+      <HashCode>AAAAgEAAAAEAAAAAAAAAAAAAAAAgAEAgAAAAAAAAgAA=</HashCode>
       <FileName>Carte\CarteClassique.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -92,7 +92,7 @@
   <Class Name="Modele.Unite">
     <Position X="9.5" Y="7.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAgSAAAAAAAQAEAAAAAAEAAAAAAAAACAAAAkAAAAA=</HashCode>
+      <HashCode>IAAAgSAAAAEAAQAEAQAABAEAAAAAAAAACAAAAkAAAAA=</HashCode>
       <FileName>Unite.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -147,7 +147,7 @@
   <Class Name="Modele.Partie">
     <Position X="12.5" Y="6" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAIAAAACIAAAAAAAAASAAAAAAgAAAAAAAIAAAAAABAA=</HashCode>
+      <HashCode>AAIAAAACIAAAAAAAAASAAAAAAgAAAAIAAAAAAAAABAA=</HashCode>
       <FileName>Partie.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -241,10 +241,9 @@
   <Class Name="Modele.Carte" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgEAAAEEABAACAAyAAAAEAYgEAFGgAAAQAAAAgAA=</HashCode>
+      <HashCode>AAAAgEAAAEEABAACAA2AAAAEAYgEAFGgAAAQAAAAgAA=</HashCode>
       <FileName>Carte\Carte.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Modele.ICarte" Collapsed="true">
     <Position X="10.75" Y="4" Width="1.5" />
@@ -284,7 +283,7 @@
   <Interface Name="Modele.IPartie" Collapsed="true">
     <Position X="12.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAABAA=</HashCode>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Interface\IPartie.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -1,5 +1,12 @@
 #pragma once
+
+
+
+#ifdef DLLEXPORT
 #define DLL _declspec(dllexport)
+#else
+#define DLL __declspec(dllimport)
+#endif
 #include <stdlib.h>
 #include <ctime>
 #include <vector>
