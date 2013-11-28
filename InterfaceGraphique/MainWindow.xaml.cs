@@ -27,34 +27,53 @@ namespace InterfaceGraphique
         public MainWindow()
         {
             InitializeComponent();
-            MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
-            monteurPartie.creerPartie(new MonteurPetite(), new FabriquePeupleGaulois());
-            partie = monteurPartie.Partie;
             rectOnOver = null;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            for (int c = 0; c < partie.Carte.Largeur; c++)
-            {
-                gridMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(50, GridUnitType.Pixel) });
-            }
 
+        }
 
-            for (int l = 0; l < partie.Carte.Hauteur; l++)
+        public void loadPartie(MonteurCarte monteurC)
+        {
+            Task.Factory.StartNew(() =>
             {
-                gridMap.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
-                for (int c = 0; c < partie.Carte.Largeur; c++)
+                MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
+                monteurPartie.creerPartie(monteurC, new FabriquePeupleGaulois());
+                partie = monteurPartie.Partie;
+
+                this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    var tile = partie.Carte.Cases[c][l];
-                    var rect = createRectangle(c, l, tile);
-                    gridMap.Children.Add(rect);
-                }
-            }
+                    gridMap.Children.Clear();
+                    gridMap.RowDefinitions.Clear();
+                    gridMap.ColumnDefinitions.Clear();
 
-            gridMap.Width = partie.Carte.Largeur * 50;
-            gridMap.Height = partie.Carte.Hauteur * 50;
+                    for (int c = 0; c < partie.Carte.Largeur; c++)
+                    {
+                        gridMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(50, GridUnitType.Pixel) });
+                    }
 
+
+                    for (int l = 0; l < partie.Carte.Hauteur; l++)
+                    {
+                        gridMap.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
+                        for (int c = 0; c < partie.Carte.Largeur; c++)
+                        {
+                            var tile = partie.Carte.Cases[c][l];
+                            int nbUnite = 0;
+                            if (partie.Carte.Unites[l][c] != null)
+                                nbUnite = partie.Carte.Unites[l][c].Count;
+                            var rect = createRectangle(c, l, tile, nbUnite);
+                            gridMap.Children.Add(rect);
+                        }
+                    }
+
+                    gridMap.Width = partie.Carte.Largeur * 50;
+                    gridMap.Height = partie.Carte.Hauteur * 50;
+                }));
+            });
+           
             updateUnitUI();
         }
 
@@ -66,19 +85,55 @@ namespace InterfaceGraphique
 
         }
             
-        private Rectangle createRectangle(int c, int l, ICase tile)
+        private Rectangle createRectangle(int c, int l, ICase tile, int nbUnite)
         {
+            ImageBrush brush = new ImageBrush();
             var rectangle = new Rectangle();
+            VisualBrush myBrush = new VisualBrush();
+            StackPanel aPanel = new StackPanel();
+
             if (tile is CaseDesert)
-                rectangle.Fill = Brushes.Brown;
+            {
+                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseDesert.png", UriKind.Relative));
+            }
             if (tile is CaseEau)
-                rectangle.Fill = Brushes.Blue;
+            {
+                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseEau.png", UriKind.Relative));
+            }
             if (tile is CaseForet)
-                rectangle.Fill = Brushes.DarkGreen;
+            {
+                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseForet.png", UriKind.Relative));
+            }
             if (tile is CaseMontagne)
-                rectangle.Fill = Brushes.Gold;
+            {
+                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseMontagne.png", UriKind.Relative));
+            }
             if (tile is CasePlaine)
-                rectangle.Fill = Brushes.LightGreen;
+            {
+                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/casePlaine.png", UriKind.Relative));
+            }
+            aPanel.Background = brush;
+
+            
+                // Create some text.
+                TextBlock someText = new TextBlock();
+                if (nbUnite > 0)
+                {
+                    someText.Text = nbUnite.ToString();
+                }
+                else
+                    someText.Text = " ";
+                FontSizeConverter fSizeConverter = new FontSizeConverter();
+                someText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
+                someText.Margin = new Thickness(10);
+                someText.Foreground = Brushes.Red;
+
+                aPanel.Children.Add(someText);
+            
+
+            myBrush.Visual = aPanel;
+            rectangle.Fill = myBrush;
+
             // mise à jour des attributs (column et Row) référencant la position dans la grille à rectangle
             Grid.SetColumn(rectangle, c);
             Grid.SetRow(rectangle, l);
@@ -86,7 +141,7 @@ namespace InterfaceGraphique
 
 
             rectangle.Stroke = Brushes.Black;
-            rectangle.StrokeThickness = 1;
+            rectangle.StrokeThickness = 0;
             // enregistrement d'un écouteur d'evt sur le rectangle : 
             // source = rectangle / evt = MouseLeftButtonDown / délégué = rectangle_MouseLeftButtonDown
             //rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(rectangle_MouseLeftButtonDown);
@@ -120,7 +175,7 @@ namespace InterfaceGraphique
             {
                 if (rectOnOver != null)
                 {
-                    rectOnOver.StrokeThickness = 1;
+                    rectOnOver.StrokeThickness = 0;
                     rectOnOver.Stroke = Brushes.Black;
                 }
                 rectOnOver = null;
@@ -159,9 +214,32 @@ namespace InterfaceGraphique
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             NouvellePartie fen = new NouvellePartie();
-            
+            fen.Owner = this;
             fen.ShowDialog();
+
+
+            if (fen.selectionCarte == 0)
+                this.loadPartie(new MonteurDemo());
+            else if (fen.selectionCarte == 1)
+                this.loadPartie(new MonteurPetite());
+            else if (fen.selectionCarte == 2)
+                this.loadPartie(new MonteurNormale());
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            loadPartie(new MonteurNormale());
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            loadPartie(new MonteurPetite());
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            loadPartie(new MonteurDemo());
+
+        }
     }
 }

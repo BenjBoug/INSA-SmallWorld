@@ -51,7 +51,7 @@ namespace Modele
         }
 
         public unsafe override void placeUnite(List<Unite> list)
-        {/*
+        {
             int nbJoueurs = 0;
             Random rand = new Random();
 
@@ -61,7 +61,7 @@ namespace Modele
                 {
                     if (unites[i][j] != null)
                     {
-                        nbJoueurs += unites[i][j].Count;
+                        nbJoueurs ++;
                     }
                 }
             }
@@ -71,20 +71,20 @@ namespace Modele
 
             if (nbJoueurs == 0)
             {
-                coord[0] = rand.Next(1) * Largeur;
-                coord[1] = rand.Next(1) * Hauteur;
+                coord[0] = rand.Next(2) * (Largeur - 1);
+                coord[1] = rand.Next(2) * (Hauteur - 1);
             }
             else
             {
                 do
                 {
-                    coord[0] = rand.Next(1) * Largeur;
-                    coord[1] = rand.Next(1) * Hauteur;
+                    coord[0] = rand.Next(2) * (Largeur - 1);
+                    coord[1] = rand.Next(2) * (Hauteur - 1);
                 } while (unites[coord[0]][coord[1]] != null && unites[coord[0]][coord[1]].Count>=1);
             }
 
 
-            unites[coord[0]][coord[1]] = list;*/
+            unites[coord[0]][coord[1]] = list;
         }
 
     }
