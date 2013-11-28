@@ -43,13 +43,14 @@ namespace Modele
             get { return pointsDepl; }
             set { pointsDepl = value; }
         }
-        public IJoueur proprietaire;
-        bool selected;
+        private Joueur proprietaire;
 
-        public void setProprietaire(IJoueur j)
+        public Joueur Proprietaire
         {
-            proprietaire = j;
+            get { return proprietaire; }
+            set { proprietaire = value; }
         }
+        bool selected;
 
         public void attaquer(IUnite adversaire)
         {

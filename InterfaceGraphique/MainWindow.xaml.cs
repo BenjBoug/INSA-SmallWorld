@@ -24,10 +24,14 @@ namespace InterfaceGraphique
         Partie partie;
         Rectangle rectOnOver;
         Rectangle rectSelected;
+        TileStrategy tileStrateg;
+
+
         public MainWindow()
         {
             InitializeComponent();
             rectOnOver = null;
+            tileStrateg = new ImageTile();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -35,12 +39,12 @@ namespace InterfaceGraphique
 
         }
 
-        public void loadPartie(MonteurCarte monteurC)
+        public void loadPartie(MonteurCarte monteurC, List<Joueur> joueurs)
         {
             Task.Factory.StartNew(() =>
             {
                 MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
-                monteurPartie.creerPartie(monteurC, new FabriquePeupleGaulois());
+                monteurPartie.creerPartie(monteurC, joueurs);
                 partie = monteurPartie.Partie;
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
@@ -58,16 +62,9 @@ namespace InterfaceGraphique
                     for (int l = 0; l < partie.Carte.Hauteur; l++)
                     {
                         gridMap.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
-                        for (int c = 0; c < partie.Carte.Largeur; c++)
-                        {
-                            var tile = partie.Carte.Cases[c][l];
-                            int nbUnite = 0;
-                            if (partie.Carte.Unites[l][c] != null)
-                                nbUnite = partie.Carte.Unites[l][c].Count;
-                            var rect = createRectangle(c, l, tile, nbUnite);
-                            gridMap.Children.Add(rect);
-                        }
                     }
+
+                    loadGrid();
 
                     gridMap.Width = partie.Carte.Largeur * 50;
                     gridMap.Height = partie.Carte.Hauteur * 50;
@@ -84,54 +81,45 @@ namespace InterfaceGraphique
         {
 
         }
-            
-        private Rectangle createRectangle(int c, int l, ICase tile, int nbUnite)
+
+        private void loadGrid()
         {
-            ImageBrush brush = new ImageBrush();
+            for (int l = 0; l < partie.Carte.Hauteur; l++)
+            {
+                for (int c = 0; c < partie.Carte.Largeur; c++)
+                {
+                    var tile = partie.Carte.Cases[c][l];
+                    var rect = createRectangle(c, l, tile, partie.Carte.Unites[c][l]);
+                    gridMap.Children.Add(rect);
+                }
+            }
+        }
+            
+        private Rectangle createRectangle(int c, int l, ICase tile, List<Unite> listUnite)
+        {
             var rectangle = new Rectangle();
+
             VisualBrush myBrush = new VisualBrush();
             StackPanel aPanel = new StackPanel();
 
-            if (tile is CaseDesert)
-            {
-                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseDesert.png", UriKind.Relative));
-            }
-            if (tile is CaseEau)
-            {
-                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseEau.png", UriKind.Relative));
-            }
-            if (tile is CaseForet)
-            {
-                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseForet.png", UriKind.Relative));
-            }
-            if (tile is CaseMontagne)
-            {
-                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseMontagne.png", UriKind.Relative));
-            }
-            if (tile is CasePlaine)
-            {
-                brush.ImageSource = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/casePlaine.png", UriKind.Relative));
-            }
-            aPanel.Background = brush;
+            aPanel.Background = tileStrateg.getViewTile(tile);
 
+            // Create some text.
+            TextBlock someText = new TextBlock();
+            if (listUnite != null)
+            {
+                someText.Text = listUnite.Count.ToString();
+                someText.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
+            }
+            else
+                someText.Text = " ";
+            FontSizeConverter fSizeConverter = new FontSizeConverter();
+            someText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
+            someText.Margin = new Thickness(10);
+            aPanel.Children.Add(someText);
             
-                // Create some text.
-                TextBlock someText = new TextBlock();
-                if (nbUnite > 0)
-                {
-                    someText.Text = nbUnite.ToString();
-                }
-                else
-                    someText.Text = " ";
-                FontSizeConverter fSizeConverter = new FontSizeConverter();
-                someText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
-                someText.Margin = new Thickness(10);
-                someText.Foreground = Brushes.Red;
-
-                aPanel.Children.Add(someText);
-            
-
             myBrush.Visual = aPanel;
+
             rectangle.Fill = myBrush;
 
             // mise à jour des attributs (column et Row) référencant la position dans la grille à rectangle
@@ -206,40 +194,33 @@ namespace InterfaceGraphique
             rectSelected = null;
         }
 
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             NouvellePartie fen = new NouvellePartie();
             fen.Owner = this;
             fen.ShowDialog();
 
-
-            if (fen.selectionCarte == 0)
-                this.loadPartie(new MonteurDemo());
-            else if (fen.selectionCarte == 1)
-                this.loadPartie(new MonteurPetite());
-            else if (fen.selectionCarte == 2)
-                this.loadPartie(new MonteurNormale());
+            e.Handled = true;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_Checked(object sender, RoutedEventArgs e)
         {
-            loadPartie(new MonteurNormale());
+
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void affTileCheckbox_Click(object sender, RoutedEventArgs e)
         {
-            loadPartie(new MonteurPetite());
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            loadPartie(new MonteurDemo());
-
+            if (affTileCheckbox.IsChecked)
+            {
+                tileStrateg = new ImageTile();
+            }
+            else
+            {
+                tileStrateg = new RectangleTile();
+            }
+            gridMap.Children.Clear();
+            loadGrid();
+            e.Handled = true;
         }
     }
 }

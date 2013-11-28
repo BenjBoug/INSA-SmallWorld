@@ -9,21 +9,20 @@ namespace Modele
     {
         private const int NBJoueur = 2;
 
-        public override void creerPartie(MonteurCarte monteurCarte, FabriquePeuple fabPeuple)
+        public override void creerPartie(MonteurCarte monteurCarte, List<Joueur> joueurs)
         {
             partie = new Partie1v1();
             partie.Carte = creerCarte(monteurCarte);
             partie.NbTours = 0;
-            creerJoueurs(fabPeuple);
+            initJoueurs(joueurs);
         }
 
-        public override void creerJoueurs(FabriquePeuple fab)
+        public override void initJoueurs(List<Joueur> joueurs)
         {
-            for (int i = 0; i < NBJoueur; i++)
+            foreach (Joueur j in joueurs)
             {
-                Joueur joueur = new JoueurConcret(fab, "blue", "joueur"+i);
-                partie.ajoutJoueur(joueur);
-                creerUnite(joueur);
+                partie.ajoutJoueur(j);
+                creerUnite(j);
             }
         }
 
@@ -39,7 +38,7 @@ namespace Modele
             for (int i = 0; i < partie.Carte.NbUniteParPeuble; i++)
             {
                 Unite unit = new Unite();
-                unit.setProprietaire(j);
+                unit.Proprietaire = (Joueur) j;
                 list.Add(unit);
             }
             partie.Carte.placeUnite(list);

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
+
 namespace Modele
 {
     public abstract class Joueur : IJoueur
     {
-        public Joueur(FabriquePeuple fab, String color)
+        public Joueur(FabriquePeuple fab, string color)
         {
             fabriquePeuple = fab;
             Peuple = fabriquePeuple.creerPeuple();

@@ -50,7 +50,7 @@ namespace Modele
 
         }
 
-        public unsafe override void placeUnite(List<Unite> list)
+        public override void placeUnite(List<Unite> list)
         {
             int nbJoueurs = 0;
             Random rand = new Random();

@@ -10,7 +10,7 @@ namespace Modele
     
         public override IPeuple creerPeuple()
         {
-            throw new NotImplementedException();
+            return new PeupleViking();
         }
     }
 }

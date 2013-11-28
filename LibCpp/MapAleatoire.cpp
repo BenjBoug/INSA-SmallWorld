@@ -18,7 +18,7 @@ int** MapAleatoire::generer(int taille,int nbTerrain)
 		map[i]= new int[5];
 	} 
 
-	int max = taille*taille/nbTerrain;
+	int max = (taille*taille)/nbTerrain;
 	int tile;
 	int* tilesNb = new int[nbTerrain];
 	for (int i=0;i<nbTerrain;i++)
@@ -32,13 +32,15 @@ int** MapAleatoire::generer(int taille,int nbTerrain)
 	{
 		for (int j=0;j<taille;j++)
 		{
-			do
+			//do
 				tile = rand()%5;
-			while (tilesNb[tile]>max);
-			tilesNb[tile]++;
+			//while (tilesNb[tile]>max);
+			//tilesNb[tile]++;
 			map[i][j] = tile;
 		}
 	}
+
+	delete[] tilesNb;
 
 	return map;
 }

@@ -15,8 +15,8 @@ namespace Modele
             set { partie = value; }
         }
 
-        public abstract void creerPartie(MonteurCarte monteurCarte, FabriquePeuple fabPeuple);
-        public abstract void creerJoueurs(FabriquePeuple fab);
+        public abstract void creerPartie(MonteurCarte monteurCarte, List<Joueur> joueurs);
+        public abstract void initJoueurs(List<Joueur> joueurs);
 
         public abstract Carte creerCarte(MonteurCarte monteur);
 
