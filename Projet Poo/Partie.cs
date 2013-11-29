@@ -21,6 +21,12 @@ namespace Modele
             set { nbTours = value; }
         }
         private List<IJoueur> listJoueurs;
+
+        public List<IJoueur> ListJoueurs
+        {
+            get { return listJoueurs; }
+            set { listJoueurs = value; }
+        }
         private Carte carte;
 
         public Carte Carte
@@ -36,14 +42,12 @@ namespace Modele
 
         public IJoueur joueurSuivant()
         {
-            // selection le joueur suivant
-            listJoueurs.GetEnumerator().MoveNext();
-            return listJoueurs.GetEnumerator().Current;
+            return listJoueurs[0];
         }
 
         public void ajoutJoueur(Joueur j)
         {
-            listJoueurs.Add(j);
+            ListJoueurs.Add(j);
         }
 
     }

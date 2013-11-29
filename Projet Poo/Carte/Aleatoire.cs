@@ -10,13 +10,14 @@ namespace Modele
 
         public void chargerCarte(Carte c)
         {
-            WrapperMapAleatoire alea = new WrapperMapAleatoire();
-            List<int> data = alea.generer(c.Largeur,5);
+            Random rand = new Random();
+            //WrapperMapAleatoire alea = new WrapperMapAleatoire();
+            //List<int> data = alea.generer(c.Largeur,5);
             for (int i = 0; i < c.Largeur; i++)
             {
                 for (int j = 0; j < c.Hauteur; j++)
                 {
-                    c.setCase(i, j, c.FabriqueCase.getCase(data[i * c.Hauteur + j]));
+                    c.setCase(i, j, c.FabriqueCase.getCase(rand.Next(5)));
                 }
             }
         }

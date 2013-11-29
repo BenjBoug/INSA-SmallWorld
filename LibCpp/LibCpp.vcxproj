@@ -65,11 +65,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Header.h" />
     <ClInclude Include="MapAleatoire.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Header.cpp" />
     <ClCompile Include="MapAleatoire.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

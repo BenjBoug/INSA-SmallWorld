@@ -30,7 +30,6 @@ namespace Modele
                     if (caseEau == null)
                         caseEau = new CaseEau();
                     return caseEau;
-
                 case 1:
                     if (caseForet == null)
                         caseForet = new CaseForet();
@@ -50,7 +49,6 @@ namespace Modele
                     if (caseMontagne == null)
                         caseMontagne = new CaseMontagne();
                     return caseMontagne;
-
                 default:
                     return null;
                     //throw new Excetion...

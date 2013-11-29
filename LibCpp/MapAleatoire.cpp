@@ -3,6 +3,7 @@
 
 MapAleatoire::MapAleatoire(void)
 {
+	srand(time(NULL));
 }
 
 
@@ -25,17 +26,15 @@ int** MapAleatoire::generer(int taille,int nbTerrain)
 	{
 		tilesNb[i]=0;
 	}
-	
-	srand (time(NULL));
 
 	for (int i=0;i<taille;i++)
 	{
 		for (int j=0;j<taille;j++)
 		{
-			//do
+			do
 				tile = rand()%5;
-			//while (tilesNb[tile]>max);
-			//tilesNb[tile]++;
+			while (tilesNb[tile]>=max);
+			tilesNb[tile]++;
 			map[i][j] = tile;
 		}
 	}
@@ -66,15 +65,15 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int taille)
 
 	if (nbJoueurs==0)
 	{
-		coord[0]=rand()*taille;
-		coord[1]=rand()*taille;
+		coord[0]=rand()*(taille-1);
+		coord[1]=rand()*(taille-1);
 	}
 	else
 	{
 		do
 		{
-			coord[0]=rand()*taille;
-			coord[1]=rand()*taille;
+			coord[0]=rand()*(taille-1);
+			coord[1]=rand()*(taille-1);
 		} while (tabJoueurs[coord[0]][coord[1]]!=0);
 	}
 

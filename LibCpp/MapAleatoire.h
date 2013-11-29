@@ -8,6 +8,7 @@
 #define DLL __declspec(dllimport)
 #endif
 #include <stdlib.h>
+#include <iostream>
 #include <ctime>
 #include <vector>
 

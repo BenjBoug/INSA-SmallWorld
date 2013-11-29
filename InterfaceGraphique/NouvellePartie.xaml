@@ -43,8 +43,6 @@
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
-
-
                 <GroupBox Header="Joueur 2">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

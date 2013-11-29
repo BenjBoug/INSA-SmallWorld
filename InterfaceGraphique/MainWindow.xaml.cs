@@ -41,6 +41,7 @@ namespace InterfaceGraphique
 
         public void loadPartie(MonteurCarte monteurC, List<Joueur> joueurs)
         {
+            /*
             Task.Factory.StartNew(() =>
             {
                 MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
@@ -65,12 +66,36 @@ namespace InterfaceGraphique
                     }
 
                     loadGrid();
+                    loadControl();
 
                     gridMap.Width = partie.Carte.Largeur * 50;
                     gridMap.Height = partie.Carte.Hauteur * 50;
                 }));
-            });
-           
+            });*/
+            MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
+            monteurPartie.creerPartie(monteurC, joueurs);
+            partie = monteurPartie.Partie;
+
+            gridMap.Children.Clear();
+            gridMap.RowDefinitions.Clear();
+            gridMap.ColumnDefinitions.Clear();
+
+            for (int c = 0; c < partie.Carte.Largeur; c++)
+            {
+                gridMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(50, GridUnitType.Pixel) });
+            }
+
+
+            for (int l = 0; l < partie.Carte.Hauteur; l++)
+            {
+                gridMap.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
+            }
+
+            loadGrid();
+            loadControl();
+
+            gridMap.Width = partie.Carte.Largeur * 50;
+            gridMap.Height = partie.Carte.Hauteur * 50;
             updateUnitUI();
         }
 
@@ -80,6 +105,33 @@ namespace InterfaceGraphique
         private void updateUnitUI()
         {
 
+        }
+
+        private void loadControl()
+        {
+
+            controlGauche.Children.Clear();
+
+            Label joueurActuel = new Label();
+            joueurActuel.Content = "C'est à " + ((JoueurConcret)partie.joueurSuivant()).Nom + " de jouer !";
+            controlGauche.Children.Add(joueurActuel);
+
+            Label nbTours = new Label();
+            nbTours.Content = "Tour: "+ partie.NbTours +"/"+partie.Carte.NbToursMax;
+            controlGauche.Children.Add(nbTours);
+
+            foreach (JoueurConcret j in partie.ListJoueurs)
+            {
+                GroupBox grpJoueur = new GroupBox();
+                grpJoueur.Margin = new Thickness(5);
+                grpJoueur.Header = j.Nom;
+                StackPanel panelGrp = new StackPanel();
+                Label nbPoint = new Label();
+                nbPoint.Content = "Points: "+j.Points;
+                panelGrp.Children.Add(nbPoint);
+                grpJoueur.Content = panelGrp;
+                controlGauche.Children.Add(grpJoueur);
+            }
         }
 
         private void loadGrid()
@@ -219,7 +271,8 @@ namespace InterfaceGraphique
                 tileStrateg = new RectangleTile();
             }
             gridMap.Children.Clear();
-            loadGrid();
+            if (partie != null && partie.Carte != null)
+                loadGrid();
             e.Handled = true;
         }
     }

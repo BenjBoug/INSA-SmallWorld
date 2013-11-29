@@ -13,14 +13,13 @@ namespace TestUnitaire
             WrapperMapAleatoire wrapMap = new WrapperMapAleatoire();
 
             //génére une carte 5x5 avec au moins 5 chiffres différents de 0 à 4
-            int** map = wrapMap.generer(5, 5);
+            //int** map = wrapMap.generer(5, 5);
         }
         [TestMethod]
-        public void TestMonteur()
+        public void TestMonteurDemo()
         {
             Carte c;
-
-            MonteurCarte monteur = new MonteurDemo();
+            MonteurCarte monteur = new MonteurNormale();
             monteur.creerCarte();
             c = monteur.Carte;
             Assert.IsNotNull(c);
@@ -29,24 +28,32 @@ namespace TestUnitaire
             Assert.AreEqual<int>(c.Hauteur, 5);
             Assert.AreEqual<int>(c.NbToursMax, 10);
             Assert.AreEqual<int>(c.NbUniteParPeuble, 5);
-
-            monteur = new MonteurPetite();
+        }
+        [TestMethod]
+        public void TestMonteurPetite()
+        {
+            Carte c;
+            MonteurCarte monteur = new MonteurNormale();
             monteur.creerCarte();
             c = monteur.Carte;
             Assert.IsNotNull(c);
             Assert.IsNotNull(c.Cases);
-            Assert.AreEqual<int>(c.Largeur, 10);
-            Assert.AreEqual<int>(c.Hauteur, 10);
+            Assert.AreEqual<int>(c.Largeur, 5);
+            Assert.AreEqual<int>(c.Hauteur, 5);
             Assert.AreEqual<int>(c.NbToursMax, 15);
             Assert.AreEqual<int>(c.NbUniteParPeuble, 8);
-
-            monteur = new MonteurNormale();
+        }
+        [TestMethod]
+        public void TestMonteurNormale()
+        {
+            Carte c;
+            MonteurCarte monteur = new MonteurNormale();
             monteur.creerCarte();
             c = monteur.Carte;
             Assert.IsNotNull(c);
             Assert.IsNotNull(c.Cases);
-            Assert.AreEqual<int>(c.Largeur, 20);
-            Assert.AreEqual<int>(c.Hauteur, 20);
+            Assert.AreEqual<int>(c.Largeur, 5);
+            Assert.AreEqual<int>(c.Hauteur, 5);
             Assert.AreEqual<int>(c.NbToursMax, 25);
             Assert.AreEqual<int>(c.NbUniteParPeuble, 15);
         }
