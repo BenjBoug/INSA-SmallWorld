@@ -15,9 +15,9 @@ namespace Modele
         }
 
 
-        protected List<Unite>[][] unites;
+        protected List<IUnite>[][] unites;
 
-        public List<Unite>[][] Unites
+        public List<IUnite>[][] Unites
         {
             get { return unites; }
             set { unites = value; }
@@ -31,7 +31,6 @@ namespace Modele
             set { cases = value; }
         }
         private FabriqueCase fabriqueCase;
-
 
         public FabriqueCase FabriqueCase
         {
@@ -94,7 +93,7 @@ namespace Modele
 
         public abstract void selectionneCase(int x, int y);
 
-        public abstract void placeUnite(List<Unite> list);
+        public abstract void placeUnite(List<IUnite> list);
 
         public void actualiseDeplacement()
         {

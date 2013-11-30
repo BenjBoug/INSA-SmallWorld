@@ -10,7 +10,7 @@ namespace Modele
 
 
         void tourSuivant();
-
+        void ajoutJoueur(IJoueur j);
         IJoueur joueurSuivant();
 
     }

@@ -45,7 +45,7 @@ namespace Modele
             return listJoueurs[0];
         }
 
-        public void ajoutJoueur(Joueur j)
+        public void ajoutJoueur(IJoueur j)
         {
             ListJoueurs.Add(j);
         }

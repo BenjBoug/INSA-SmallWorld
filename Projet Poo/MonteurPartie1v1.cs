@@ -9,7 +9,7 @@ namespace Modele
     {
         private const int NBJoueur = 2;
 
-        public override void creerPartie(MonteurCarte monteurCarte, List<Joueur> joueurs)
+        public override void creerPartie(MonteurCarte monteurCarte, List<IJoueur> joueurs)
         {
             partie = new Partie1v1();
             partie.Carte = creerCarte(monteurCarte);
@@ -17,7 +17,7 @@ namespace Modele
             initJoueurs(joueurs);
         }
 
-        public override void initJoueurs(List<Joueur> joueurs)
+        public override void initJoueurs(List<IJoueur> joueurs)
         {
             foreach (Joueur j in joueurs)
             {
@@ -34,7 +34,7 @@ namespace Modele
 
         public override void creerUnite(IJoueur j)
         {
-            List<Unite> list = new List<Unite>();
+            List<IUnite> list = new List<IUnite>();
             for (int i = 0; i < partie.Carte.NbUniteParPeuble; i++)
             {
                 Unite unit = new Unite();

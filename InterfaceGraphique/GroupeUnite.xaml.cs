@@ -21,11 +21,13 @@ namespace InterfaceGraphique
     /// </summary>
     public partial class GroupeUnite : UserControl
     {
-        IUnite unit;
+        private IUnite unit;
+        private bool select;
         public GroupeUnite(IUnite unit)
         {
             InitializeComponent();
             this.unit = unit;
+            select = false;
             grpUnit.Header = "Unite " + unit.Proprietaire.Peuple;
             PV.Text += unit.PointsVie.ToString();
             PA.Text += unit.PointsAttaque.ToString();
@@ -36,6 +38,11 @@ namespace InterfaceGraphique
 
         private void grpUnit_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            select = !select;
+            if (select)
+                grpUnit.Background = Brushes.White;
+            else
+                grpUnit.Background = null;
         }
     }
 }

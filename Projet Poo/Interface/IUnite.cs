@@ -7,13 +7,34 @@ namespace Modele
 {
     public interface IUnite
     {
+        IJoueur Proprietaire
+        {
+            get;
+            set;
+        }
+        int PointsDepl
+        {
+            get;
+            set;
+        }
+        int PointsVie
+        {
+            get;
+            set;
+        }
+        int PointsAttaque
+        {
+            get;
+            set;
+        }
+        int PointsDefense
+        {
+            get;
+            set;
+        }
 
         void attaquer(IUnite adversaire);
-
         void perdPV(int nb);
-
         bool estEnVie();
-
-
     }
 }

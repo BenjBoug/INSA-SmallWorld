@@ -25,7 +25,7 @@ namespace InterfaceGraphique
         Rectangle rectOnOver;
         Rectangle rectSelected;
         TileFactory tileStrateg;
-        IUnite uniteSelected;
+        List<IUnite> listUnitSelected;
 
 
         public MainWindow()
@@ -33,7 +33,7 @@ namespace InterfaceGraphique
             InitializeComponent();
             rectOnOver = null;
             rectSelected = null;
-            uniteSelected = null;
+            listUnitSelected = new List<IUnite>();
             tileStrateg = new ImageFactory();
         }
 

@@ -25,9 +25,9 @@ namespace Modele
                 Carte.Cases[i] = new ICase[Carte.Hauteur];
 
             
-            Carte.Unites = new List<Unite>[Carte.Largeur][];
+            Carte.Unites = new List<IUnite>[Carte.Largeur][];
             for (int i = 0; i < Carte.Largeur; i++)
-                Carte.Unites[i] = new List<Unite>[Carte.Hauteur];
+                Carte.Unites[i] = new List<IUnite>[Carte.Hauteur];
             
 
             Carte.chargerCarte(new Aleatoire());

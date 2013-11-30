@@ -21,13 +21,15 @@ namespace InterfaceGraphique
     /// </summary>
     public partial class GroupeJoueur : UserControl
     {
-        public GroupeJoueur(IJoueur j)
+        public GroupeJoueur(IJoueur j, bool actif=false)
         {
             InitializeComponent();
             grpJoueur.Header = j.Nom;
             couleur.Text += j.Couleur;
             peuple.Text += j.Peuple;
             nbpoints.Text += j.Points;
+            if (actif)
+                grpJoueur.Background = Brushes.White;
         }
     }
 }

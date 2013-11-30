@@ -10,10 +10,10 @@ namespace Modele
         public override void creerCarte()
         {
             Carte = new CarteClassique();
-            Carte.Largeur = 20;
-            Carte.Hauteur = 20;
-            Carte.NbToursMax = 25;
-            Carte.NbUniteParPeuble = 15;
+            Carte.Largeur = 15;
+            Carte.Hauteur = 15;
+            Carte.NbToursMax = 30;
+            Carte.NbUniteParPeuble = 8;
             creerStructureCarte();
         }
     }

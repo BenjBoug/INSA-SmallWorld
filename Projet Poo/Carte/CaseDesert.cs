@@ -7,5 +7,9 @@ namespace Modele
 {
     public class CaseDesert : Case
     {
+        public override string ToString() 
+        {
+            return "Désert";
+        }
     }
 }

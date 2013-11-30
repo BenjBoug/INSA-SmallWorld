@@ -9,20 +9,12 @@ namespace Modele
 {
     public abstract class Joueur : IJoueur
     {
-        public Joueur(FabriquePeuple fab, string color)
+        public Joueur(FabriquePeuple fab, String color, String nom)
         {
-            fabriquePeuple = fab;
-            Peuple = fabriquePeuple.creerPeuple();
+            Peuple = fab.creerPeuple();
             Points = 0;
             Couleur = color;
-        }
-
-        private FabriquePeuple fabriquePeuple;
-
-        public FabriquePeuple FabriquePeuple
-        {
-            get { return fabriquePeuple; }
-            set { fabriquePeuple = value; }
+            Nom = nom;
         }
 
         private IPeuple _peuple;
@@ -47,6 +39,14 @@ namespace Modele
         {
             get { return couleur; }
             set { couleur = value; }
+        }
+
+        private String nom;
+
+        public String Nom
+        {
+            get { return nom; }
+            set { nom = value; }
         }
     }
 }

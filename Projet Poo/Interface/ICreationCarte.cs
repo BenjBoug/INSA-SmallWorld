@@ -7,7 +7,6 @@ namespace Modele
 {
     public interface ICreationCarte
     {
-    
         void chargerCarte(Carte c);
     }
 }

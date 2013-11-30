@@ -7,5 +7,9 @@ namespace Modele
 {
     public class PeupleGaulois : Peuple
     {
+        public override string ToString()
+        {
+            return "Gaulois";
+        }
     }
 }

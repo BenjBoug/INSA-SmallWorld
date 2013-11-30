@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 #ifdef DLLEXPORT
 #define DLL _declspec(dllexport)
 #else

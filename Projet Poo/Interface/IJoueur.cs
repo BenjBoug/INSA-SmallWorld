@@ -7,5 +7,25 @@ namespace Modele
 {
     public interface IJoueur
     {
+        IPeuple Peuple
+        {
+            get;
+            set;
+        }
+        int Points
+        {
+            get;
+            set;
+        }
+        String Couleur
+        {
+            get;
+            set;
+        }
+        String Nom
+        {
+            get;
+            set;
+        }
     }
 }

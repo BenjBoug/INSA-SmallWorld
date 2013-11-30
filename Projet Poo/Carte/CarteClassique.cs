@@ -10,12 +10,10 @@ namespace Modele
     {
         public CarteClassique() : base()
         {
-            unites = new List<Unite>[Largeur][];
-            for (int i = 0; i < Largeur; i++)
-                unites[i] = new List<Unite>[Hauteur];
+
         }
 
-        public void deplacerUnite(Unite u, int x, int y)
+        public void deplacerUnite(IUnite u, int x, int y)
         {
 
         }
@@ -50,7 +48,7 @@ namespace Modele
 
         }
 
-        public override void placeUnite(List<Unite> list)
+        public override void placeUnite(List<IUnite> list)
         {
             int nbJoueurs = 0;
             Random rand = new Random();
