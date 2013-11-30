@@ -11,5 +11,9 @@ namespace Modele
         {
             return "Foret";
         }
+        public int bonusPoints(PeupleNain p)
+        {
+            return 2;
+        }
     }
 }

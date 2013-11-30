@@ -11,5 +11,9 @@ namespace Modele
         {
             return "Eau";
         }
+        public int bonusPoints(Peuple p)
+        {
+            return 0;
+        }
     }
 }

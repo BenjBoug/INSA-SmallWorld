@@ -7,9 +7,13 @@ namespace Modele
 {
     public class CaseMontagne : Case
     {
-        public override string ToString()
+        public override string ToString() 
         {
-            return "Montagne";
+            return "Désert";
+        }
+        public int bonusPoints(PeupleGaulois p)
+        {
+            return 0;
         }
     }
 }

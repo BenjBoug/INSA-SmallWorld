@@ -11,5 +11,10 @@ namespace Modele
         {
             return "Désert";
         }
+
+        public int bonusPoints(PeupleViking p)
+        {
+            return 0;
+        }
     }
 }

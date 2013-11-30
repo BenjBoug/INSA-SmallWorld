@@ -27,7 +27,16 @@ namespace Modele
             get;
             set;
         }
-
+        ICase[][] Cases
+        {
+            get;
+            set;
+        }
+        List<IUnite>[][] Unites
+        {
+            get;
+            set;
+        }
         void calculerPoints();
         bool caseVide(int x, int y);
         ICase getCase(int x, int y);

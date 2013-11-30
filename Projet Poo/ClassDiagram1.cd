@@ -15,28 +15,28 @@
   <Class Name="Modele.CaseMontagne" Collapsed="true">
     <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Carte\CaseMontagne.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.CasePlaine" Collapsed="true">
     <Position X="2.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Carte\CasePlaine.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.CaseDesert" Collapsed="true">
     <Position X="4" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Carte\CaseDesert.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.CaseForet" Collapsed="true">
     <Position X="5.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Carte\CaseForet.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -51,7 +51,7 @@
   <Class Name="Modele.CaseEau" Collapsed="true">
     <Position X="7.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Carte\CaseEau.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -70,13 +70,12 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.Joueur">
-    <Position X="7.5" Y="7" Width="1.5" />
+    <Position X="7.5" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAiAAIAIgAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <HashCode>AAAAAAiAAIAIgAAAAAAAIAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Joueur.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="fabriquePeuple" />
       <Field Name="_peuple" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
@@ -92,7 +91,7 @@
   <Class Name="Modele.Unite">
     <Position X="9.5" Y="7.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IAAAgSAAAAEAAQAEAQAABAEAAAAAAAAACAAAAkAAAAA=</HashCode>
+      <HashCode>IAAAgSAAAAEAAAAEAQAABAEAAAAAAAAACAAAAEAAAAE=</HashCode>
       <FileName>Unite.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -103,21 +102,21 @@
   <Class Name="Modele.PeupleGaulois" Collapsed="true">
     <Position X="0.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\PeupleGaulois.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.PeupleViking" Collapsed="true">
     <Position X="2.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\PeupleViking.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.PeupleNain" Collapsed="true">
     <Position X="4.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\PeupleNain.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -147,7 +146,7 @@
   <Class Name="Modele.Partie">
     <Position X="12.5" Y="6" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAIAAAACIAAAAAAAAASAAAAAAgAAAAIAAAAAAAAABAA=</HashCode>
+      <HashCode>AAIAAAACIAAABAAAAASACAQAAgAAAAIAAAAAAAAABAA=</HashCode>
       <FileName>Partie.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -158,7 +157,7 @@
   <Class Name="Modele.MonteurPartie">
     <Position X="14.75" Y="5.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAEAAAABAEAAAIAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAEAAQABAEAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>MonteurPartie.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -168,7 +167,7 @@
   <Class Name="Modele.MonteurPartie1v1">
     <Position X="14.75" Y="8.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAAAEAAAIAAAAAAggAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAAQAAAEAAAAAAAAAAggAAAAAAAAAAAAAA=</HashCode>
       <FileName>MonteurPartie1v1.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -180,9 +179,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.JoueurConcret">
-    <Position X="7.5" Y="10.25" Width="1.5" />
+    <Position X="7.5" Y="11.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>JoueurConcret.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -244,11 +243,12 @@
       <HashCode>AAAAgEAAAEEABAACAA2AAAAEAYgEAFGgAAAQAAAAgAA=</HashCode>
       <FileName>Carte\Carte.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Modele.ICarte" Collapsed="true">
     <Position X="10.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgEAAAAEAAAAAAACAAAAAAAAAAEAAAAAAAAAAgAA=</HashCode>
+      <HashCode>AAAAgEAAAEEABAACAAmAAAAAAYgAAEAgAAAAAAAAgAA=</HashCode>
       <FileName>Interface\ICarte.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -262,14 +262,14 @@
   <Interface Name="Modele.IUnite" Collapsed="true">
     <Position X="10" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAEAAAAA=</HashCode>
+      <HashCode>IAAAgAAAAAEAAAAAAQAABAAAAAAAAAAACAAAAEAAAAE=</HashCode>
       <FileName>Interface\IUnite.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Modele.IJoueur">
     <Position X="7.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAIgAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interface\IJoueur.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -283,7 +283,7 @@
   <Interface Name="Modele.IPartie" Collapsed="true">
     <Position X="12.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <HashCode>AAAAAAAAIAAAAAAAAACACAAAAAAAAAAAAAAAAAAABAA=</HashCode>
       <FileName>Interface\IPartie.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -7,5 +7,6 @@ namespace Modele
 {
     public interface ICase
     {
+        int bonusPoints(IPeuple p);
     }
 }

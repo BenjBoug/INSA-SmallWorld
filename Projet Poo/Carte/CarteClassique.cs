@@ -25,7 +25,22 @@ namespace Modele
 
         public override void calculerPoints()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    List<IUnite> list = Unites[i][j];
+                    if (list!=null)
+                    foreach (IUnite u in list)
+                    {
+                        IJoueur joueur = u.Proprietaire;
+                        IPeuple peuple = u.Proprietaire.Peuple;
+
+                        joueur.Points += Cases[i][j].bonusPoints(peuple);
+
+                    }
+                }
+            }
         }
 
 

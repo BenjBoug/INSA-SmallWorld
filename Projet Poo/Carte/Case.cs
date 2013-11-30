@@ -7,6 +7,10 @@ namespace Modele
 {
     public abstract class Case : ICase
     {
+        public int bonusPoints(IPeuple p)
+        {
+            return 1;
+        }
 
     }
 

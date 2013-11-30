@@ -10,10 +10,12 @@ namespace Modele
     {
         public Partie()
         {
+            indiceJoueurActuel = 0;
             listJoueurs = new List<IJoueur>();
         }
 
         private int nbTours;
+        private int indiceJoueurActuel;
 
         public int NbTours
         {
@@ -27,9 +29,9 @@ namespace Modele
             get { return listJoueurs; }
             set { listJoueurs = value; }
         }
-        private Carte carte;
+        private ICarte carte;
 
-        public Carte Carte
+        public ICarte Carte
         {
             get { return carte; }
             set { carte = value; }
@@ -37,17 +39,28 @@ namespace Modele
 
         public void tourSuivant()
         {
-            carte.actualiseDeplacement();
+            joueurSuivant();
         }
 
-        public IJoueur joueurSuivant()
+        public void joueurSuivant()
         {
-            return listJoueurs[0];
+            if (++indiceJoueurActuel >= listJoueurs.Count)
+            {
+                indiceJoueurActuel = 0;
+                nbTours++;
+                carte.actualiseDeplacement();
+                carte.calculerPoints();
+            }
         }
 
         public void ajoutJoueur(IJoueur j)
         {
-            ListJoueurs.Add(j);
+            listJoueurs.Add(j);
+        }
+
+        public IJoueur joueurActuel()
+        {
+            return listJoueurs[indiceJoueurActuel];
         }
 
     }

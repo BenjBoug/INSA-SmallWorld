@@ -11,5 +11,15 @@ namespace Modele
         {
             return "Plaine";
         }
+
+        public int bonusPoints(PeupleNain p)
+        {
+            return 0;
+        }
+
+        public int bonusPoints(PeupleGaulois p)
+        {
+            return 2;
+        }
     }
 }

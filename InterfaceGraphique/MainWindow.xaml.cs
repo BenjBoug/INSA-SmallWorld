@@ -69,23 +69,19 @@ namespace InterfaceGraphique
                         gridMap.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
                     }
 
+                    gridMap.Width = partie.Carte.Largeur * 50;
+                    gridMap.Height = partie.Carte.Hauteur * 50;
+
                     loadGrid();
                     loadControlGauche();
                     loadControlDroit();
-
-                    gridMap.Width = partie.Carte.Largeur * 50;
-                    gridMap.Height = partie.Carte.Hauteur * 50;
                 }));
             });
             updateUnitUI();
         }
 
-        /// <summary>
-        /// Récupération de la position de l'unité (logique), mise à jour de l'ellipse (physique) matérialisant l'unité
-        /// </summary>
         private void updateUnitUI()
         {
-
         }
 
         private void loadControlGauche()
@@ -94,7 +90,7 @@ namespace InterfaceGraphique
             controlGauche.Children.Clear();
 
             Label joueurActuel = new Label();
-            joueurActuel.Content = "C'est à " + ((JoueurConcret)partie.joueurSuivant()).Nom + " de jouer !";
+            joueurActuel.Content = "C'est à " + partie.joueurActuel().Nom + " de jouer !";
             controlGauche.Children.Add(joueurActuel);
 
             Label nbTours = new Label();
@@ -103,17 +99,17 @@ namespace InterfaceGraphique
 
             foreach (JoueurConcret j in partie.ListJoueurs)
             {
-                controlGauche.Children.Add(new GroupeJoueur(j));
+                controlGauche.Children.Add(new GroupeJoueur(j, j == partie.joueurActuel()));
             }
 
             Button boutonNext = new Button();
             boutonNext.Content = "Tour fini !";
+            boutonNext.Click += Button_Click;
             controlGauche.Children.Add(boutonNext);
         }
 
         private void loadControlDroit()
         {
-
             controlDroit.Children.Clear();
 
             GroupBox grpInfo = new GroupBox();
@@ -139,18 +135,16 @@ namespace InterfaceGraphique
             StackPanel panelInfo = new StackPanel();
             panelInfo.Margin = new Thickness(4);
             TextBlock typeCase = new TextBlock();
+            typeCase.Text = "Type: ";
             if (rectSelected != null)
-                typeCase.Text = "Type: "+(rectSelected.Tag as ICase).ToString();
-            else
-                typeCase.Text = "Type: ";
+                typeCase.Text += "Type: "+(rectSelected.Tag as ICase).ToString();
 
             TextBlock nbUnite = new TextBlock();
+            nbUnite.Text = "Nb Unités: ";
             if (partie.Carte.Unites[column][row] != null)
-                nbUnite.Text = "Nb Unités: "+partie.Carte.Unites[column][row].Count();
+                nbUnite.Text += partie.Carte.Unites[column][row].Count();
             else
-                nbUnite.Text = "Nb Unités: 0";
-
-
+                nbUnite.Text += "0";
 
             panelGrp.Children.Add(rect);
             panelInfo.Children.Add(typeCase);
@@ -160,25 +154,16 @@ namespace InterfaceGraphique
             grpInfo.Content = panelGrp;
             controlDroit.Children.Add(grpInfo);
 
-
-
             if (partie.Carte.Unites[column][row] != null && rectSelected != null)
             {
-                if (partie.Carte.Unites[column][row].Count > 0)
-                {
-                    TextBlock joueur = new TextBlock();
-                    joueur.Text = "Unités de : " + partie.Carte.Unites[column][row][0].Proprietaire.Nom;
-                    controlDroit.Children.Add(joueur);
-                }
-
-
                 ScrollViewer scrollInfoUnite = new ScrollViewer();
                 scrollInfoUnite.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 scrollInfoUnite.Height = 400;
                 StackPanel panelScroll = new StackPanel();
                 foreach (Unite u in partie.Carte.Unites[column][row])
                 {
-                    panelScroll.Children.Add(new GroupeUnite(u));
+                    if (u.Proprietaire == partie.joueurActuel())
+                        panelScroll.Children.Add(new GroupeUnite(u));
                 }
                 scrollInfoUnite.Content = panelScroll;
                 controlDroit.Children.Add(scrollInfoUnite);
@@ -330,6 +315,14 @@ namespace InterfaceGraphique
             gridMap.Children.Clear();
             if (partie != null && partie.Carte != null)
                 loadGrid();
+            e.Handled = true;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            partie.tourSuivant();
+            loadControlGauche();
+            loadControlDroit();
             e.Handled = true;
         }
     }
