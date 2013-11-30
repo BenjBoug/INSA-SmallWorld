@@ -27,7 +27,7 @@ namespace InterfaceGraphique
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<Joueur> joueurs = new List<Joueur>();
+            List<IJoueur> joueurs = new List<IJoueur>();
             joueurs.Add(new JoueurConcret(getFabriquePeuple(peupleJoueur1), (couleurJoueur1.SelectedItem as PropertyInfo).Name, nomJoueur1.Text));
             joueurs.Add(new JoueurConcret(getFabriquePeuple(peupleJoueur2), (couleurJoueur2.SelectedItem as PropertyInfo).Name, nomJoueur2.Text));
 
@@ -50,6 +50,11 @@ namespace InterfaceGraphique
                 return new FabriquePeupleViking();
             else
                 return new FabriquePeupleNain(); // throw exception en temps normal ...
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

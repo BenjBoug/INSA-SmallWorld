@@ -78,9 +78,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="class\TileStrategy\ImageTile.cs" />
-    <Compile Include="class\TileStrategy\RectangleTile.cs" />
-    <Compile Include="class\TileStrategy\TileStrategy.cs" />
+    <Compile Include="class\TileFactory\ImageFactory.cs" />
+    <Compile Include="class\TileFactory\RectangleFactory.cs" />
+    <Compile Include="class\TileFactory\TileFactory.cs" />
+    <Page Include="GroupeJoueur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GroupeUnite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,6 +97,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GroupeJoueur.xaml.cs">
+      <DependentUpon>GroupeJoueur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GroupeUnite.xaml.cs">
+      <DependentUpon>GroupeUnite.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -96,6 +110,10 @@
     <Page Include="NouvellePartie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

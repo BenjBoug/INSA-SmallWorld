@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace InterfaceGraphique
 {
-    class RectangleTile : TileStrategy
+    class RectangleFactory : TileFactory
     {
         public override Brush getViewTile(ICase tile)
         {

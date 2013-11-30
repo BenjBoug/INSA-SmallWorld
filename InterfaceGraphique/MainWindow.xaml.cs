@@ -24,14 +24,17 @@ namespace InterfaceGraphique
         Partie partie;
         Rectangle rectOnOver;
         Rectangle rectSelected;
-        TileStrategy tileStrateg;
+        TileFactory tileStrateg;
+        IUnite uniteSelected;
 
 
         public MainWindow()
         {
             InitializeComponent();
             rectOnOver = null;
-            tileStrateg = new ImageTile();
+            rectSelected = null;
+            uniteSelected = null;
+            tileStrateg = new ImageFactory();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -39,9 +42,11 @@ namespace InterfaceGraphique
 
         }
 
-        public void loadPartie(MonteurCarte monteurC, List<Joueur> joueurs)
+        public void loadPartie(MonteurCarte monteurC, List<IJoueur> joueurs)
         {
-            /*
+            rectOnOver = null;
+            rectSelected = null;
+            
             Task.Factory.StartNew(() =>
             {
                 MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
@@ -59,43 +64,19 @@ namespace InterfaceGraphique
                         gridMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(50, GridUnitType.Pixel) });
                     }
 
-
                     for (int l = 0; l < partie.Carte.Hauteur; l++)
                     {
                         gridMap.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
                     }
 
                     loadGrid();
-                    loadControl();
+                    loadControlGauche();
+                    loadControlDroit();
 
                     gridMap.Width = partie.Carte.Largeur * 50;
                     gridMap.Height = partie.Carte.Hauteur * 50;
                 }));
-            });*/
-            MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
-            monteurPartie.creerPartie(monteurC, joueurs);
-            partie = monteurPartie.Partie;
-
-            gridMap.Children.Clear();
-            gridMap.RowDefinitions.Clear();
-            gridMap.ColumnDefinitions.Clear();
-
-            for (int c = 0; c < partie.Carte.Largeur; c++)
-            {
-                gridMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(50, GridUnitType.Pixel) });
-            }
-
-
-            for (int l = 0; l < partie.Carte.Hauteur; l++)
-            {
-                gridMap.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
-            }
-
-            loadGrid();
-            loadControl();
-
-            gridMap.Width = partie.Carte.Largeur * 50;
-            gridMap.Height = partie.Carte.Hauteur * 50;
+            });
             updateUnitUI();
         }
 
@@ -107,7 +88,7 @@ namespace InterfaceGraphique
 
         }
 
-        private void loadControl()
+        private void loadControlGauche()
         {
 
             controlGauche.Children.Clear();
@@ -122,17 +103,88 @@ namespace InterfaceGraphique
 
             foreach (JoueurConcret j in partie.ListJoueurs)
             {
-                GroupBox grpJoueur = new GroupBox();
-                grpJoueur.Margin = new Thickness(5);
-                grpJoueur.Header = j.Nom;
-                StackPanel panelGrp = new StackPanel();
-                Label nbPoint = new Label();
-                nbPoint.Content = "Points: "+j.Points;
-                panelGrp.Children.Add(nbPoint);
-                grpJoueur.Content = panelGrp;
-                controlGauche.Children.Add(grpJoueur);
+                controlGauche.Children.Add(new GroupeJoueur(j));
+            }
+
+            Button boutonNext = new Button();
+            boutonNext.Content = "Tour fini !";
+            controlGauche.Children.Add(boutonNext);
+        }
+
+        private void loadControlDroit()
+        {
+
+            controlDroit.Children.Clear();
+
+            GroupBox grpInfo = new GroupBox();
+            grpInfo.Margin = new Thickness(5);
+            grpInfo.Header = "Infos case";
+            StackPanel panelGrp = new StackPanel();
+            panelGrp.Orientation = Orientation.Horizontal;
+            Rectangle rect = new Rectangle();
+            rect.Width = 50;
+            rect.Height = 50;
+            int column = 0, row = 0;
+            if (rectSelected!=null)
+            {
+                rect.Fill = tileStrateg.getViewTile(rectSelected.Tag as ICase);
+                column = Grid.GetColumn(rectSelected);
+                row = Grid.GetRow(rectSelected);
+            }
+            else
+            {
+                rect.Fill = Brushes.Black;
+            }
+
+            StackPanel panelInfo = new StackPanel();
+            panelInfo.Margin = new Thickness(4);
+            TextBlock typeCase = new TextBlock();
+            if (rectSelected != null)
+                typeCase.Text = "Type: "+(rectSelected.Tag as ICase).ToString();
+            else
+                typeCase.Text = "Type: ";
+
+            TextBlock nbUnite = new TextBlock();
+            if (partie.Carte.Unites[column][row] != null)
+                nbUnite.Text = "Nb Unités: "+partie.Carte.Unites[column][row].Count();
+            else
+                nbUnite.Text = "Nb Unités: 0";
+
+
+
+            panelGrp.Children.Add(rect);
+            panelInfo.Children.Add(typeCase);
+            panelInfo.Children.Add(nbUnite);
+
+            panelGrp.Children.Add(panelInfo);
+            grpInfo.Content = panelGrp;
+            controlDroit.Children.Add(grpInfo);
+
+
+
+            if (partie.Carte.Unites[column][row] != null && rectSelected != null)
+            {
+                if (partie.Carte.Unites[column][row].Count > 0)
+                {
+                    TextBlock joueur = new TextBlock();
+                    joueur.Text = "Unités de : " + partie.Carte.Unites[column][row][0].Proprietaire.Nom;
+                    controlDroit.Children.Add(joueur);
+                }
+
+
+                ScrollViewer scrollInfoUnite = new ScrollViewer();
+                scrollInfoUnite.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                scrollInfoUnite.Height = 400;
+                StackPanel panelScroll = new StackPanel();
+                foreach (Unite u in partie.Carte.Unites[column][row])
+                {
+                    panelScroll.Children.Add(new GroupeUnite(u));
+                }
+                scrollInfoUnite.Content = panelScroll;
+                controlDroit.Children.Add(scrollInfoUnite);
             }
         }
+
 
         private void loadGrid()
         {
@@ -147,7 +199,7 @@ namespace InterfaceGraphique
             }
         }
             
-        private Rectangle createRectangle(int c, int l, ICase tile, List<Unite> listUnite)
+        private Rectangle createRectangle(int c, int l, ICase tile, List<IUnite> listUnite)
         {
             var rectangle = new Rectangle();
 
@@ -194,17 +246,21 @@ namespace InterfaceGraphique
 
         private void Rectangle_MouseEnter(object sender, MouseEventArgs e)
         {
-            var rect = sender as Rectangle;
-            var tile = rect.Tag as ICase;
-            int column = Grid.GetColumn(rect);
-            int row = Grid.GetRow(rect);
-
-            if (rectOnOver != null) rectOnOver.StrokeThickness = 1;
-            rectOnOver = rect;
-            rectOnOver.Tag = tile;
-            rect.StrokeThickness = 3;
-            rect.Stroke = Brushes.Yellow;
-
+            if (rectSelected != (sender as Rectangle))
+            {
+                var rect = sender as Rectangle;
+                var tile = rect.Tag as ICase;
+                int column = Grid.GetColumn(rect);
+                int row = Grid.GetRow(rect);
+                if (rectSelected != rectOnOver)
+                {
+                    if (rectOnOver != null) rectOnOver.StrokeThickness = 0;
+                }
+                rectOnOver = rect;
+                rectOnOver.Tag = tile;
+                rect.StrokeThickness = 3;
+                rect.Stroke = Brushes.Yellow;
+            }
             e.Handled = true;
 
         }
@@ -220,6 +276,7 @@ namespace InterfaceGraphique
                 }
                 rectOnOver = null;
             }
+            e.Handled = true;
         }
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
@@ -229,21 +286,22 @@ namespace InterfaceGraphique
             int column = Grid.GetColumn(rect);
             int row = Grid.GetRow(rect);
 
-            if (rectSelected != null) rectSelected.StrokeThickness = 1;
+            if (rectSelected != null) rectSelected.StrokeThickness = 0;
             rectSelected = rect;
             rectSelected.Tag = tile;
             rect.StrokeThickness = 3;
             rect.Stroke = Brushes.Blue;
+            loadControlDroit();
+            e.Handled = true;
         }
+
 
         private void ScrollViewer_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (rectSelected != null)
-            {
-                rectSelected.StrokeThickness = 1;
-                rectSelected.Stroke = Brushes.Black;
-            }
+            if (rectSelected != null) rectSelected.StrokeThickness = 0;
             rectSelected = null;
+            loadControlDroit();
+            e.Handled = true;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -251,7 +309,6 @@ namespace InterfaceGraphique
             NouvellePartie fen = new NouvellePartie();
             fen.Owner = this;
             fen.ShowDialog();
-
             e.Handled = true;
         }
 
@@ -264,11 +321,11 @@ namespace InterfaceGraphique
         {
             if (affTileCheckbox.IsChecked)
             {
-                tileStrateg = new ImageTile();
+                tileStrateg = new ImageFactory();
             }
             else
             {
-                tileStrateg = new RectangleTile();
+                tileStrateg = new RectangleFactory();
             }
             gridMap.Children.Clear();
             if (partie != null && partie.Carte != null)

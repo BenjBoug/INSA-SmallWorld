@@ -8,7 +8,7 @@ using Modele;
 
 namespace InterfaceGraphique
 {
-    abstract class TileStrategy
+    abstract class TileFactory
     {
         public abstract Brush getViewTile(ICase c);
     }

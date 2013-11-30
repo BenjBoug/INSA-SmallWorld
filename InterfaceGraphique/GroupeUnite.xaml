@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="InterfaceGraphique.GroupeUnite"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <GroupBox x:Name="grpUnit" Header="GroupBox" BorderThickness="2" Cursor="Hand" MouseDown="grpUnit_MouseDown" Margin="5">
+            <StackPanel>
+                <TextBlock x:Name="PV" TextWrapping="Wrap" Text="Points de vie :" Foreground="LightGreen"/>
+                <TextBlock x:Name="PA" TextWrapping="Wrap" Text="Points d'attaque : " Foreground="LightCoral"/>
+                <TextBlock x:Name="PDef" TextWrapping="Wrap" Text="Points de défense :" Foreground="LightBlue"/>
+                <TextBlock x:Name="PDepl" TextWrapping="Wrap" Text="Points de dépl. : " Foreground="LightGray"/>
+            </StackPanel>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace InterfaceGraphique
 {
-    class ImageTile : TileStrategy
+    class ImageFactory : TileFactory
     {
         private BitmapImage tileDesert = null;
         BitmapImage tileEau = null;
