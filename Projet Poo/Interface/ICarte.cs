@@ -48,5 +48,7 @@ namespace Modele
         void chargerCarte(ICreationCarte creationCarte);
         void setCase(int x, int y, ICase _case);
         void actualiseDeplacement();
+
+        void deplaceUnite(IUnite u, int column, int row);
     }
 }

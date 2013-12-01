@@ -163,7 +163,11 @@ namespace InterfaceGraphique
                 foreach (Unite u in partie.Carte.Unites[column][row])
                 {
                     if (u.Proprietaire == partie.joueurActuel())
-                        panelScroll.Children.Add(new GroupeUnite(u));
+                    {
+                        GroupeUnite grp = new GroupeUnite(u);
+                        grp.MouseDown += grpUnit_MouseDown;
+                        panelScroll.Children.Add(grp);
+                    }
                 }
                 scrollInfoUnite.Content = panelScroll;
                 controlDroit.Children.Add(scrollInfoUnite);
@@ -195,7 +199,7 @@ namespace InterfaceGraphique
 
             // Create some text.
             TextBlock someText = new TextBlock();
-            if (listUnite != null)
+            if (listUnite != null && listUnite.Count>0)
             {
                 someText.Text = listUnite.Count.ToString();
                 someText.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
@@ -276,6 +280,17 @@ namespace InterfaceGraphique
             rectSelected.Tag = tile;
             rect.StrokeThickness = 3;
             rect.Stroke = Brushes.Blue;
+            if (listUnitSelected.Count > 0)
+            {
+                foreach (IUnite u in listUnitSelected)
+                {
+                    //if (partie.Carte.estAdjacente())
+                        partie.Carte.deplaceUnite(u,column,row);
+                        u.PointsDepl--;
+                }
+                listUnitSelected.Clear();
+                loadGrid();
+            }
             loadControlDroit();
             e.Handled = true;
         }
@@ -324,6 +339,18 @@ namespace InterfaceGraphique
             loadControlGauche();
             loadControlDroit();
             e.Handled = true;
+        }
+
+        private void grpUnit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var grp = (GroupeUnite)sender;
+            if (grp.Selected)
+            {
+                if (grp.Unit.PointsDepl>0)
+                    listUnitSelected.Add(grp.Unit);
+            }
+            else
+                listUnitSelected.Remove(grp.Unit);
         }
     }
 }

@@ -29,9 +29,24 @@ namespace LibCLR {
 				return res;
 			}
 
-			int * getEmplacementJoueur(int** emplJoueur,int taille)
+			List<int> ^ getEmplacementJoueur(List<int>^ emplJoueur,int taille)
 			{
-				return mapAlea->placeJoueur(emplJoueur,taille);
+				int ** unites = new int*[taille];
+
+				for (int i=0;i<taille;i++)
+				{
+					unites[i] = new int[taille];
+					for (int j=0;j<taille;j++)
+					{
+						unites[i][j] = emplJoueur[i*taille + j];
+					}
+				}
+
+				int * coord =  mapAlea->placeJoueur(unites,taille);
+				List<int>^res = gcnew List<int>();
+				res->Add(coord[0]);
+				res->Add(coord[1]);
+				return res;
 			}
 	protected:
 		!WrapperMapAleatoire() {delete mapAlea;}

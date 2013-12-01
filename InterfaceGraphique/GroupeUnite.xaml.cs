@@ -22,12 +22,22 @@ namespace InterfaceGraphique
     public partial class GroupeUnite : UserControl
     {
         private IUnite unit;
-        private bool select;
+
+        public IUnite Unit
+        {
+            get { return unit; }
+        }
+        private bool selected;
+
+        public bool Selected
+        {
+            get { return selected; }
+        }
         public GroupeUnite(IUnite unit)
         {
             InitializeComponent();
             this.unit = unit;
-            select = false;
+            selected = false;
             grpUnit.Header = "Unite " + unit.Proprietaire.Peuple;
             PV.Text += unit.PointsVie.ToString();
             PA.Text += unit.PointsAttaque.ToString();
@@ -38,8 +48,8 @@ namespace InterfaceGraphique
 
         private void grpUnit_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            select = !select;
-            if (select)
+            selected = !Selected;
+            if (Selected && unit.PointsDepl>0)
                 grpUnit.Background = Brushes.White;
             else
                 grpUnit.Background = null;

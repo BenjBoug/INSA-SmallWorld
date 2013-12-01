@@ -111,5 +111,27 @@ namespace Modele
                 }
             }
         }
+
+
+        public void deplaceUnite(IUnite u, int column, int row)
+        {
+            for (int i = 0; i < largeur; i++)
+            {
+                for (int j = 0; j < hauteur; j++)
+                {
+                    if (unites[i][j] != null && unites[i][j].Count > 0)
+                    {
+                        if (unites[i][j].Contains(u))
+                        {
+                            if (unites[column][row] == null)
+                                unites[column][row] = new List<IUnite>();
+                            unites[column][row].Add(u);
+                            unites[i][j].Remove(u);
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }

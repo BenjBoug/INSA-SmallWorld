@@ -65,38 +65,19 @@ namespace Modele
 
         public override void placeUnite(List<IUnite> list)
         {
-            int nbJoueurs = 0;
-            Random rand = new Random();
-
+            WrapperMapAleatoire wrap = new WrapperMapAleatoire();
+            List<int> emplUnites = new List<int>();
             for (int i = 0; i < Largeur; i++)
             {
                 for (int j = 0; j < Hauteur; j++)
                 {
-                    if (unites[i][j] != null)
-                    {
-                        nbJoueurs ++;
-                    }
+                    if (Unites[i][j] != null)
+                        emplUnites.Add(Unites[i][j].Count);
+                    else
+                        emplUnites.Add(0);
                 }
             }
-
-
-            int[] coord = new int[2];
-
-            if (nbJoueurs == 0)
-            {
-                coord[0] = rand.Next(2) * (Largeur - 1);
-                coord[1] = rand.Next(2) * (Hauteur - 1);
-            }
-            else
-            {
-                do
-                {
-                    coord[0] = rand.Next(2) * (Largeur - 1);
-                    coord[1] = rand.Next(2) * (Hauteur - 1);
-                } while (unites[coord[0]][coord[1]] != null && unites[coord[0]][coord[1]].Count>=1);
-            }
-
-
+            List<int> coord = wrap.getEmplacementJoueur(emplUnites,Largeur);
             unites[coord[0]][coord[1]] = list;
         }
 
