@@ -12,9 +12,12 @@ namespace Modele
             return "Désert";
         }
 
-        public int bonusPoints(PeupleViking p)
+        public override int bonusPoints(IPeuple p)
         {
-            return 0;
+            if (p is PeupleViking)
+                return 0;
+            else
+                return base.bonusPoints(p);
         }
     }
 }

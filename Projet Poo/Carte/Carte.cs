@@ -89,6 +89,26 @@ namespace Modele
             Cases[x][y] = _case;
         }
 
+        public int[] getCoord(IUnite u)
+        {
+            int[] coord = new int[2];
+
+            for (int i = 0; i < largeur; i++)
+            {
+                for (int j = 0; j < hauteur; j++)
+                {
+                    if (unites[i][j] != null && unites[i][j].Contains(u))
+                    {
+                        coord[0] = i;
+                        coord[1] = j;
+                        break;
+                    }
+                }
+            }
+
+            return coord;
+        }
+
         public abstract void selectionneUnite(IUnite unite);
 
         public abstract void selectionneCase(int x, int y);
@@ -132,6 +152,84 @@ namespace Modele
                 }
             }
 
+            u.PointsDepl--;
+
+        }
+
+        public int[][] suggestion(IUnite unite, int x, int y)
+        {
+            WrapperMapAleatoire wrap = new WrapperMapAleatoire();
+            List<int> emplUnites = new List<int>();
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    if (Unites[i][j] != null)
+                        emplUnites.Add(Unites[i][j].Count);
+                    else
+                        emplUnites.Add(0);
+                }
+            }
+
+            List<int> carteInt = new List<int>();
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    int tile = -1;
+                    if (Cases[i][j] is CaseDesert)
+                    {
+                        tile = 0;
+                    }
+                    else if (Cases[i][j] is CaseEau)
+                    {
+                        tile = 1;
+                    }
+                    else if (Cases[i][j] is CaseForet)
+                    {
+                        tile = 2;
+                    }
+                    else if (Cases[i][j] is CaseMontagne)
+                    {
+                        tile = 3;
+                    }
+                    else if (Cases[i][j] is CasePlaine)
+                    {
+                        tile = 4;
+                    }
+                    else
+                        tile = -1;
+                    carteInt.Add(tile);
+                }
+            }
+
+            int peuple = -1;
+            IPeuple p = unite.Proprietaire.Peuple;
+
+            if (p is PeupleViking)
+                peuple = 0;
+            else if (p is PeupleNain)
+                peuple = 1;
+            else if (p is PeupleGaulois)
+                peuple = 2;
+
+            List<int> sugg = wrap.getSuggestion(carteInt, emplUnites, Largeur, x, y, unite.PointsDepl, peuple);
+
+            int[][] res = new int[Largeur][];
+            for (int i = 0; i < Largeur; i++)
+            {
+                res[i] = new int[Hauteur];
+            }
+
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    res[i][j] = sugg[i*Largeur + j];
+                }
+            }
+
+            return res;
         }
     }
 }

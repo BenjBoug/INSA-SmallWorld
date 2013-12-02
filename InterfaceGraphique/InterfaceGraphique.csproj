@@ -81,6 +81,9 @@
     <Compile Include="class\TileFactory\ImageFactory.cs" />
     <Compile Include="class\TileFactory\RectangleFactory.cs" />
     <Compile Include="class\TileFactory\TileFactory.cs" />
+    <Compile Include="Tile.xaml.cs">
+      <DependentUpon>Tile.xaml</DependentUpon>
+    </Compile>
     <Page Include="GroupeJoueur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,6 +117,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

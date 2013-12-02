@@ -11,7 +11,7 @@ namespace Modele
         {
             return "Eau";
         }
-        public int bonusPoints(Peuple p)
+        public override int bonusPoints(IPeuple p)
         {
             return 0;
         }

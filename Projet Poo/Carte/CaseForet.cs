@@ -11,9 +11,12 @@ namespace Modele
         {
             return "Foret";
         }
-        public int bonusPoints(PeupleNain p)
+        public override int bonusPoints(IPeuple p)
         {
-            return 2;
+            if (p is PeupleNain)
+                return 2;
+            else
+                return base.bonusPoints(p);
         }
     }
 }

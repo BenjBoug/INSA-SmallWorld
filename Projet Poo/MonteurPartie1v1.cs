@@ -7,7 +7,6 @@ namespace Modele
 {
     public class MonteurPartie1v1 : MonteurPartie
     {
-        private const int NBJoueur = 2;
 
         public override void creerPartie(MonteurCarte monteurCarte, List<IJoueur> joueurs)
         {

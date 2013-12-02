@@ -22,16 +22,17 @@ namespace InterfaceGraphique
     public partial class MainWindow : Window
     {
         Partie partie;
-        Rectangle rectOnOver;
-        Rectangle rectSelected;
+        Tile rectSelected;
         TileFactory tileStrateg;
         List<IUnite> listUnitSelected;
+        int[][] allowedMouv;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            rectOnOver = null;
+            //rectOnOver = null;
+            allowedMouv = null;
             rectSelected = null;
             listUnitSelected = new List<IUnite>();
             tileStrateg = new ImageFactory();
@@ -44,7 +45,7 @@ namespace InterfaceGraphique
 
         public void loadPartie(MonteurCarte monteurC, List<IJoueur> joueurs)
         {
-            rectOnOver = null;
+            //rectOnOver = null;
             rectSelected = null;
             
             Task.Factory.StartNew(() =>
@@ -123,7 +124,7 @@ namespace InterfaceGraphique
             int column = 0, row = 0;
             if (rectSelected!=null)
             {
-                rect.Fill = tileStrateg.getViewTile(rectSelected.Tag as ICase);
+                rect.Fill = tileStrateg.getViewTile(rectSelected.TileType);
                 column = Grid.GetColumn(rectSelected);
                 row = Grid.GetRow(rectSelected);
             }
@@ -137,7 +138,7 @@ namespace InterfaceGraphique
             TextBlock typeCase = new TextBlock();
             typeCase.Text = "Type: ";
             if (rectSelected != null)
-                typeCase.Text += "Type: "+(rectSelected.Tag as ICase).ToString();
+                typeCase.Text += "Type: "+(rectSelected.TileType).ToString();
 
             TextBlock nbUnite = new TextBlock();
             nbUnite.Text = "Nb Unités: ";
@@ -177,62 +178,40 @@ namespace InterfaceGraphique
 
         private void loadGrid()
         {
+            bool allowRect = false;
             for (int l = 0; l < partie.Carte.Hauteur; l++)
             {
                 for (int c = 0; c < partie.Carte.Largeur; c++)
                 {
                     var tile = partie.Carte.Cases[c][l];
-                    var rect = createRectangle(c, l, tile, partie.Carte.Unites[c][l]);
+                    if (allowedMouv == null)
+                        allowRect = false;
+                    else
+                        allowRect = allowedMouv[c][l]==1;
+                    var rect = createRectangle(c, l, tile, partie.Carte.Unites[c][l], allowRect);
                     gridMap.Children.Add(rect);
                 }
             }
         }
-            
-        private Rectangle createRectangle(int c, int l, ICase tile, List<IUnite> listUnite)
+
+        private Tile createRectangle(int c, int l, ICase tile, List<IUnite> listUnite, bool allowed)
         {
-            var rectangle = new Rectangle();
-
-            VisualBrush myBrush = new VisualBrush();
-            StackPanel aPanel = new StackPanel();
-
-            aPanel.Background = tileStrateg.getViewTile(tile);
-
-            // Create some text.
-            TextBlock someText = new TextBlock();
-            if (listUnite != null && listUnite.Count>0)
-            {
-                someText.Text = listUnite.Count.ToString();
-                someText.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
-            }
-            else
-                someText.Text = " ";
-            FontSizeConverter fSizeConverter = new FontSizeConverter();
-            someText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
-            someText.Margin = new Thickness(10);
-            aPanel.Children.Add(someText);
-            
-            myBrush.Visual = aPanel;
-
-            rectangle.Fill = myBrush;
+            var rectangle = new Tile(tile, tileStrateg, listUnite, allowed);
 
             // mise à jour des attributs (column et Row) référencant la position dans la grille à rectangle
             Grid.SetColumn(rectangle, c);
             Grid.SetRow(rectangle, l);
-            rectangle.Tag = tile; // Tag : ref par defaut sur la tuile logique
 
-
-            rectangle.Stroke = Brushes.Black;
-            rectangle.StrokeThickness = 0;
             // enregistrement d'un écouteur d'evt sur le rectangle : 
             // source = rectangle / evt = MouseLeftButtonDown / délégué = rectangle_MouseLeftButtonDown
             //rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(rectangle_MouseLeftButtonDown);
-
-            rectangle.MouseEnter += new MouseEventHandler(Rectangle_MouseEnter);
-            rectangle.MouseLeave += new MouseEventHandler(Rectangle_MouseLeave);
+            
+            //rectangle.MouseEnter += new MouseEventHandler(Rectangle_MouseEnter);
+            //rectangle.MouseLeave += new MouseEventHandler(Rectangle_MouseLeave);
             rectangle.MouseDown += new MouseButtonEventHandler(Rectangle_MouseDown);
             return rectangle;
         }
-
+        /*
         private void Rectangle_MouseEnter(object sender, MouseEventArgs e)
         {
             if (rectSelected != (sender as Rectangle))
@@ -266,28 +245,30 @@ namespace InterfaceGraphique
                 rectOnOver = null;
             }
             e.Handled = true;
-        }
+        }*/
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var rect = sender as Rectangle;
-            var tile = rect.Tag as ICase;
+            var rect = sender as Tile;
+            var tile = rect.TileType;
             int column = Grid.GetColumn(rect);
             int row = Grid.GetRow(rect);
-
-            if (rectSelected != null) rectSelected.StrokeThickness = 0;
+            
+            if (rectSelected != null) rectSelected.rect.StrokeThickness = 0;
             rectSelected = rect;
-            rectSelected.Tag = tile;
-            rect.StrokeThickness = 3;
-            rect.Stroke = Brushes.Blue;
-            if (listUnitSelected.Count > 0)
+            rect.rect.StrokeThickness = 3;
+            rect.rect.Stroke = Brushes.Blue;
+            if (listUnitSelected.Count > 0 && allowedMouv != null && allowedMouv[column][row]==1)
             {
                 foreach (IUnite u in listUnitSelected)
                 {
-                    //if (partie.Carte.estAdjacente())
-                        partie.Carte.deplaceUnite(u,column,row);
-                        u.PointsDepl--;
+                    //if (partie.Carte.estAdjacente(column,row))
+                    {
+                        partie.Carte.deplaceUnite(u, column, row);
+                        allowedMouv = null;
+                    }
                 }
+                         allowedMouv = null;
                 listUnitSelected.Clear();
                 loadGrid();
             }
@@ -297,11 +278,11 @@ namespace InterfaceGraphique
 
 
         private void ScrollViewer_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+        {/*
             if (rectSelected != null) rectSelected.StrokeThickness = 0;
             rectSelected = null;
             loadControlDroit();
-            e.Handled = true;
+            e.Handled = true;*/
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -346,8 +327,16 @@ namespace InterfaceGraphique
             var grp = (GroupeUnite)sender;
             if (grp.Selected)
             {
-                if (grp.Unit.PointsDepl>0)
+                if (grp.Unit.PointsDepl > 0)
+                {
+                    int column = Grid.GetColumn(rectSelected);
+                    int row = Grid.GetRow(rectSelected);
                     listUnitSelected.Add(grp.Unit);
+                    //afficher proposition
+                    //int[] coord = partie.Carte.getCoord(grp.Unit);
+                    allowedMouv = partie.Carte.suggestion(grp.Unit, column, row);
+                    loadGrid();
+                }
             }
             else
                 listUnitSelected.Remove(grp.Unit);

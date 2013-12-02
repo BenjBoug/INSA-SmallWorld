@@ -11,15 +11,14 @@ namespace Modele
         {
             return "Plaine";
         }
-
-        public int bonusPoints(PeupleNain p)
+        public override int bonusPoints(IPeuple p)
         {
-            return 0;
-        }
-
-        public int bonusPoints(PeupleGaulois p)
-        {
-            return 2;
+            if (p is PeupleNain)
+                return 0;
+            else if (p is PeupleGaulois)
+                return 2;
+            else
+                return base.bonusPoints(p);
         }
     }
 }
