@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Modele
 {
+    [XmlInclude(typeof(Partie1v1))]
     public abstract class Partie : IPartie
     {
         public Partie()
         {
             indiceJoueurActuel = 0;
-            listJoueurs = new List<IJoueur>();
+            listJoueurs = new List<Joueur>();
         }
 
         private int nbTours;
@@ -22,16 +24,17 @@ namespace Modele
             get { return nbTours; }
             set { nbTours = value; }
         }
-        private List<IJoueur> listJoueurs;
+        private List<Joueur> listJoueurs;
 
-        public List<IJoueur> ListJoueurs
+        public List<Joueur> ListJoueurs
         {
             get { return listJoueurs; }
             set { listJoueurs = value; }
         }
-        private ICarte carte;
+        private Carte carte;
 
-        public ICarte Carte
+        [XmlElement("CarteClassique", typeof(CarteClassique))]
+        public Carte Carte
         {
             get { return carte; }
             set { carte = value; }
@@ -53,12 +56,12 @@ namespace Modele
             }
         }
 
-        public void ajoutJoueur(IJoueur j)
+        public void ajoutJoueur(Joueur j)
         {
             listJoueurs.Add(j);
         }
 
-        public IJoueur joueurActuel()
+        public Joueur joueurActuel()
         {
             return listJoueurs[indiceJoueurActuel];
         }

@@ -27,29 +27,29 @@ namespace Modele
             get;
             set;
         }
-        ICase[][] Cases
+        Case[][] Cases
         {
             get;
             set;
         }
-        List<IUnite>[][] Unites
+        List<Unite>[][] Unites
         {
             get;
             set;
         }
         void calculerPoints();
         bool caseVide(int x, int y);
-        ICase getCase(int x, int y);
+        Case getCase(int x, int y);
         void selectionneUnite(IUnite unite);
         void selectionneCase(int x, int y);
-        void placeUnite(List<IUnite> l);
+        void placeUnite(List<Unite> l);
         bool estAdjacente(int x, int y, int x2, int y2);
-        IUnite getAdversaire();
+        Unite getAdversaire();
         void chargerCarte(ICreationCarte creationCarte);
-        void setCase(int x, int y, ICase _case);
+        void setCase(int x, int y, Case _case);
         void actualiseDeplacement();
         int[] getCoord(IUnite u);
-        void deplaceUnite(IUnite u, int column, int row);
+        void deplaceUnite(Unite u, int column, int row);
 
         int[][] suggestion(IUnite unite, int x, int y);
     }

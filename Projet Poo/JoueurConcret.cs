@@ -11,5 +11,11 @@ namespace Modele
         {
 
         }
+
+        public JoueurConcret()
+            : base()
+        {
+
+        }
     }
 }

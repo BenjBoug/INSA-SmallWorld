@@ -43,9 +43,9 @@ namespace Modele
             get { return pointsDepl; }
             set { pointsDepl = value; }
         }
-        private IJoueur proprietaire;
+        private Joueur proprietaire;
 
-        public IJoueur Proprietaire
+        public Joueur Proprietaire
         {
             get { return proprietaire; }
             set { proprietaire = value; }

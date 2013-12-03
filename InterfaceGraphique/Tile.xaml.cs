@@ -35,7 +35,7 @@ namespace InterfaceGraphique
             get { return selected; }
             set { selected = value; }
         }
-        public Tile(ICase tile, TileFactory tileFactory, List<IUnite> listUnite)
+        public Tile(ICase tile, TileFactory tileFactory, List<Unite> listUnite)
         {
             InitializeComponent();
             this.tile = tile;

@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Xml.Serialization;
 
 
 namespace Modele
 {
+    [XmlInclude(typeof(JoueurConcret))]
     public abstract class Joueur : IJoueur
     {
+        public Joueur()
+        {
+
+        }
+
         public Joueur(FabriquePeuple fab, String color, String nom)
         {
             Peuple = fab.creerPeuple();
@@ -17,9 +24,9 @@ namespace Modele
             Nom = nom;
         }
 
-        private IPeuple _peuple;
+        private Peuple _peuple;
 
-        public IPeuple Peuple
+        public Peuple Peuple
         {
             get { return _peuple; }
             set { _peuple = value; }

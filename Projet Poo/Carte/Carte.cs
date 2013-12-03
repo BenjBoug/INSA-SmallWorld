@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibCLR;
+using System.Xml.Serialization;
+using System.Xml;
 
 namespace Modele
 {
-    public abstract class Carte : ICarte
+    [XmlInclude(typeof(CarteClassique))]
+    public abstract class Carte : ICarte, IXmlSerializable
     {
 
         enum PeupleInt { Gaulois = 1, Viking = 0, Nain = 2 };
@@ -18,23 +21,24 @@ namespace Modele
         }
 
 
-        protected List<IUnite>[][] unites;
-
-        public List<IUnite>[][] Unites
+        protected List<Unite>[][] unites;
+        [XmlIgnore]
+        public List<Unite>[][] Unites
         {
             get { return unites; }
             set { unites = value; }
         }
 
-        protected ICase[][] cases;
+        protected Case[][] cases;
 
-        public ICase[][] Cases
+        public Case[][] Cases
         {
             get { return cases; }
             set { cases = value; }
         }
         private FabriqueCase fabriqueCase;
 
+        [XmlIgnore]
         public FabriqueCase FabriqueCase
         {
             get { return fabriqueCase; }
@@ -72,7 +76,7 @@ namespace Modele
             return ((Math.Abs(x - x2) <= 1) && (Math.Abs(y - y2) <= 1));
         }
 
-        public abstract IUnite getAdversaire();
+        public abstract Unite getAdversaire();
         public abstract void calculerPoints();
 
         public void chargerCarte(ICreationCarte creationCarte)
@@ -82,12 +86,12 @@ namespace Modele
 
         public abstract bool caseVide(int x, int y);
 
-        public ICase getCase(int x, int y)
+        public Case getCase(int x, int y)
         {
             return Cases[x][y];
         }
 
-        public void setCase(int x, int y, ICase _case)
+        public void setCase(int x, int y, Case _case)
         {
             Cases[x][y] = _case;
         }
@@ -116,7 +120,7 @@ namespace Modele
 
         public abstract void selectionneCase(int x, int y);
 
-        public abstract void placeUnite(List<IUnite> list);
+        public abstract void placeUnite(List<Unite> list);
 
         public void actualiseDeplacement()
         {
@@ -136,7 +140,7 @@ namespace Modele
         }
 
 
-        public void deplaceUnite(IUnite u, int column, int row)
+        public void deplaceUnite(Unite u, int column, int row)
         {
             for (int i = 0; i < largeur; i++)
             {
@@ -147,7 +151,7 @@ namespace Modele
                         if (unites[i][j].Contains(u))
                         {
                             if (unites[column][row] == null)
-                                unites[column][row] = new List<IUnite>();
+                                unites[column][row] = new List<Unite>();
                             unites[column][row].Add(u);
                             unites[i][j].Remove(u);
                         }
@@ -231,6 +235,129 @@ namespace Modele
             }
 
             return res;
+        }
+
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(System.Xml.XmlReader reader)
+        {
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    if (reader.Name == "Largeur")
+                    {
+                        if (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Text)
+                                this.Largeur = int.Parse(reader.Value);
+                        }
+                    }
+                    else if (reader.Name == "Hauteur")
+                    {
+                        if (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Text)
+                                this.Hauteur = int.Parse(reader.Value);
+                        }
+                    }
+                    else if (reader.Name == "NbToursMax")
+                    {
+                        if (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Text)
+                                this.NbToursMax = int.Parse(reader.Value);
+                        }
+                    }
+                    else if (reader.Name == "NbUniteParPeuble")
+                    {
+                        if (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Text)
+                                this.NbUniteParPeuble = int.Parse(reader.Value);
+                        }
+                    }
+                    else if (reader.Name == "Cases")
+                    {
+                        if (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Element)
+                            {
+                                XmlSerializer xs = new XmlSerializer(typeof(Case[][]));
+                                this.Cases = xs.Deserialize(reader) as Case[][];
+                            }
+                        }
+                    }
+                    else if (reader.Name == "Unites")
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.NodeType == XmlNodeType.Element)
+                            {
+
+                                if (Unites == null)
+                                {
+                                    Unites = new List<Unite>[Largeur][];
+                                    for (int i = 0; i < Largeur; i++)
+                                    {
+                                        Unites[i] = new List<Unite>[Hauteur];
+                                    }
+                                }
+                                int x = int.Parse(reader.GetAttribute("x"));
+                                int y = int.Parse(reader.GetAttribute("y"));
+                                if (reader.Read())
+                                {
+                                    if (reader.NodeType == XmlNodeType.Element)
+                                    {
+                                        XmlSerializer xs = new XmlSerializer(typeof(List<Unite>));
+                                        this.Unites[x][y] = xs.Deserialize(reader) as List<Unite>;//
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void WriteXml(System.Xml.XmlWriter writer)
+        {
+
+
+            XmlSerializer xs;
+
+            writer.WriteElementString("Largeur", this.Largeur.ToString());
+            writer.WriteElementString("Hauteur", this.Hauteur.ToString());
+            writer.WriteElementString("NbToursMax", this.NbToursMax.ToString());
+            writer.WriteElementString("NbUniteParPeuble", this.NbUniteParPeuble.ToString());
+
+
+            writer.WriteStartElement("Cases");
+            xs = new XmlSerializer(typeof(Case[][]));
+            xs.Serialize(writer, this.Cases);
+            writer.WriteEndElement();
+
+            
+            writer.WriteStartElement("Unites");
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    if (this.Unites[i][j] != null && this.Unites[i][j].Count > 0)
+                    {
+                        writer.WriteStartElement("Coordonnees");
+                        writer.WriteAttributeString("x", i.ToString());
+                        writer.WriteAttributeString("y", j.ToString());
+                        xs = new XmlSerializer(typeof(List<Unite>));
+                        xs.Serialize(writer, this.Unites[i][j]);
+                        writer.WriteEndElement();
+                    }
+                }
+            }
+            writer.WriteEndElement();
         }
     }
 }

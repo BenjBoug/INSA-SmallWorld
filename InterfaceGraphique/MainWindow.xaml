@@ -33,9 +33,9 @@
                     <MenuItem Header="_Partie en ligne..." IsEnabled="False"/>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="_Ouvrir..." />
+                <MenuItem Header="_Ouvrir..." Click="MenuItem_Click_2" />
                 <Separator />
-                <MenuItem Header="_Sauvegarder" />
+                <MenuItem Header="_Sauvegarder" Click="MenuItem_Click_1" />
                 <MenuItem Header="_Sauvegarder sous..." />
                 <Separator />
                 <MenuItem Header="_Quitter" />
@@ -58,10 +58,6 @@
                 <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Rectangle Style="{StaticResource selectionStyle}" Name="selectionRectangle" RadiusX="5" RadiusY="5" />
                 </Canvas>
-                <!--
-                <Grid x:Name="gridMap" VerticalAlignment="Center" HorizontalAlignment="Center">
-                </Grid>
-                -->
             </ScrollViewer>
             <StackPanel x:Name="controlDroit" Width="200" Height="550">
                 <StackPanel.Background>

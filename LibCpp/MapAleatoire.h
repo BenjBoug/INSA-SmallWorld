@@ -28,5 +28,9 @@ public:
 	/*
 	DLL int * placeJoueur2(int nbJoueurs,int * peuple,int ** carte, int taille);
 	int calculDistance(int x,int y,int x2,int y2);*/
+
+	void calculDeplClassique(int **carte, int x, int y, int depl, int peuple, int taille, int ** sugg);
+
+private:
 };
 

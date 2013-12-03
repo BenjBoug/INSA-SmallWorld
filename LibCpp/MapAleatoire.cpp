@@ -65,39 +65,18 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int
 
 
  int ** MapAleatoire::suggestion(int **carte, int**unites, int taille,int xActuel,int yAcuel, int ptDepl, int peupleJActuel)
-{
+ {
 
-	int verif[3][5] = { {1,1,1,1,1},	//VIKING
-						{1,0,1,1,1},	//GAULOIS
-						{1,0,1,1,1}};	//NAIN
-
-	int** sugg = new int*[taille];
+	int ** sugg = new int*[taille];
 	for (int i=0; i<taille; i++) 
+	{
 		sugg[i]= new int[taille];
-	
-
-	for (int i=0; i<taille; i++) {
 		for (int j=0; j<taille; j++) {
 			sugg[i][j] = 0;
 		} 
-	} 
+	}
 
-	if (xActuel-1>=0)
-	{
-		sugg[xActuel-1][yAcuel]=verif[peupleJActuel][carte[xActuel-1][yAcuel]];
-	}
-	if (xActuel+1<taille)
-	{
-		sugg[xActuel+1][yAcuel]=verif[peupleJActuel][carte[xActuel+1][yAcuel]];
-	}
-	if (yAcuel-1>=0)
-	{
-		sugg[xActuel][yAcuel-1]=verif[peupleJActuel][carte[xActuel][yAcuel-1]];
-	}
-	if (yAcuel+1<taille)
-	{
-		sugg[xActuel][yAcuel+1]=verif[peupleJActuel][carte[xActuel][yAcuel+1]];
-	}
+	calculDeplClassique(carte,xActuel,yAcuel,ptDepl,peupleJActuel,taille, sugg);
 
 	if (peupleJActuel==Nain && carte[xActuel][yAcuel]==Montagne)
 	{
@@ -114,6 +93,42 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int
 
 	return sugg;
 }
+
+ 
+void MapAleatoire::calculDeplClassique(int **carte, int xActuel, int yActuel, int depl, int peupleJActuel, int taille, int** sugg)
+{
+	 int verif[3][5] = { {2,1,2,1,2},	//VIKING
+						 {3,0,1,2,2},	//GAULOIS
+						 {1,0,2,2,3}};	//NAIN
+	if (depl>0)
+	{
+		if (xActuel-1>=0)
+		{
+			sugg[xActuel-1][yActuel]=verif[peupleJActuel][carte[xActuel-1][yActuel]];
+			if (sugg[xActuel-1][yActuel]>0)
+				calculDeplClassique(carte,xActuel-1,yActuel,depl-1,peupleJActuel,taille,sugg);
+		}
+		if (xActuel+1<taille)
+		{
+			sugg[xActuel+1][yActuel]=verif[peupleJActuel][carte[xActuel+1][yActuel]];
+			if (sugg[xActuel+1][yActuel]>0)
+				calculDeplClassique(carte,xActuel+1,yActuel,depl-1,peupleJActuel,taille,sugg);
+		}
+		if (yActuel-1>=0)
+		{
+			sugg[xActuel][yActuel-1]=verif[peupleJActuel][carte[xActuel][yActuel-1]];
+			if (sugg[xActuel][yActuel-1]>0)
+				calculDeplClassique(carte,xActuel,yActuel-1,depl-1,peupleJActuel,taille,sugg);
+		}
+		if (yActuel+1<taille)
+		{
+			sugg[xActuel][yActuel+1]=verif[peupleJActuel][carte[xActuel][yActuel+1]];
+			if (sugg[xActuel][yActuel+1]>0)
+				calculDeplClassique(carte,xActuel,yActuel+1,depl-1,peupleJActuel,taille,sugg);
+		}
+	}
+}
+
 
 /*
 int * MapAleatoire::placeJoueur2(int nbJoueurs,int * peuple,int ** carte, int taille)

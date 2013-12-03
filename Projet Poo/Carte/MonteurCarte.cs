@@ -20,14 +20,24 @@ namespace Modele
 
         protected void creerStructureCarte()
         {
-            Carte.Cases = new ICase[Carte.Largeur][];
+            Carte.Cases = new Case[Carte.Largeur][];
             for (int i = 0; i < Carte.Largeur; i++)
-                Carte.Cases[i] = new ICase[Carte.Hauteur];
+                Carte.Cases[i] = new Case[Carte.Hauteur];
 
             
-            Carte.Unites = new List<IUnite>[Carte.Largeur][];
+            Carte.Unites = new List<Unite>[Carte.Largeur][];
             for (int i = 0; i < Carte.Largeur; i++)
-                Carte.Unites[i] = new List<IUnite>[Carte.Hauteur];
+            {
+                Carte.Unites[i] = new List<Unite>[Carte.Hauteur];
+            }
+
+            for (int i = 0; i < Carte.Largeur; i++)
+            {
+                for (int j = 0; j < Carte.Hauteur; j++)
+                {
+                    Carte.Unites[i][j] = new List<Unite>();
+                }
+            }
             
 
             Carte.chargerCarte(new Aleatoire());

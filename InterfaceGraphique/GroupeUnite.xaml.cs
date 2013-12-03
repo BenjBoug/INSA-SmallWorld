@@ -21,9 +21,9 @@ namespace InterfaceGraphique
     /// </summary>
     public partial class GroupeUnite : UserControl
     {
-        private IUnite unit;
+        private Unite unit;
 
-        public IUnite Unit
+        public Unite Unit
         {
             get { return unit; }
         }
@@ -33,7 +33,7 @@ namespace InterfaceGraphique
         {
             get { return selected; }
         }
-        public GroupeUnite(IUnite unit)
+        public GroupeUnite(Unite unit)
         {
             InitializeComponent();
             this.unit = unit;

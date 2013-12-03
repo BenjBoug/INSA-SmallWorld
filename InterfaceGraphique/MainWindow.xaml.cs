@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Modele;
+using System.Xml.Serialization;
+using System.IO;
 
 namespace InterfaceGraphique
 {
@@ -23,7 +25,7 @@ namespace InterfaceGraphique
     {
         Partie partie;
         TileFactory tileStrateg;
-        List<IUnite> listUnitSelected;
+        List<Unite> listUnitSelected;
         int[][] allowedMouv;
 
 
@@ -32,7 +34,7 @@ namespace InterfaceGraphique
             InitializeComponent();
             //rectOnOver = null;
             allowedMouv = null;
-            listUnitSelected = new List<IUnite>();
+            listUnitSelected = new List<Unite>();
             tileStrateg = new ImageFactory();
         }
 
@@ -52,20 +54,7 @@ namespace InterfaceGraphique
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    canvasMap.Children.Clear();/*
-                    gridMap.RowDefinitions.Clear();
-                    gridMap.ColumnDefinitions.Clear();
-
-                    for (int c = 0; c < partie.Carte.Largeur; c++)
-                    {
-                        gridMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(50, GridUnitType.Pixel) });
-                    }
-
-                    for (int l = 0; l < partie.Carte.Hauteur; l++)
-                    {
-                        gridMap.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
-                    }*/
-
+                    canvasMap.Children.Clear();
                     canvasMap.Children.Add(selectionRectangle);
                     canvasMap.Width = partie.Carte.Largeur * 50;
                     canvasMap.Height = partie.Carte.Hauteur * 50;
@@ -75,11 +64,6 @@ namespace InterfaceGraphique
                     loadControlDroit();
                 }));
             });
-            updateUnitUI();
-        }
-
-        private void updateUnitUI()
-        {
         }
 
         private void loadControlGauche()
@@ -193,20 +177,24 @@ namespace InterfaceGraphique
 
         private void loadSuggestion()
         {
-            for (int l = 0; l < partie.Carte.Hauteur; l++)
+            if (allowedMouv != null)
             {
-                for (int c = 0; c < partie.Carte.Largeur; c++)
+                for (int l = 0; l < partie.Carte.Hauteur; l++)
                 {
-                    if (allowedMouv[c][l] == 1)
+                    for (int c = 0; c < partie.Carte.Largeur; c++)
                     {
-                        var rect = createSuggestion(c, l);
-                        canvasMap.Children.Add(rect);
+                        if (allowedMouv[c][l] >= 1)
+                        {
+                            var rect = createSuggestion(c, l);
+                            rect.StrokeThickness = allowedMouv[c][l] + 1;
+                            canvasMap.Children.Add(rect);
+                        }
                     }
                 }
             }
         }
 
-        private Tile createRectangle(int c, int l, ICase tile, List<IUnite> listUnite)
+        private Tile createRectangle(int c, int l, ICase tile, List<Unite> listUnite)
         {
             var rectangle = new Tile(tile, tileStrateg, listUnite);
 
@@ -234,7 +222,7 @@ namespace InterfaceGraphique
             rectangle.Width = 50;
             rectangle.Height = 50;
 
-            rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
+            //rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
 
             return rectangle;
         }
@@ -252,21 +240,22 @@ namespace InterfaceGraphique
             selectionRectangle.Tag = tile;
 
 
-            if (listUnitSelected.Count > 0)
+            if (listUnitSelected.Count > 0 && allowedMouv != null && allowedMouv[column][row] > 0)
             {
-                foreach (IUnite u in listUnitSelected)
+                foreach (Unite u in listUnitSelected)
                 {
-                    //if (partie.Carte.estAdjacente(column,row))
-                    {
-                        partie.Carte.deplaceUnite(u, column, row);
-
-                    }
+                     partie.Carte.deplaceUnite(u, column, row);
                 }
                 listUnitSelected.Clear();
-                loadGrid();
+            }
+            else
+            {
+                allowedMouv = null;
+                loadSuggestion();
             }
 
 
+            loadGrid();
             loadControlDroit();
         }
 
@@ -312,16 +301,56 @@ namespace InterfaceGraphique
                     int column = (int)Canvas.GetLeft(selectionRectangle) / 50;
                     int row = (int)Canvas.GetTop(selectionRectangle) / 50;
                     listUnitSelected.Add(grp.Unit);
-                    //afficher proposition
-                    //int[] coord = partie.Carte.getCoord(grp.Unit);
-                    allowedMouv = partie.Carte.suggestion(grp.Unit, column, row);
-        
-                    loadGrid();
-                    loadSuggestion();
+
+                    Task.Factory.StartNew(() =>
+                    {
+                        allowedMouv = partie.Carte.suggestion(grp.Unit, column, row);
+
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            loadGrid();
+                            loadSuggestion();
+                        }));
+                    });
                 }
             }
             else
+            {
                 listUnitSelected.Remove(grp.Unit);
+                if (listUnitSelected.Count == 0)
+                {
+                    loadGrid();
+                    allowedMouv = null;
+                    loadSuggestion();
+                }
+            }
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (partie != null)
+            {
+                XmlSerializer mySerializer = new XmlSerializer(partie.GetType());
+                StreamWriter myWriter = new StreamWriter("myFileName.xml");
+                mySerializer.Serialize(myWriter, partie);
+                myWriter.Close();
+            }
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            XmlSerializer mySerializer = new XmlSerializer(typeof(Partie1v1));
+            FileStream myFileStream = new FileStream("myFileName.xml", FileMode.Open);
+            partie = (Partie)mySerializer.Deserialize(myFileStream);
+            myFileStream.Close();
+
+            canvasMap.Children.Clear();
+            canvasMap.Children.Add(selectionRectangle);
+            canvasMap.Width = partie.Carte.Largeur * 50;
+            canvasMap.Height = partie.Carte.Hauteur * 50;
+            loadControlDroit();
+            loadControlGauche();
+            loadGrid();
         }
 
     }

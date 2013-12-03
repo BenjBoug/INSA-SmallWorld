@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LibCLR;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Modele
 {
@@ -13,12 +15,8 @@ namespace Modele
 
         }
 
-        public void deplacerUnite(IUnite u, int x, int y)
-        {
 
-        }
-
-        public override IUnite getAdversaire()
+        public override Unite getAdversaire()
         {
             return new Unite();
         }
@@ -29,9 +27,9 @@ namespace Modele
             {
                 for (int j = 0; j < Hauteur; j++)
                 {
-                    List<IUnite> list = Unites[i][j];
+                    List<Unite> list = Unites[i][j];
                     if (list!=null)
-                    foreach (IUnite u in list)
+                    foreach (Unite u in list)
                     {
                         IJoueur joueur = u.Proprietaire;
                         IPeuple peuple = u.Proprietaire.Peuple;
@@ -63,7 +61,7 @@ namespace Modele
 
         }
 
-        public override void placeUnite(List<IUnite> list)
+        public override void placeUnite(List<Unite> list)
         {
             WrapperMapAleatoire wrap = new WrapperMapAleatoire();
             List<int> emplUnites = new List<int>();
@@ -124,6 +122,5 @@ namespace Modele
             List<int> coord = wrap.getEmplacementJoueur(emplUnites,carteInt,Largeur,peuple);
             unites[coord[0]][coord[1]] = list;
         }
-
     }
 }

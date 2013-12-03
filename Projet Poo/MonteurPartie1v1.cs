@@ -33,7 +33,7 @@ namespace Modele
 
         public override void creerUnite(IJoueur j)
         {
-            List<IUnite> list = new List<IUnite>();
+            List<Unite> list = new List<Unite>();
             for (int i = 0; i < partie.Carte.NbUniteParPeuble; i++)
             {
                 Unite unit = new Unite();

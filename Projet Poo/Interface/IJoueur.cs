@@ -7,7 +7,7 @@ namespace Modele
 {
     public interface IJoueur
     {
-        IPeuple Peuple
+        Peuple Peuple
         {
             get;
             set;

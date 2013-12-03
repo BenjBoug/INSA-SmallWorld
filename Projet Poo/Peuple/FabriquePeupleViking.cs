@@ -8,7 +8,7 @@ namespace Modele
     public class FabriquePeupleViking : FabriquePeuple
     {
     
-        public override IPeuple creerPeuple()
+        public override Peuple creerPeuple()
         {
             return new PeupleViking();
         }

@@ -7,6 +7,6 @@ namespace Modele
 {
     public abstract class FabriquePeuple
     {
-        public abstract IPeuple creerPeuple();
+        public abstract Peuple creerPeuple();
     }
 }

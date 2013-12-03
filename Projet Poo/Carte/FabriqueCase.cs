@@ -22,7 +22,7 @@ namespace Modele
             caseMontagne = null;
         }
 
-        public ICase getCase(int _case)
+        public Case getCase(int _case)
         {
             switch (_case)
             {

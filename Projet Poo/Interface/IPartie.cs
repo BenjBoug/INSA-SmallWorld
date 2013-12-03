@@ -10,9 +10,9 @@ namespace Modele
 
 
         void tourSuivant();
-        void ajoutJoueur(IJoueur j);
+        void ajoutJoueur(Joueur j);
         void joueurSuivant();
-        IJoueur joueurActuel();
+        Joueur joueurActuel();
 
     }
 }

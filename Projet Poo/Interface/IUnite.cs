@@ -7,7 +7,7 @@ namespace Modele
 {
     public interface IUnite
     {
-        IJoueur Proprietaire
+        Joueur Proprietaire
         {
             get;
             set;
