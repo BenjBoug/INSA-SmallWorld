@@ -9,6 +9,9 @@ namespace Modele
     public abstract class Carte : ICarte
     {
 
+        enum PeupleInt { Gaulois = 1, Viking = 0, Nain = 2 };
+        enum CaseInt { Plaine = 0, Eau = 1, Montagne = 2, Desert = 3, Foret = 4 };
+
         public Carte()
         {
             fabriqueCase = new FabriqueCase();
@@ -176,44 +179,42 @@ namespace Modele
             {
                 for (int j = 0; j < Hauteur; j++)
                 {
-                    int tile = -1;
+                    CaseInt tile = CaseInt.Plaine;
                     if (Cases[i][j] is CaseDesert)
                     {
-                        tile = 0;
+                        tile = CaseInt.Desert;
                     }
                     else if (Cases[i][j] is CaseEau)
                     {
-                        tile = 1;
+                        tile = CaseInt.Eau;
                     }
                     else if (Cases[i][j] is CaseForet)
                     {
-                        tile = 2;
+                        tile = CaseInt.Foret;
                     }
                     else if (Cases[i][j] is CaseMontagne)
                     {
-                        tile = 3;
+                        tile = CaseInt.Montagne;
                     }
                     else if (Cases[i][j] is CasePlaine)
                     {
-                        tile = 4;
+                        tile = CaseInt.Plaine;
                     }
-                    else
-                        tile = -1;
-                    carteInt.Add(tile);
+                    carteInt.Add((int)tile);
                 }
             }
 
-            int peuple = -1;
+            PeupleInt peuple = PeupleInt.Gaulois;
             IPeuple p = unite.Proprietaire.Peuple;
 
             if (p is PeupleViking)
-                peuple = 0;
+                peuple = PeupleInt.Viking;
             else if (p is PeupleNain)
-                peuple = 1;
+                peuple = PeupleInt.Nain;
             else if (p is PeupleGaulois)
-                peuple = 2;
+                peuple = PeupleInt.Gaulois;
 
-            List<int> sugg = wrap.getSuggestion(carteInt, emplUnites, Largeur, x, y, unite.PointsDepl, peuple);
+            List<int> sugg = wrap.getSuggestion(carteInt, emplUnites, Largeur, x, y, unite.PointsDepl, (int)peuple);
 
             int[][] res = new int[Largeur][];
             for (int i = 0; i < Largeur; i++)

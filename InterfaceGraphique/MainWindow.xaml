@@ -3,6 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SmallWorld" Loaded="Window_Loaded"
         ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style TargetType="Rectangle" x:Key="selectionStyle">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Stroke" Value="Blue"/>
+            <Setter Property="StrokeThickness" Value="3"/>
+            <Setter Property="Panel.ZIndex" Value="999"/>
+            <Setter Property="Visibility" Value= "Collapsed"/>
+        </Style>
+    </Window.Resources>
+
+
     <StackPanel Orientation="Vertical">
         <Menu IsMainMenu="False" Height="25">
             <Menu.Background>
@@ -28,7 +41,7 @@
                 <MenuItem Header="_Quitter" />
             </MenuItem>
             <MenuItem Header="_Options">
-                <MenuItem x:Name="affTileCheckbox" Header="Afficher tiles" IsCheckable="True" IsChecked="True" Checked="MenuItem_Checked" Click="affTileCheckbox_Click">
+                <MenuItem x:Name="affTileCheckbox" Header="Afficher tiles" IsCheckable="True" IsChecked="True" Click="affTileCheckbox_Click">
                 </MenuItem>
             </MenuItem>
         </Menu>
@@ -41,9 +54,14 @@
                     </LinearGradientBrush>
                 </StackPanel.Background>
             </StackPanel>
-            <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" MouseDown="ScrollViewer_MouseDown">
+            <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Rectangle Style="{StaticResource selectionStyle}" Name="selectionRectangle" RadiusX="5" RadiusY="5" />
+                </Canvas>
+                <!--
                 <Grid x:Name="gridMap" VerticalAlignment="Center" HorizontalAlignment="Center">
                 </Grid>
+                -->
             </ScrollViewer>
             <StackPanel x:Name="controlDroit" Width="200" Height="550">
                 <StackPanel.Background>

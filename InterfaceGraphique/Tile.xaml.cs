@@ -35,7 +35,7 @@ namespace InterfaceGraphique
             get { return selected; }
             set { selected = value; }
         }
-        public Tile(ICase tile, TileFactory tileFactory, List<IUnite> listUnite, bool allowed)
+        public Tile(ICase tile, TileFactory tileFactory, List<IUnite> listUnite)
         {
             InitializeComponent();
             this.tile = tile;
@@ -61,22 +61,11 @@ namespace InterfaceGraphique
             myBrush.Visual = aPanel;
 
             rect.Fill = myBrush;
-
-            if (allowed)
-            {
-                rect.Stroke = Brushes.Red;
-                rect.StrokeThickness = 2;
-            }
-            else
-            {
-                rect.Stroke = Brushes.Black;
-                rect.StrokeThickness = 0;
-            }
+            
         }
 
         private void rect_MouseEnter(object sender, MouseEventArgs e)
         {
-
             rect.StrokeThickness = 3;
             rect.Stroke = Brushes.Yellow;
         }
@@ -84,8 +73,7 @@ namespace InterfaceGraphique
         private void rect_MouseLeave(object sender, MouseEventArgs e)
         {
             rect.StrokeThickness = 0;
-            rect.Stroke = Brushes.Yellow;
-
+           // rect.Stroke = color;
         }
     }
 }

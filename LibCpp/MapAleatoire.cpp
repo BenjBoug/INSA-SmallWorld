@@ -58,7 +58,7 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int
 		coord[0]=rand()%2*(taille-1);
 		coord[1]=rand()%2*(taille-1);
 	} 
-	while (tabJoueurs[coord[0]][coord[1]]!=0);// || (carte[coord[0]][coord[1]]==1 && peuple != 0));
+	while (tabJoueurs[coord[0]][coord[1]]!=0 || (carte[coord[0]][coord[1]]==Eau && peuple != Viking));
 
 	return coord;
 }
@@ -66,6 +66,11 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int
 
  int ** MapAleatoire::suggestion(int **carte, int**unites, int taille,int xActuel,int yAcuel, int ptDepl, int peupleJActuel)
 {
+
+	int verif[3][5] = { {1,1,1,1,1},	//VIKING
+						{1,0,1,1,1},	//GAULOIS
+						{1,0,1,1,1}};	//NAIN
+
 	int** sugg = new int*[taille];
 	for (int i=0; i<taille; i++) 
 		sugg[i]= new int[taille];
@@ -78,14 +83,33 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int
 	} 
 
 	if (xActuel-1>=0)
-		sugg[xActuel-1][yAcuel]=1;
+	{
+		sugg[xActuel-1][yAcuel]=verif[peupleJActuel][carte[xActuel-1][yAcuel]];
+	}
 	if (xActuel+1<taille)
-		sugg[xActuel+1][yAcuel]=1;
+	{
+		sugg[xActuel+1][yAcuel]=verif[peupleJActuel][carte[xActuel+1][yAcuel]];
+	}
 	if (yAcuel-1>=0)
-		sugg[xActuel][yAcuel-1]=1;
+	{
+		sugg[xActuel][yAcuel-1]=verif[peupleJActuel][carte[xActuel][yAcuel-1]];
+	}
 	if (yAcuel+1<taille)
-		sugg[xActuel][yAcuel+1]=1;
+	{
+		sugg[xActuel][yAcuel+1]=verif[peupleJActuel][carte[xActuel][yAcuel+1]];
+	}
 
+	if (peupleJActuel==Nain && carte[xActuel][yAcuel]==Montagne)
+	{
+		for (int i=0;i<taille;i++)
+		{
+			for (int j=0;j<taille;j++)
+			{
+				if(carte[i][j]==Montagne && unites[i][j]==0)
+					sugg[i][j]=1;
+			}
+		}
+	}
 
 
 	return sugg;
