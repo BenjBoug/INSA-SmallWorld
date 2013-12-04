@@ -17,5 +17,10 @@ namespace Modele
         {
 
         }
+
+        public override void jouerTour(Partie partie)
+        {
+
+        }
     }
 }

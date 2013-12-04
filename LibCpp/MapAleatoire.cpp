@@ -80,20 +80,7 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int
 
 	calculDeplClassique(carte,xActuel,yAcuel,ptDepl,peupleJActuel,taille, sugg);
 
-	if (peupleJActuel==Nain && carte[xActuel][yAcuel]==Montagne)
-	{
-		for (int i=0;i<taille;i++)
-		{
-			for (int j=0;j<taille;j++)
-			{
-				if(carte[i][j]==Montagne && unites[i][j]==0)
-				{
-					sugg[i][j][0]=1;
-					sugg[i][j][1]=1;
-				}
-			}
-		}
-	}
+	
 
 
 	return sugg;
@@ -132,6 +119,22 @@ void MapAleatoire::calculDeplClassique(int **carte, int xActuel, int yActuel, in
 			if (sugg[xActuel][yActuel+1][1]<depl && sugg[xActuel][yActuel+1][0]>0)
 				calculDeplClassique(carte,xActuel,yActuel+1,depl-1,peupleJActuel,taille,sugg);
 		}
+
+		if (peupleJActuel==Nain && carte[xActuel][yActuel]==Montagne)
+        {
+            for (int i=0;i<taille;i++)
+            {
+                for (int j=0;j<taille;j++)
+                {
+                    if(carte[i][j]==Montagne)// && unites[i][j]==0)
+                    {
+                        sugg[i][j][0]=2;
+                        if (sugg[i][j][1]<depl && sugg[i][j][0]>0)
+                            calculDeplClassique(carte,i,j,depl-1,peupleJActuel,taille, sugg);
+                    }
+                }
+            }
+        }
 	}
 }
 

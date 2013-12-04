@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 namespace Modele
 {
     [XmlInclude(typeof(JoueurConcret))]
+    [XmlInclude(typeof(JoueurCOM))]
     public abstract class Joueur : IJoueur
     {
         public Joueur()
@@ -62,5 +63,8 @@ namespace Modele
             get { return nom; }
             set { nom = value; }
         }
+
+
+        public abstract void jouerTour(Partie partie);
     }
 }

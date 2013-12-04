@@ -28,8 +28,8 @@ namespace InterfaceGraphique
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             List<IJoueur> joueurs = new List<IJoueur>();
-            joueurs.Add(new JoueurConcret(getFabriquePeuple(peupleJoueur1), (couleurJoueur1.SelectedItem as PropertyInfo).Name, nomJoueur1.Text));
-            joueurs.Add(new JoueurConcret(getFabriquePeuple(peupleJoueur2), (couleurJoueur2.SelectedItem as PropertyInfo).Name, nomJoueur2.Text));
+            joueurs.Add(new JoueurCOM(getFabriquePeuple(peupleJoueur1), (couleurJoueur1.SelectedItem as PropertyInfo).Name, nomJoueur1.Text));
+            joueurs.Add(new JoueurCOM(getFabriquePeuple(peupleJoueur2), (couleurJoueur2.SelectedItem as PropertyInfo).Name, nomJoueur2.Text+"COM"));
 
             if (comboCarte.SelectedIndex == 0)
                 ((MainWindow)Owner).loadPartie(new MonteurDemo(), joueurs);

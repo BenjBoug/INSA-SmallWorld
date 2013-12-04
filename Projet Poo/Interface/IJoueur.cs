@@ -27,5 +27,7 @@ namespace Modele
             get;
             set;
         }
+
+        void jouerTour(Partie partie);
     }
 }

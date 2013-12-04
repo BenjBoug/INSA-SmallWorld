@@ -53,6 +53,7 @@
     <Compile Include="Carte\CasePlaine.cs" />
     <Compile Include="Interface\ICreationCarte.cs" />
     <Compile Include="Carte\FabriqueCase.cs" />
+    <Compile Include="JoueurCOM.cs" />
     <Compile Include="Peuple\FabriquePeupleAbstraite.cs" />
     <Compile Include="Peuple\FabriquePeupleGaulois.cs" />
     <Compile Include="Peuple\FabriquePeupleNain.cs" />

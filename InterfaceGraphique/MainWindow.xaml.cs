@@ -79,7 +79,7 @@ namespace InterfaceGraphique
             nbTours.Content = "Tour: "+ partie.NbTours +"/"+partie.Carte.NbToursMax;
             controlGauche.Children.Add(nbTours);
 
-            foreach (JoueurConcret j in partie.ListJoueurs)
+            foreach (Joueur j in partie.ListJoueurs)
             {
                 controlGauche.Children.Add(new GroupeJoueur(j, j == partie.joueurActuel()));
             }
@@ -284,6 +284,7 @@ namespace InterfaceGraphique
         {
             partie.tourSuivant();
             allowedMouv = null;
+            listUnitSelected.Clear();
             loadGrid();
             loadSuggestion();
             loadControlGauche();
@@ -294,36 +295,55 @@ namespace InterfaceGraphique
         private void grpUnit_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var grp = (GroupeUnite)sender;
-            if (grp.Selected)
+            if (grp.Selected) // si on selectionne l'unité
             {
-                if (grp.Unit.PointsDepl > 0)
+                if (grp.Unit.PointsDepl > 0) // et qu'elle lui reste des points de déplacements
                 {
-                    int column = (int)Canvas.GetLeft(selectionRectangle) / 50;
-                    int row = (int)Canvas.GetTop(selectionRectangle) / 50;
-                    listUnitSelected.Add(grp.Unit);
-
-                    Task.Factory.StartNew(() =>
-                    {
-                        allowedMouv = partie.Carte.suggestion(grp.Unit, column, row);
-
-                        this.Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            loadGrid();
-                            loadSuggestion();
-                        }));
-                    });
+                    listUnitSelected.Add(grp.Unit); // on l'ajout à la liste des unités séléctionnées
+                    loadDataSuggestion(); // et on réactualise l'affichage des suggestions de déplacements
                 }
             }
-            else
+            else // sinon on la désélectionne
             {
-                listUnitSelected.Remove(grp.Unit);
-                if (listUnitSelected.Count == 0)
+                listUnitSelected.Remove(grp.Unit); // on la retire de la liste
+                if (listUnitSelected.Count == 0) // si plus aucune unité n'est sélectionné
                 {
                     loadGrid();
-                    allowedMouv = null;
+                    allowedMouv = null; // on supprime l'affichage  des suggestions
                     loadSuggestion();
                 }
+                else
+                {
+                    loadDataSuggestion(); //sinon on réactualise l'affichage des suggestions avec les unités restantes
+                }
             }
+        }
+
+        private void loadDataSuggestion()
+        {
+            int column = (int)Canvas.GetLeft(selectionRectangle) / 50;
+            int row = (int)Canvas.GetTop(selectionRectangle) / 50;
+            Task.Factory.StartNew(() =>
+            {
+                Unite unit = null;
+                foreach (Unite u in listUnitSelected) // on cherche l'unité avec le moins de points de deplacements
+                {
+                    if (unit == null)
+                        unit = u;
+                    else
+                    {
+                        if (unit.PointsDepl > u.PointsDepl)
+                            unit = u;
+                    }
+                }
+                allowedMouv = partie.Carte.suggestion(unit, column, row); // on charge les suggestions pour cette unités ( et qui servira pour toutes les unités select)
+
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    loadGrid();
+                    loadSuggestion();
+                }));
+            });
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
