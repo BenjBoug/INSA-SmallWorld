@@ -49,8 +49,8 @@ namespace Modele
         void setCase(int x, int y, Case _case);
         void actualiseDeplacement();
         int[] getCoord(IUnite u);
-        void deplaceUnites(List<Unite> u, int column, int row);
+        void deplaceUnites(List<Unite> u, int column, int row, int depl);
 
-        int[][] suggestion(IUnite unite, int x, int y);
+        int[][][] suggestion(IUnite unite, int x, int y);
     }
 }

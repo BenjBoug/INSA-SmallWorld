@@ -26,7 +26,7 @@ namespace InterfaceGraphique
         Partie partie;
         TileFactory tileStrateg;
         List<Unite> listUnitSelected;
-        int[][] allowedMouv;
+        int[][][] allowedMouv;
 
 
         public MainWindow()
@@ -183,10 +183,10 @@ namespace InterfaceGraphique
                 {
                     for (int c = 0; c < partie.Carte.Largeur; c++)
                     {
-                        if (allowedMouv[c][l] >= 1)
+                        if (allowedMouv[c][l][0] >= 1)
                         {
                             var rect = createSuggestion(c, l);
-                            rect.StrokeThickness = allowedMouv[c][l] + 1;
+                            rect.StrokeThickness = allowedMouv[c][l][0] + 1;
                             canvasMap.Children.Add(rect);
                         }
                     }
@@ -240,9 +240,9 @@ namespace InterfaceGraphique
             selectionRectangle.Tag = tile;
 
 
-            if (listUnitSelected.Count > 0 && allowedMouv != null && allowedMouv[column][row] > 0)
+            if (listUnitSelected.Count > 0 && allowedMouv != null && allowedMouv[column][row][0] > 0)
             {
-                partie.Carte.deplaceUnites(listUnitSelected, column, row);
+                partie.Carte.deplaceUnites(listUnitSelected, column, row, allowedMouv[column][row][1]);
                 listUnitSelected.Clear();
             }
             else

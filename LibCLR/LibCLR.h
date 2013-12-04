@@ -57,6 +57,26 @@ namespace LibCLR {
 				return res;
 			}
 
+			List<int>^ tabToList2(int *** tab, int taille)
+			{
+				List<int>^ res = gcnew List<int>();
+				for (int i=0;i<taille;i++)
+				{
+					for (int j=0;j<taille;j++)
+					{
+						res->Add(tab[i][j][0]);
+					}
+				}
+				for (int i=0;i<taille;i++)
+				{
+					for (int j=0;j<taille;j++)
+					{
+						res->Add(tab[i][j][1]);
+					}
+				}
+				return res;
+			}
+
 			List<int> ^ getEmplacementJoueur(List<int>^ emplJoueur, List<int>^ map,int taille, int peupleJoueur)
 			{
 				int ** unites = listToTab(emplJoueur,taille);
@@ -71,7 +91,7 @@ namespace LibCLR {
 
 			List<int> ^ getSuggestion(List<int>^ carte,List<int>^ unites,int taille,int x,int y,int ptDepl,int peupleJActuel)
 			{
-				return tabToList(mapAlea->suggestion(listToTab(carte,taille), listToTab(unites,taille), taille, x, y, ptDepl, peupleJActuel),taille);
+				return tabToList2(mapAlea->suggestion(listToTab(carte,taille), listToTab(unites,taille), taille, x, y, ptDepl, peupleJActuel),taille);
 			}
 	protected:
 		!WrapperMapAleatoire() {delete mapAlea;}

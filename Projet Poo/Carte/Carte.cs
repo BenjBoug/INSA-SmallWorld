@@ -140,7 +140,7 @@ namespace Modele
         }
 
 
-        public void deplaceUnites(List<Unite> u, int column, int row)
+        public void deplaceUnites(List<Unite> u, int column, int row, int nbPtDepl)
         {
             List<Unite> dest = unites[column][row];
             for (int i = 0; i < largeur; i++)
@@ -160,7 +160,9 @@ namespace Modele
                                 {
                                     unites[column][row].Add(unit);
                                     unites[i][j].Remove(unit);
-                                    unit.PointsDepl -= Math.Abs(column - i) + Math.Abs(row - j);
+                                    unit.PointsDepl = nbPtDepl;
+                                    //unit.PointsDepl -= Math.Abs(column - i) + Math.Abs(row - j);
+                                    //calculPointDepl(Unite u, int xOrig, yOrig, int xDest, int yDest);
                                 }
                                 else
                                 {
@@ -173,7 +175,12 @@ namespace Modele
             }
         }
 
-        public int[][] suggestion(IUnite unite, int x, int y)
+        private void calculPointDepl(Unite u, int xOrig,int yOrig, int xDest, int yDest)
+        {
+            //calcul points récursivements
+        }
+
+        public int[][][] suggestion(IUnite unite, int x, int y)
         {
             WrapperMapAleatoire wrap = new WrapperMapAleatoire();
             List<int> emplUnites = new List<int>();
@@ -230,17 +237,29 @@ namespace Modele
 
             List<int> sugg = wrap.getSuggestion(carteInt, emplUnites, Largeur, x, y, unite.PointsDepl, (int)peuple);
 
-            int[][] res = new int[Largeur][];
+            int[][][] res = new int[Largeur][][];
             for (int i = 0; i < Largeur; i++)
             {
-                res[i] = new int[Hauteur];
+                res[i] = new int[Hauteur][];
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    res[i][j] = new int[2];
+                }
             }
 
             for (int i = 0; i < Largeur; i++)
             {
                 for (int j = 0; j < Hauteur; j++)
                 {
-                    res[i][j] = sugg[i*Largeur + j];
+                    res[i][j][0] = sugg[i*Largeur + j];
+                }
+            }
+
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    res[i][j][1] = sugg[Largeur*Hauteur + (i * Largeur + j)];
                 }
             }
 
