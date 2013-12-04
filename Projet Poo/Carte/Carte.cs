@@ -140,27 +140,37 @@ namespace Modele
         }
 
 
-        public void deplaceUnite(Unite u, int column, int row)
+        public void deplaceUnites(List<Unite> u, int column, int row)
         {
+            List<Unite> dest = unites[column][row];
             for (int i = 0; i < largeur; i++)
             {
                 for (int j = 0; j < hauteur; j++)
                 {
                     if (unites[i][j] != null && unites[i][j].Count > 0)
                     {
-                        if (unites[i][j].Contains(u))
+                        foreach (Unite unit in u)
                         {
-                            if (unites[column][row] == null)
-                                unites[column][row] = new List<Unite>();
-                            unites[column][row].Add(u);
-                            unites[i][j].Remove(u);
+                            if (unites[i][j].Contains(unit))
+                            {
+                                if (dest == null)
+                                    unites[column][row] = new List<Unite>();
+
+                                if (dest.Count == 0 || (dest.Count > 0 && dest[0].IdProprietaire == unit.IdProprietaire))
+                                {
+                                    unites[column][row].Add(unit);
+                                    unites[i][j].Remove(unit);
+                                    unit.PointsDepl -= Math.Abs(column - i) + Math.Abs(row - j);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("combat");
+                                }
+                            }
                         }
                     }
                 }
             }
-
-            u.PointsDepl--;
-
         }
 
         public int[][] suggestion(IUnite unite, int x, int y)
@@ -313,7 +323,7 @@ namespace Modele
                                     if (reader.NodeType == XmlNodeType.Element)
                                     {
                                         XmlSerializer xs = new XmlSerializer(typeof(List<Unite>));
-                                        this.Unites[x][y] = xs.Deserialize(reader) as List<Unite>;//
+                                        this.Unites[x][y] = xs.Deserialize(reader) as List<Unite>;
                                     }
                                 }
                             }

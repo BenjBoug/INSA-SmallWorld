@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Modele
 {
@@ -45,10 +46,18 @@ namespace Modele
         }
         private Joueur proprietaire;
 
+        [XmlIgnore]
         public Joueur Proprietaire
         {
             get { return proprietaire; }
-            set { proprietaire = value; }
+            set { proprietaire = value; idProp = proprietaire.Id; }
+        }
+
+        private int idProp;
+        public int IdProprietaire
+        {
+            get { return idProp; }
+            set { idProp = value; }
         }
 
 

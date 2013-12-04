@@ -19,6 +19,12 @@ namespace Modele
         private int nbTours;
         private int indiceJoueurActuel;
 
+        public int IndiceJoueurActuel
+        {
+            get { return indiceJoueurActuel; }
+            set { indiceJoueurActuel = value; }
+        }
+
         public int NbTours
         {
             get { return nbTours; }
@@ -47,9 +53,9 @@ namespace Modele
 
         public void joueurSuivant()
         {
-            if (++indiceJoueurActuel >= listJoueurs.Count)
+            if (++IndiceJoueurActuel >= listJoueurs.Count)
             {
-                indiceJoueurActuel = 0;
+                IndiceJoueurActuel = 0;
                 nbTours++;
                 carte.actualiseDeplacement();
                 carte.calculerPoints();
@@ -59,11 +65,29 @@ namespace Modele
         public void ajoutJoueur(Joueur j)
         {
             listJoueurs.Add(j);
+            j.Id = listJoueurs.IndexOf(j);
         }
 
         public Joueur joueurActuel()
         {
-            return listJoueurs[indiceJoueurActuel];
+            return listJoueurs[IndiceJoueurActuel];
+        }
+
+        public void associeJoueursUnite()
+        {
+            for (int i = 0; i < Carte.Largeur; i++)
+            {
+                for (int j = 0; j < Carte.Hauteur; j++)
+                {
+                    if (Carte.Unites[i][j] != null && Carte.Unites[i][j].Count > 0)
+                    {
+                        foreach (Unite u in Carte.Unites[i][j])
+                        {
+                            u.Proprietaire = listJoueurs[u.IdProprietaire];
+                        }
+                    }
+                }
+            }
         }
 
     }

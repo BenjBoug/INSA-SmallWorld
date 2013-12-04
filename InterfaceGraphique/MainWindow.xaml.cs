@@ -242,10 +242,7 @@ namespace InterfaceGraphique
 
             if (listUnitSelected.Count > 0 && allowedMouv != null && allowedMouv[column][row] > 0)
             {
-                foreach (Unite u in listUnitSelected)
-                {
-                     partie.Carte.deplaceUnite(u, column, row);
-                }
+                partie.Carte.deplaceUnites(listUnitSelected, column, row);
                 listUnitSelected.Clear();
             }
             else
@@ -286,6 +283,9 @@ namespace InterfaceGraphique
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             partie.tourSuivant();
+            allowedMouv = null;
+            loadGrid();
+            loadSuggestion();
             loadControlGauche();
             loadControlDroit();
             e.Handled = true;
@@ -342,6 +342,7 @@ namespace InterfaceGraphique
             XmlSerializer mySerializer = new XmlSerializer(typeof(Partie1v1));
             FileStream myFileStream = new FileStream("myFileName.xml", FileMode.Open);
             partie = (Partie)mySerializer.Deserialize(myFileStream);
+            partie.associeJoueursUnite();
             myFileStream.Close();
 
             canvasMap.Children.Clear();
