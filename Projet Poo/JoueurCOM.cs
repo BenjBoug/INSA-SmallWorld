@@ -72,7 +72,7 @@ namespace Modele
                     }
                 }
             }
-            partie.tourSuivant();
+            //partie.tourSuivant();
         }
     }
 }

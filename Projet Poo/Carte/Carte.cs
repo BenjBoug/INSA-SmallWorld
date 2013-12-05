@@ -154,7 +154,10 @@ namespace Modele
                             if (unites[i][j].Contains(unit))
                             {
                                 if (dest == null)
+                                {
                                     unites[column][row] = new List<Unite>();
+                                    dest = unites[column][row];
+                                }
 
                                 if (dest.Count == 0 || (dest.Count > 0 && dest[0].IdProprietaire == unit.IdProprietaire))
                                 {
@@ -166,18 +169,73 @@ namespace Modele
                                 }
                                 else
                                 {
-                                    Console.WriteLine("combat");
+                                    Unite unitDef = unites[column][row][0]; 
+                                    Random randCombat = new Random();
+                                    Random rand = new Random();
+                                    int nbToursCombat = 3+randCombat.Next((Math.Max(unit.PointsVie,unitDef.PointsVie))+2);
+                                    int n = 0;
+                                    Console.WriteLine("combat nbTours "+nbToursCombat);
+                                    while (nbToursCombat-n>0 && unit.estEnVie() && unitDef.estEnVie())
+                                    {
+                                        double ratioVie = (double)unit.PointsVie / (double)unit.PointsVieMax;
+                                        double ratioVieDef = (double)unitDef.PointsVie / (double)unitDef.PointsVieMax;
+                                        double attaUnit = (double)unit.PointsAttaque * (double)ratioVie;
+                                        double defUnitdef = (double)unitDef.PointsDefense * (double)ratioVieDef;
+                                        double ratioAttDef = (double)(attaUnit / defUnitdef);
+                                        double ratioChanceDef=0;
+                                        if (ratioAttDef > 1) // avantage attaquant
+                                        {
+                                            ratioChanceDef = 1/ratioAttDef;
+                                            ratioChanceDef *= 0.5;
+                                            ratioChanceDef = 0.5-ratioChanceDef;
+                                            ratioChanceDef += 0.5;
+                                        }
+                                        else if (ratioAttDef == 1) //égalité, aucun n'a l'avantage
+                                        {
+                                            ratioChanceDef = ratioAttDef * 0.5; // 50% de chnce de gagner
+                                        }
+                                        else // avantage défense
+                                        {
+                                            ratioChanceDef = ratioAttDef;
+                                            ratioChanceDef *= 0.5;
+                                        }
+                                        double ratioCombat = (double)((double)rand.Next(100)/100);
+                                        Console.WriteLine(ratioChanceDef+" "+ratioCombat+" "+ratioVie);
+                                        if (ratioCombat <= ratioChanceDef)
+                                        {
+                                            Console.WriteLine(unit.Proprietaire.Nom+" gagne tour " + (n+1));
+                                            unitDef.perdPV(1);
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine(unitDef.Proprietaire.Nom + " perd tour" + (n + 1));
+                                            unit.perdPV(1);
+                                        }
+                                        n++;
+                                    }
+
+                                    if (!unit.estEnVie())
+                                    {
+                                        unites[i][j].Remove(unit);
+                                    }
+                                    if (!unitDef.estEnVie())
+                                    {
+                                        unites[column][row].Remove(unitDef);
+                                        if (unites[column][row].Count == 0)
+                                        {
+                                            unites[column][row].Add(unit);
+                                            unites[i][j].Remove(unit);
+                                        }
+                                        unit.PointsDepl = nbPtDepl;
+                                    }
+
+
                                 }
                             }
                         }
                     }
                 }
             }
-        }
-
-        private void calculPointDepl(Unite u, int xOrig,int yOrig, int xDest, int yDest)
-        {
-            //calcul points récursivements
         }
 
         public int[][][] suggestion(IUnite unite, int x, int y)

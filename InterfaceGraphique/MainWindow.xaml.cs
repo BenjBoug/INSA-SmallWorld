@@ -283,6 +283,7 @@ namespace InterfaceGraphique
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             partie.tourSuivant();
+            partie.joueurActuel().jouerTour(partie);
             allowedMouv = null;
             listUnitSelected.Clear();
             loadGrid();

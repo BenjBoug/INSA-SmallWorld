@@ -14,6 +14,7 @@ namespace Modele
             pointsDefense = 1;
             pointsDepl = 1;
             pointsVie = 2;
+            pointsVieMax = pointsVie;
         }
 
         private int pointsDefense;
@@ -30,6 +31,16 @@ namespace Modele
             get { return pointsAttaque; }
             set { pointsAttaque = value; }
         }
+
+        private int pointsVieMax;
+
+        public int PointsVieMax
+        {
+            get { return pointsVieMax; }
+            set { pointsVieMax = value; }
+        }
+
+
         private int pointsVie;
 
         public int PointsVie

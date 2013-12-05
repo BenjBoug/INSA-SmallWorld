@@ -48,7 +48,14 @@ namespace Modele
 
         public void tourSuivant()
         {
-            joueurSuivant();
+            Console.WriteLine("NbTours:" + nbTours);
+            joueurSuivant();/*
+            if (nbTours <= carte.NbToursMax)
+                joueurActuel().jouerTour(this);
+            else
+            {
+                Console.WriteLine("Fin de la partie !!");
+            }*/
         }
 
         public void joueurSuivant()

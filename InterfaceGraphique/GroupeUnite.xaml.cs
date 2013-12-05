@@ -39,7 +39,7 @@ namespace InterfaceGraphique
             this.unit = unit;
             selected = false;
             grpUnit.Header = "Unite " + unit.Proprietaire.Peuple;
-            PV.Text += unit.PointsVie.ToString();
+            PV.Text += unit.PointsVie.ToString()+"/"+unit.PointsVieMax.ToString();
             PA.Text += unit.PointsAttaque.ToString();
             PDef.Text += unit.PointsDefense.ToString();
             PDepl.Text += unit.PointsDepl.ToString();
