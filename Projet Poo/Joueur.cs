@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Xml.Serialization;
+using System.ComponentModel;
 
 
 namespace Modele
@@ -66,5 +67,8 @@ namespace Modele
 
 
         public abstract void jouerTour(Partie partie);
+
+        public abstract void finirTour();
+
     }
 }

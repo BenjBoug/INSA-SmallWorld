@@ -11,6 +11,7 @@
                 <TextBlock x:Name="couleur" TextWrapping="Wrap" Text="Couleur : "/>
                 <TextBlock x:Name="peuple" TextWrapping="Wrap" Text="Peuple : "/>
                 <TextBlock x:Name="nbpoints" TextWrapping="Wrap" Text="Points : "/>
+                <TextBlock x:Name="nbUnites"  TextWrapping="Wrap" Text="Unités réstantes :"/>
             </StackPanel>
         </GroupBox>
 

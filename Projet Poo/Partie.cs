@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
@@ -8,14 +9,22 @@ using System.Xml.Serialization;
 namespace Modele
 {
     [XmlInclude(typeof(Partie1v1))]
-    public abstract class Partie : IPartie
+    public abstract class Partie : IPartie, INotifyPropertyChanged
     {
         public Partie()
         {
             indiceJoueurActuel = 0;
             listJoueurs = new List<Joueur>();
+            finpartie = false;
         }
 
+        private bool finpartie;
+
+        public bool Finpartie
+        {
+            get { return finpartie; }
+            set { finpartie = value; }
+        }
         private int nbTours;
         private int indiceJoueurActuel;
 
@@ -48,14 +57,30 @@ namespace Modele
 
         public void tourSuivant()
         {
-            Console.WriteLine("NbTours:" + nbTours);
-            joueurSuivant();/*
-            if (nbTours <= carte.NbToursMax)
-                joueurActuel().jouerTour(this);
+            OnPropertyChanged("FinTours");
+            //Console.WriteLine("NbTours:" + nbTours);
+            if (getNbJoueursVivant() > 1)
+            {
+                do
+                    joueurSuivant();
+                while (carte.getNombreUniteRestante(joueurActuel()) == 0);
+            }
             else
             {
-                Console.WriteLine("Fin de la partie !!");
-            }*/
+                Finpartie = true;
+            }
+        }
+
+        private int getNbJoueursVivant()
+        {
+            int res=0;
+            foreach (Joueur j in listJoueurs)
+            {
+                if (carte.getNombreUniteRestante(j) > 0)
+                    res++;
+            }
+
+            return res;
         }
 
         public void joueurSuivant()
@@ -97,5 +122,23 @@ namespace Modele
             }
         }
 
+        private void finirTour(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged("JoueurFini");
+            tourSuivant();
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // Create the OnPropertyChanged method to raise the event 
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
     }
 }

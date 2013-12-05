@@ -78,7 +78,7 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int
 		} 
 	}
 
-	calculDeplClassique(carte,xActuel,yAcuel,ptDepl,peupleJActuel,taille, sugg);
+	calculDeplClassique(carte,unites,xActuel,yAcuel,ptDepl,peupleJActuel,taille, sugg);
 
 	
 
@@ -87,7 +87,7 @@ int * MapAleatoire::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int
 }
 
  
-void MapAleatoire::calculDeplClassique(int **carte, int xActuel, int yActuel, int depl, int peupleJActuel, int taille, int*** sugg)
+void MapAleatoire::calculDeplClassique(int **carte, int **unites, int xActuel, int yActuel, int depl, int peupleJActuel, int taille, int*** sugg)
 {
 	 int verif[3][5] = { {2,1,2,1,2},	//VIKING
 						 {3,0,1,2,2},	//GAULOIS
@@ -97,27 +97,55 @@ void MapAleatoire::calculDeplClassique(int **carte, int xActuel, int yActuel, in
 		sugg[xActuel][yActuel][1]=depl;
 		if (xActuel-1>=0)
 		{
-			sugg[xActuel-1][yActuel][0]=verif[peupleJActuel][carte[xActuel-1][yActuel]];
-			if (sugg[xActuel-1][yActuel][1]<depl && sugg[xActuel-1][yActuel][0]>0)
-				calculDeplClassique(carte,xActuel-1,yActuel,depl-1,peupleJActuel,taille,sugg);
+			if (unites[xActuel][yActuel]==0)
+			{
+				sugg[xActuel-1][yActuel][0]=verif[peupleJActuel][carte[xActuel-1][yActuel]];
+				if (sugg[xActuel-1][yActuel][1]<depl && sugg[xActuel-1][yActuel][0]>0)
+					calculDeplClassique(carte,unites,xActuel-1,yActuel,depl-1,peupleJActuel,taille,sugg);
+			}
+			else
+			{
+				sugg[xActuel][yActuel][0]+=5;
+			}
 		}
 		if (xActuel+1<taille)
 		{
+			if (unites[xActuel][yActuel]==0)
+			{
 			sugg[xActuel+1][yActuel][0]=verif[peupleJActuel][carte[xActuel+1][yActuel]];
 			if (sugg[xActuel+1][yActuel][1]<depl && sugg[xActuel+1][yActuel][0]>0)
-				calculDeplClassique(carte,xActuel+1,yActuel,depl-1,peupleJActuel,taille,sugg);
+				calculDeplClassique(carte,unites,xActuel+1,yActuel,depl-1,peupleJActuel,taille,sugg);
+			}
+			else
+			{
+				sugg[xActuel][yActuel][0]+=5;
+			}
 		}
 		if (yActuel-1>=0)
 		{
+			if (unites[xActuel][yActuel]==0)
+			{
 			sugg[xActuel][yActuel-1][0]=verif[peupleJActuel][carte[xActuel][yActuel-1]];
 			if (sugg[xActuel][yActuel-1][1]<depl && sugg[xActuel][yActuel-1][0]>0)
-				calculDeplClassique(carte,xActuel,yActuel-1,depl-1,peupleJActuel,taille,sugg);
+				calculDeplClassique(carte,unites,xActuel,yActuel-1,depl-1,peupleJActuel,taille,sugg);
+			}
+			else
+			{
+				sugg[xActuel][yActuel][0]+=5;
+			}
 		}
 		if (yActuel+1<taille)
 		{
+			if (unites[xActuel][yActuel]==0)
+			{
 			sugg[xActuel][yActuel+1][0]=verif[peupleJActuel][carte[xActuel][yActuel+1]];
 			if (sugg[xActuel][yActuel+1][1]<depl && sugg[xActuel][yActuel+1][0]>0)
-				calculDeplClassique(carte,xActuel,yActuel+1,depl-1,peupleJActuel,taille,sugg);
+				calculDeplClassique(carte,unites,xActuel,yActuel+1,depl-1,peupleJActuel,taille,sugg);
+			}
+			else
+			{
+				sugg[xActuel][yActuel][0]+=5;
+			}
 		}
 
 		if (peupleJActuel==Nain && carte[xActuel][yActuel]==Montagne)
@@ -126,11 +154,11 @@ void MapAleatoire::calculDeplClassique(int **carte, int xActuel, int yActuel, in
             {
                 for (int j=0;j<taille;j++)
                 {
-                    if(carte[i][j]==Montagne)// && unites[i][j]==0)
+                    if(carte[i][j]==Montagne && unites[i][j]==0)
                     {
                         sugg[i][j][0]=2;
                         if (sugg[i][j][1]<depl && sugg[i][j][0]>0)
-                            calculDeplClassique(carte,i,j,depl-1,peupleJActuel,taille, sugg);
+                            calculDeplClassique(carte,unites,i,j,depl-1,peupleJActuel,taille, sugg);
                     }
                 }
             }

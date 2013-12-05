@@ -116,6 +116,23 @@ namespace Modele
             return coord;
         }
 
+        public int getNombreUniteRestante(Joueur joueur)
+        {
+            int res = 0;
+            for (int i = 0; i < largeur; i++)
+            {
+                for (int j = 0; j < hauteur; j++)
+                {
+                    if (unites[i][j] != null && unites[i][j].Count > 0 && unites[i][j][0].IdProprietaire == joueur.Id)
+                    {
+                        res += unites[i][j].Count;
+                    }
+                }
+            }
+
+            return res;
+        }
+
         public abstract void selectionneUnite(IUnite unite);
 
         public abstract void selectionneCase(int x, int y);
@@ -174,7 +191,7 @@ namespace Modele
                                     Random rand = new Random();
                                     int nbToursCombat = 3+randCombat.Next((Math.Max(unit.PointsVie,unitDef.PointsVie))+2);
                                     int n = 0;
-                                    Console.WriteLine("combat nbTours "+nbToursCombat);
+                                    //Console.WriteLine("combat nbTours "+nbToursCombat);
                                     while (nbToursCombat-n>0 && unit.estEnVie() && unitDef.estEnVie())
                                     {
                                         double ratioVie = (double)unit.PointsVie / (double)unit.PointsVieMax;
@@ -200,15 +217,15 @@ namespace Modele
                                             ratioChanceDef *= 0.5;
                                         }
                                         double ratioCombat = (double)((double)rand.Next(100)/100);
-                                        Console.WriteLine(ratioChanceDef+" "+ratioCombat+" "+ratioVie);
+                                        //Console.WriteLine(ratioChanceDef+" "+ratioCombat+" "+ratioVie);
                                         if (ratioCombat <= ratioChanceDef)
                                         {
-                                            Console.WriteLine(unit.Proprietaire.Nom+" gagne tour " + (n+1));
+                                           // Console.WriteLine(unit.Proprietaire.Nom+" gagne tour " + (n+1));
                                             unitDef.perdPV(1);
                                         }
                                         else
                                         {
-                                            Console.WriteLine(unitDef.Proprietaire.Nom + " perd tour" + (n + 1));
+                                            //Console.WriteLine(unitDef.Proprietaire.Nom + " perd tour" + (n + 1));
                                             unit.perdPV(1);
                                         }
                                         n++;
@@ -238,7 +255,7 @@ namespace Modele
             }
         }
 
-        public int[][][] suggestion(IUnite unite, int x, int y)
+        public int[][][] suggestion(Unite unite, int x, int y)
         {
             WrapperMapAleatoire wrap = new WrapperMapAleatoire();
             List<int> emplUnites = new List<int>();
@@ -246,7 +263,7 @@ namespace Modele
             {
                 for (int j = 0; j < Hauteur; j++)
                 {
-                    if (Unites[i][j] != null)
+                    if (Unites[i][j] != null && Unites[i][j].Count > 0 && Unites[i][j][0].IdProprietaire != unite.IdProprietaire)
                         emplUnites.Add(Unites[i][j].Count);
                     else
                         emplUnites.Add(0);

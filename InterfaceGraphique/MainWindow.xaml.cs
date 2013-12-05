@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using Modele;
 using System.Xml.Serialization;
 using System.IO;
+using System.ComponentModel;
+using System.Threading;
 
 namespace InterfaceGraphique
 {
@@ -24,23 +26,47 @@ namespace InterfaceGraphique
     public partial class MainWindow : Window
     {
         Partie partie;
-        TileFactory tileStrateg;
+        TileFactory tileFactory;
         List<Unite> listUnitSelected;
         int[][][] allowedMouv;
+        Button boutonNext;
+        private Semaphore _pool;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            //rectOnOver = null;
             allowedMouv = null;
             listUnitSelected = new List<Unite>();
-            tileStrateg = new ImageFactory();
+            tileFactory = new ImageFactory();
+            _pool = new Semaphore(0, 1);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void faireJouerIA(object sender, PropertyChangedEventArgs e)
+        {
+        }
+
+        private void updateUI(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "FinTours")
+            {
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    allowedMouv = null;
+                    listUnitSelected.Clear();
+                    loadGrid();
+                    loadSuggestion();
+                    loadControlGauche();
+                    loadControlDroit();
+                    //Console.WriteLine("updateUi ");
+                    _pool.Release();
+                }));
+            }
         }
 
         public void loadPartie(MonteurCarte monteurC, List<IJoueur> joueurs)
@@ -51,9 +77,11 @@ namespace InterfaceGraphique
                 MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
                 monteurPartie.creerPartie(monteurC, joueurs);
                 partie = monteurPartie.Partie;
+                partie.PropertyChanged += updateUI;
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    Console.WriteLine("initUI ");
                     canvasMap.Children.Clear();
                     canvasMap.Children.Add(selectionRectangle);
                     canvasMap.Width = partie.Carte.Largeur * 50;
@@ -62,32 +90,42 @@ namespace InterfaceGraphique
                     loadGrid();
                     loadControlGauche();
                     loadControlDroit();
+                    _pool.Release();
                 }));
+                
+                Task.Factory.StartNew(() =>
+                {
+                    _pool.WaitOne();
+                    while (partie.NbTours < partie.Carte.NbToursMax && !partie.Finpartie)
+                    {
+                        partie.joueurActuel().jouerTour(partie);
+                        partie.tourSuivant();
+                        _pool.WaitOne();
+                        System.Threading.Thread.Sleep(30);
+                    }
+                });
             });
         }
 
         private void loadControlGauche()
         {
-
-            controlGauche.Children.Clear();
-
-            Label joueurActuel = new Label();
-            joueurActuel.Content = "C'est à " + partie.joueurActuel().Nom + " de jouer !";
-            controlGauche.Children.Add(joueurActuel);
-
-            Label nbTours = new Label();
-            nbTours.Content = "Tour: "+ partie.NbTours +"/"+partie.Carte.NbToursMax;
-            controlGauche.Children.Add(nbTours);
-
+            labelJoueurActuel.Content = "C'est à " + partie.joueurActuel().Nom + " de jouer !";
+            labelNbTour.Content = "Tour: " + partie.NbTours + "/" + partie.Carte.NbToursMax;
+            panelListeJoueur.Children.Clear();
             foreach (Joueur j in partie.ListJoueurs)
             {
-                controlGauche.Children.Add(new GroupeJoueur(j, j == partie.joueurActuel()));
+                GroupeJoueur grp = new GroupeJoueur(j, j == partie.joueurActuel());
+                int nbUniteRestante = partie.Carte.getNombreUniteRestante(j);
+                if (nbUniteRestante == 0)
+                    grp.IsEnabled = false;
+                panelListeJoueur.Children.Add(grp);
             }
 
-            Button boutonNext = new Button();
-            boutonNext.Content = "Tour fini !";
-            boutonNext.Click += Button_Click;
-            controlGauche.Children.Add(boutonNext);
+            boutonFinir.IsEnabled = false;
+            if (partie.joueurActuel() is JoueurConcret)
+            {
+                boutonFinir.IsEnabled = true;
+            }
         }
 
         private void loadControlDroit()
@@ -103,10 +141,11 @@ namespace InterfaceGraphique
             rect.Width = 50;
             rect.Height = 50;
             int column = 0, row = 0;
+
             
             if (selectionRectangle.Visibility==Visibility.Visible)
             {
-                rect.Fill = tileStrateg.getViewTile(selectionRectangle.Tag as ICase);
+                rect.Fill = tileFactory.getViewTile(selectionRectangle.Tag as ICase);
                 column = (int)Canvas.GetLeft(selectionRectangle) / 50;
                 row = (int)Canvas.GetTop(selectionRectangle) / 50;
             }
@@ -138,7 +177,7 @@ namespace InterfaceGraphique
             grpInfo.Content = panelGrp;
             controlDroit.Children.Add(grpInfo);
 
-            if (partie.Carte.Unites[column][row] != null )//&& rectSelected != null)
+            if (partie.Carte.Unites[column][row] != null && selectionRectangle.Visibility == Visibility.Visible)
             {
                 ScrollViewer scrollInfoUnite = new ScrollViewer();
                 scrollInfoUnite.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
@@ -196,7 +235,7 @@ namespace InterfaceGraphique
 
         private Tile createRectangle(int c, int l, ICase tile, List<Unite> listUnite)
         {
-            var rectangle = new Tile(tile, tileStrateg, listUnite);
+            var rectangle = new Tile(tile, tileFactory, listUnite);
 
             // mise à jour des attributs (column et Row) référencant la position dans la grille à rectangle
             Canvas.SetLeft(rectangle, c * 50);
@@ -269,11 +308,11 @@ namespace InterfaceGraphique
         {
             if (affTileCheckbox.IsChecked)
             {
-                tileStrateg = new ImageFactory();
+                tileFactory = new ImageFactory();
             }
             else
             {
-                tileStrateg = new RectangleFactory();
+                tileFactory = new RectangleFactory();
             }
             if (partie != null && partie.Carte != null)
                 loadGrid();
@@ -282,14 +321,9 @@ namespace InterfaceGraphique
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            partie.tourSuivant();
-            partie.joueurActuel().jouerTour(partie);
-            allowedMouv = null;
-            listUnitSelected.Clear();
-            loadGrid();
-            loadSuggestion();
-            loadControlGauche();
-            loadControlDroit();
+
+            partie.joueurActuel().finirTour();
+
             e.Handled = true;
         }
 
@@ -373,6 +407,11 @@ namespace InterfaceGraphique
             loadControlDroit();
             loadControlGauche();
             loadGrid();
+        }
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            Console.WriteLine("test");
         }
 
     }

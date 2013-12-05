@@ -20,9 +20,11 @@ namespace Modele
 
         private List<Unite> unitesSelect;
 
+
         public override void jouerTour(Partie partie)
         {
             Carte carte = partie.Carte;
+            Random rand = new Random();
 
             //chercher unites
 
@@ -35,9 +37,11 @@ namespace Modele
                     {
                         List<Unite> listUnitoMove = new List<Unite>();
                         Unite u;
-                        for(int k=0;k<unites.Count();k++)
+                        int nbUnit = unites.Count();
+                        for(int k=0;k<nbUnit;k++)
                         {
-                            u = unites[k];
+                            listUnitoMove.Clear();
+                            u = unites[0];
                             if (u.PointsDepl > 0)
                             {
                                 int[][][] allowedMouv = partie.Carte.suggestion(u, i, j);
@@ -56,7 +60,7 @@ namespace Modele
                                             coordY.Add(y);
                                             max = allowedMouv[x][y][0];
                                         }
-                                        else if (allowedMouv[x][y][0] == max)
+                                        else if (allowedMouv[x][y][0] == max && max != 0)
                                         {
                                             coordX.Add(x);
                                             coordY.Add(y);
@@ -64,7 +68,6 @@ namespace Modele
                                     }
                                 }
                                 listUnitoMove.Add(u);
-                                Random rand = new Random();
                                 int choix = rand.Next(coordX.Count());
                                 carte.deplaceUnites(listUnitoMove, coordX[choix], coordY[choix], allowedMouv[coordX[choix]][coordY[choix]][1]);
                             }
@@ -72,7 +75,11 @@ namespace Modele
                     }
                 }
             }
-            //partie.tourSuivant();
+        }
+
+        public override void finirTour()
+        {
+            
         }
     }
 }

@@ -51,6 +51,6 @@ namespace Modele
         int[] getCoord(IUnite u);
         void deplaceUnites(List<Unite> u, int column, int row, int depl);
 
-        int[][][] suggestion(IUnite unite, int x, int y);
+        int[][][] suggestion(Unite unite, int x, int y);
     }
 }
