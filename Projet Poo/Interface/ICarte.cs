@@ -37,6 +37,13 @@ namespace Modele
             get;
             set;
         }
+
+        List<Unite> UnitesList
+        {
+            get;
+            set;
+        }
+
         void calculerPoints();
         bool caseVide(int x, int y);
         Case getCase(int x, int y);

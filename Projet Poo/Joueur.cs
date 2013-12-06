@@ -9,6 +9,9 @@ using System.ComponentModel;
 
 namespace Modele
 {
+
+    public delegate void PointChangeEventHandler(object sender, EventArgs e);
+
     [XmlInclude(typeof(JoueurConcret))]
     [XmlInclude(typeof(JoueurCOM))]
     public abstract class Joueur : IJoueur
@@ -46,7 +49,7 @@ namespace Modele
         public int Points
         {
             get { return points; }
-            set { points = value; }
+            set { points = value; OnPointChange(); }
         }
 
         private String couleur;
@@ -69,6 +72,17 @@ namespace Modele
         public abstract void jouerTour(Partie partie);
 
         public abstract void finirTour();
+
+        public event PointChangeEventHandler PointChange;
+
+        protected void OnPointChange()
+        {
+            PointChangeEventHandler handler = PointChange;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
 
     }
 }

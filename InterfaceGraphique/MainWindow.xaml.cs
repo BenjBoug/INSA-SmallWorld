@@ -29,7 +29,6 @@ namespace InterfaceGraphique
         TileFactory tileFactory;
         List<Unite> listUnitSelected;
         int[][][] allowedMouv;
-        Button boutonNext;
         private Semaphore _pool;
 
 
@@ -47,26 +46,56 @@ namespace InterfaceGraphique
 
         }
 
-        private void faireJouerIA(object sender, PropertyChangedEventArgs e)
+
+        private void updateUI(object sender, EventArgs e)
         {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                allowedMouv = null;
+                listUnitSelected.Clear();
+                loadGrid();
+                loadSuggestion();
+                loadControlDroit();
+                refreshControlGauche();
+                //Console.WriteLine("updateUi ");
+                _pool.Release();
+            }));
         }
 
-        private void updateUI(object sender, PropertyChangedEventArgs e)
+        private void startGame()
         {
-            if (e.PropertyName == "FinTours")
+            Task.Factory.StartNew(() =>
             {
-                this.Dispatcher.BeginInvoke(new Action(() =>
+                _pool.WaitOne();
+                while (!partie.Finpartie)
                 {
-                    allowedMouv = null;
-                    listUnitSelected.Clear();
-                    loadGrid();
-                    loadSuggestion();
-                    loadControlGauche();
-                    loadControlDroit();
-                    //Console.WriteLine("updateUi ");
-                    _pool.Release();
-                }));
-            }
+                    partie.joueurActuel().jouerTour(partie);
+                    partie.tourSuivant();
+                    _pool.WaitOne();
+                    System.Threading.Thread.Sleep(30);
+                }
+                endGame();
+            });
+        }
+
+        private void endGame()
+        {
+            MessageBox.Show(partie.getGagnant().Nom+" gagne la partie !");
+        }
+
+        private void initUI()
+        {
+            partie.FinTours += updateUI;
+            Console.WriteLine("initUI ");
+            canvasMap.Children.Clear();
+            canvasMap.Children.Add(selectionRectangle);
+            canvasMap.Width = partie.Carte.Largeur * 50;
+            canvasMap.Height = partie.Carte.Hauteur * 50;
+
+            loadGrid();
+            loadControlGauche();
+            loadControlDroit();
+            _pool.Release();
         }
 
         public void loadPartie(MonteurCarte monteurC, List<IJoueur> joueurs)
@@ -77,56 +106,55 @@ namespace InterfaceGraphique
                 MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
                 monteurPartie.creerPartie(monteurC, joueurs);
                 partie = monteurPartie.Partie;
-                partie.PropertyChanged += updateUI;
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Console.WriteLine("initUI ");
-                    canvasMap.Children.Clear();
-                    canvasMap.Children.Add(selectionRectangle);
-                    canvasMap.Width = partie.Carte.Largeur * 50;
-                    canvasMap.Height = partie.Carte.Hauteur * 50;
-
-                    loadGrid();
-                    loadControlGauche();
-                    loadControlDroit();
-                    _pool.Release();
+                    initUI();
                 }));
-                
-                Task.Factory.StartNew(() =>
-                {
-                    _pool.WaitOne();
-                    while (partie.NbTours < partie.Carte.NbToursMax && !partie.Finpartie)
-                    {
-                        partie.joueurActuel().jouerTour(partie);
-                        partie.tourSuivant();
-                        _pool.WaitOne();
-                        System.Threading.Thread.Sleep(30);
-                    }
-                });
+
+                startGame();
             });
         }
 
-        private void loadControlGauche()
+        
+        private void refreshControlGauche()
         {
             labelJoueurActuel.Content = "C'est à " + partie.joueurActuel().Nom + " de jouer !";
             labelNbTour.Content = "Tour: " + partie.NbTours + "/" + partie.Carte.NbToursMax;
-            panelListeJoueur.Children.Clear();
-            foreach (Joueur j in partie.ListJoueurs)
-            {
-                GroupeJoueur grp = new GroupeJoueur(j, j == partie.joueurActuel());
-                int nbUniteRestante = partie.Carte.getNombreUniteRestante(j);
-                if (nbUniteRestante == 0)
-                    grp.IsEnabled = false;
-                panelListeJoueur.Children.Add(grp);
-            }
+
 
             boutonFinir.IsEnabled = false;
             if (partie.joueurActuel() is JoueurConcret)
             {
                 boutonFinir.IsEnabled = true;
             }
+
+            foreach (GroupeJoueur grp in panelListeJoueur.Children)
+            {
+                grp.select(partie.joueurActuel());
+                if (partie.Carte.getNombreUniteRestante(grp.Joueur)==0)
+                {
+                    grp.IsEnabled = false;
+                }
+            }
+                
         }
+
+        private void loadControlGauche()
+        {
+            panelListeJoueur.Children.Clear();
+            foreach (Joueur j in partie.ListJoueurs)
+            {
+                GroupeJoueur grp = new GroupeJoueur(j);
+                int nbUniteRestante = partie.Carte.getNombreUniteRestante(j);
+                if (nbUniteRestante == 0)
+                    grp.IsEnabled = false;
+                panelListeJoueur.Children.Add(grp);
+            }
+
+            refreshControlGauche();
+        }
+
 
         private void loadControlDroit()
         {
@@ -400,19 +428,9 @@ namespace InterfaceGraphique
             partie.associeJoueursUnite();
             myFileStream.Close();
 
-            canvasMap.Children.Clear();
-            canvasMap.Children.Add(selectionRectangle);
-            canvasMap.Width = partie.Carte.Largeur * 50;
-            canvasMap.Height = partie.Carte.Hauteur * 50;
-            loadControlDroit();
-            loadControlGauche();
-            loadGrid();
-        }
+            initUI();
 
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-            Console.WriteLine("test");
+            startGame();
         }
-
     }
 }

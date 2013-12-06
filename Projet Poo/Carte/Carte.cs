@@ -166,7 +166,7 @@ namespace Modele
                 {
                     if (unites[i][j] != null && unites[i][j].Count > 0)
                     {
-                        foreach (Unite unit in u)
+                        foreach(Unite unit in u)//probleme ici
                         {
                             if (unites[i][j].Contains(unit))
                             {

@@ -15,6 +15,15 @@ namespace Modele
             pointsDepl = 1;
             pointsVie = 2;
             pointsVieMax = pointsVie;
+            coord = new Coordonnees();
+        }
+
+        private Coordonnees coord;
+
+        public Coordonnees Coord
+        {
+            get { return coord; }
+            set { coord = value; }
         }
 
         private int pointsDefense;

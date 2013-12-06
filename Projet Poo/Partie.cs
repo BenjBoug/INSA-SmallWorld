@@ -8,15 +8,22 @@ using System.Xml.Serialization;
 
 namespace Modele
 {
+
+    public delegate void FinTourEventHandler(object sender, EventArgs e);
+
     [XmlInclude(typeof(Partie1v1))]
-    public abstract class Partie : IPartie, INotifyPropertyChanged
+    public abstract class Partie : IPartie
     {
         public Partie()
         {
             indiceJoueurActuel = 0;
             listJoueurs = new List<Joueur>();
             finpartie = false;
+            classement = new Stack<Joueur>();
         }
+
+        private Stack<Joueur> classement;
+
 
         private bool finpartie;
 
@@ -57,9 +64,13 @@ namespace Modele
 
         public void tourSuivant()
         {
-            OnPropertyChanged("FinTours");
+            OnFinTours();
             //Console.WriteLine("NbTours:" + nbTours);
-            if (getNbJoueursVivant() > 1)
+            if (nbTours == 20)
+            {
+                Console.WriteLine();
+            }
+            if (getNbJoueursVivant() > 1 && nbTours<carte.NbToursMax)
             {
                 do
                     joueurSuivant();
@@ -68,6 +79,52 @@ namespace Modele
             else
             {
                 Finpartie = true;
+            }
+            makeClassement();
+        }
+
+        private int CompareForClassemnt(Joueur j1, Joueur j2)
+        {
+            return j1.Points - j2.Points;
+        }
+
+        private void makeClassement()
+        {
+            if (finpartie)
+            {
+                listJoueurs.Sort(CompareForClassemnt);
+                foreach (Joueur j in listJoueurs)
+                {
+                    if (!classement.Contains(j))
+                    {
+                        classement.Push(j);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Joueur j in listJoueurs)
+                {
+                    if (carte.getNombreUniteRestante(j) == 0)
+                    {
+                        if (!classement.Contains(j))
+                        {
+                            classement.Push(j);
+                        }
+                    }
+                }
+            }
+        }
+
+        public Joueur getGagnant()
+        {
+            if (Finpartie)
+            {
+                return classement.Peek();
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -121,23 +178,15 @@ namespace Modele
                 }
             }
         }
+        
+        public event FinTourEventHandler FinTours;
 
-        private void finirTour(object sender, PropertyChangedEventArgs e)
+        protected void OnFinTours()
         {
-            OnPropertyChanged("JoueurFini");
-            tourSuivant();
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        // Create the OnPropertyChanged method to raise the event 
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            FinTourEventHandler handler = FinTours;
             if (handler != null)
             {
-                handler(this, new PropertyChangedEventArgs(name));
+                handler(this, EventArgs.Empty);
             }
         }
     }

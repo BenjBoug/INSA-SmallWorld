@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Carte\Aleatoire.cs" />
     <Compile Include="Carte\Carte.cs" />
+    <Compile Include="Coordonnees.cs" />
     <Compile Include="Interface\ICarte.cs" />
     <Compile Include="Carte\CarteClassique.cs" />
     <Compile Include="Carte\Case.cs" />

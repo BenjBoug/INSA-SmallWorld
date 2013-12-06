@@ -45,8 +45,7 @@ namespace Modele
                             if (u.PointsDepl > 0)
                             {
                                 int[][][] allowedMouv = partie.Carte.suggestion(u, i, j);
-                                List<int> coordX = new List<int>();
-                                List<int> coordY = new List<int>();
+                                List<Coordonnees> coord = new List<Coordonnees>();
                                 int max = 0;
                                 for (int x = 0; x < carte.Largeur; x++)
                                 {
@@ -54,22 +53,22 @@ namespace Modele
                                     {
                                         if (allowedMouv[x][y][0] > max)
                                         {
-                                            coordX.Clear();
-                                            coordY.Clear();
-                                            coordX.Add(x);
-                                            coordY.Add(y);
+                                            coord.Clear();
+                                            coord.Add(new Coordonnees(x,y));
                                             max = allowedMouv[x][y][0];
                                         }
                                         else if (allowedMouv[x][y][0] == max && max != 0)
                                         {
-                                            coordX.Add(x);
-                                            coordY.Add(y);
+                                            coord.Add(new Coordonnees(x, y));
                                         }
                                     }
                                 }
-                                listUnitoMove.Add(u);
-                                int choix = rand.Next(coordX.Count());
-                                carte.deplaceUnites(listUnitoMove, coordX[choix], coordY[choix], allowedMouv[coordX[choix]][coordY[choix]][1]);
+                                if (coord.Count > 0)
+                                {
+                                    listUnitoMove.Add(u);
+                                    int choix = rand.Next(coord.Count());
+                                    carte.deplaceUnites(listUnitoMove, coord[choix].X, coord[choix].Y, allowedMouv[coord[choix].X][coord[choix].Y][1]);
+                                }
                             }
                         }
                     }

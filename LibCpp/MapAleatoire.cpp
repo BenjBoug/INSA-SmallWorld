@@ -105,7 +105,7 @@ void MapAleatoire::calculDeplClassique(int **carte, int **unites, int xActuel, i
 			}
 			else
 			{
-				sugg[xActuel][yActuel][0]+=5;
+				sugg[xActuel][yActuel][0]=5;
 			}
 		}
 		if (xActuel+1<taille)
@@ -118,7 +118,7 @@ void MapAleatoire::calculDeplClassique(int **carte, int **unites, int xActuel, i
 			}
 			else
 			{
-				sugg[xActuel][yActuel][0]+=5;
+				sugg[xActuel][yActuel][0]=5;
 			}
 		}
 		if (yActuel-1>=0)
@@ -131,7 +131,7 @@ void MapAleatoire::calculDeplClassique(int **carte, int **unites, int xActuel, i
 			}
 			else
 			{
-				sugg[xActuel][yActuel][0]+=5;
+				sugg[xActuel][yActuel][0]=5;
 			}
 		}
 		if (yActuel+1<taille)
@@ -144,7 +144,7 @@ void MapAleatoire::calculDeplClassique(int **carte, int **unites, int xActuel, i
 			}
 			else
 			{
-				sugg[xActuel][yActuel][0]+=5;
+				sugg[xActuel][yActuel][0]=5;
 			}
 		}
 

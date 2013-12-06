@@ -21,15 +21,49 @@ namespace InterfaceGraphique
     /// </summary>
     public partial class GroupeJoueur : UserControl
     {
-        public GroupeJoueur(IJoueur j, bool actif=false)
+        Joueur joueur;
+
+        public Joueur Joueur
         {
+            get { return joueur; }
+            set { joueur = value; }
+        }
+        public GroupeJoueur(Joueur joueur)
+        {
+            this.joueur = joueur;
             InitializeComponent();
-            grpJoueur.Header = j.Nom;
-            couleur.Text += j.Couleur;
-            peuple.Text += j.Peuple;
-            nbpoints.Text += j.Points;
-            if (actif)
+            grpJoueur.Header = joueur.Nom;
+            couleur.Text += joueur.Couleur;
+            peuple.Text += joueur.Peuple;
+            nbpoints.Text += joueur.Points;
+            joueur.PointChange += refreshPointLabel;
+            this.IsEnabledChanged += griser;
+        }
+
+        private void griser(object o, DependencyPropertyChangedEventArgs e)
+        {
+            this.Opacity = 0.5;
+        }
+
+        private void refreshPointLabel(object o, EventArgs e)
+        {
+            Joueur j = (Joueur)o;
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                nbpoints.Text = "Points : " + j.Points;
+            }));
+        }
+
+        public void select(Joueur joueurActif)
+        {
+            if (joueurActif == Joueur)
+            {
                 grpJoueur.Background = Brushes.White;
+            }
+            else
+            {
+                grpJoueur.Background = null;
+            }
         }
     }
 }
