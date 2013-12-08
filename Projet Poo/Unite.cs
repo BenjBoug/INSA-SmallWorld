@@ -10,10 +10,10 @@ namespace Modele
     {
         public Unite()
         {
-            pointsAttaque = 2;
-            pointsDefense = 1;
+            pointsAttaque = 5;
+            pointsDefense = 3;
             pointsDepl = 1;
-            pointsVie = 2;
+            pointsVie = 10;
             pointsVieMax = pointsVie;
             coord = new Coordonnees();
         }
@@ -81,9 +81,48 @@ namespace Modele
         }
 
 
-        public void attaquer(IUnite adversaire)
+        public void attaquer(IUnite unitDef)
         {
-            throw new NotImplementedException();
+            Random randCombat = new Random();
+            Random rand = new Random();
+            int nbToursCombat = 3 + randCombat.Next((Math.Max(this.PointsVie, unitDef.PointsVie)) + 2);
+            int n = 0;
+            //Console.WriteLine("combat nbTours "+nbToursCombat);
+            while (nbToursCombat - n > 0 && this.estEnVie() && unitDef.estEnVie())
+            {
+                double ratioVie = (double)this.PointsVie / (double)this.PointsVieMax;
+                double ratioVieDef = (double)unitDef.PointsVie / (double)unitDef.PointsVieMax;
+                double attaUnit = (double)this.PointsAttaque * (double)ratioVie;
+                double defUnitdef = (double)unitDef.PointsDefense * (double)ratioVieDef;
+                double ratioAttDef = (double)(attaUnit / defUnitdef);
+                double ratioChanceDef = 0;
+                if (ratioAttDef > 1) // avantage attaquant
+                {
+                    ratioChanceDef = (1 / ratioAttDef) / 2;
+                    ratioChanceDef = (0.5 - ratioChanceDef) + 0.5;
+                }
+                else if (ratioAttDef == 1) //égalité, aucun n'a l'avantage
+                {
+                    ratioChanceDef = 0.5; // 50% de chnce de gagner
+                }
+                else // avantage défense
+                {
+                    ratioChanceDef = ratioAttDef/2;
+                }
+                double ratioCombat = (double)((double)rand.Next(100) / 100);
+                //Console.WriteLine(ratioChanceDef+" "+ratioCombat+" "+ratioVie);
+                if (ratioCombat <= ratioChanceDef)
+                {
+                    // Console.WriteLine(unit.Proprietaire.Nom+" gagne tour " + (n+1));
+                    unitDef.perdPV(1);
+                }
+                else
+                {
+                    //Console.WriteLine(unit.Proprietaire.Nom + " perd tour" + (n + 1));
+                    this.perdPV(1);
+                }
+                n++;
+            }
         }
 
         public void perdPV(int nb)

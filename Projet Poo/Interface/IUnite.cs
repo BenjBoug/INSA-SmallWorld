@@ -33,6 +33,12 @@ namespace Modele
             set;
         }
 
+        int PointsVieMax
+        {
+            get;
+            set;
+        }
+
         void attaquer(IUnite adversaire);
         void perdPV(int nb);
         bool estEnVie();

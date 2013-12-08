@@ -15,5 +15,13 @@ namespace Modele
         {
             return 0;
         }
+
+        public override bool estAccessible(IPeuple p)
+        {
+            if (p is PeupleViking)
+                return true;
+            else
+                return false;
+        }
     }
 }

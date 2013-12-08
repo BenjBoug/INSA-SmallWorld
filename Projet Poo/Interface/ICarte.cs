@@ -32,32 +32,19 @@ namespace Modele
             get;
             set;
         }
-        List<Unite>[][] Unites
+        List<Unite> Unites
         {
             get;
             set;
         }
-
-        List<Unite> UnitesList
-        {
-            get;
-            set;
-        }
-
+        
         void calculerPoints();
-        bool caseVide(int x, int y);
         Case getCase(int x, int y);
-        void selectionneUnite(IUnite unite);
-        void selectionneCase(int x, int y);
         void placeUnite(List<Unite> l);
-        bool estAdjacente(int x, int y, int x2, int y2);
-        Unite getAdversaire();
         void chargerCarte(ICreationCarte creationCarte);
         void setCase(int x, int y, Case _case);
         void actualiseDeplacement();
-        int[] getCoord(IUnite u);
-        void deplaceUnites(List<Unite> u, int column, int row, int depl);
+        void deplaceUnites(List<Unite> u, Coordonnees coord, int depl, int[][][] sugg);
 
-        int[][][] suggestion(Unite unite, int x, int y);
     }
 }

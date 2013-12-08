@@ -18,6 +18,12 @@ namespace Modele
             return 1;
         }
 
+
+        public virtual bool estAccessible(IPeuple p)
+        {
+            return true;
+        }
+
     }
 
 }

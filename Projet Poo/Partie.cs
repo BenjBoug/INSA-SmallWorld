@@ -164,19 +164,12 @@ namespace Modele
 
         public void associeJoueursUnite()
         {
-            for (int i = 0; i < Carte.Largeur; i++)
+
+            foreach (Unite u in Carte.Unites)
             {
-                for (int j = 0; j < Carte.Hauteur; j++)
-                {
-                    if (Carte.Unites[i][j] != null && Carte.Unites[i][j].Count > 0)
-                    {
-                        foreach (Unite u in Carte.Unites[i][j])
-                        {
-                            u.Proprietaire = listJoueurs[u.IdProprietaire];
-                        }
-                    }
-                }
+                u.Proprietaire = listJoueurs[u.IdProprietaire];
             }
+
         }
         
         public event FinTourEventHandler FinTours;

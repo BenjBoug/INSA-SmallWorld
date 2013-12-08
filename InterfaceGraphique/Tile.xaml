@@ -6,10 +6,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <Rectangle x:Name="rect" Height="50"  Width="50" MouseEnter="rect_MouseEnter" MouseLeave="rect_MouseLeave">
-        <Rectangle.Effect>
-            <DropShadowEffect/>
-        </Rectangle.Effect>
-    </Rectangle>
-
+        <Rectangle x:Name="rect" Height="50"  Width="50" Grid.Column="0" Grid.Row="0" MouseEnter="rect_MouseEnter" MouseLeave="rect_MouseLeave">
+            <Rectangle.Effect>
+                <DropShadowEffect/>
+            </Rectangle.Effect>
+        </Rectangle>
 </UserControl>

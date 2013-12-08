@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Modele
 {
-    public interface ICase
+    public interface IStrategySuggestion
     {
-        int bonusPoints(IPeuple p);
-        bool estAccessible(IPeuple p);
+        int[][][] getSuggestion(Carte carte, Unite unite);
     }
 }

@@ -13,7 +13,7 @@ namespace Modele
             Carte.Largeur = 5;
             Carte.Hauteur = 5;
             Carte.NbToursMax = 20;
-            Carte.NbUniteParPeuble = 5;
+            Carte.NbUniteParPeuble = 50;
             creerStructureCarte();
         }
     }

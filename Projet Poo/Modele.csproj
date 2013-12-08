@@ -54,7 +54,9 @@
     <Compile Include="Carte\CasePlaine.cs" />
     <Compile Include="Interface\ICreationCarte.cs" />
     <Compile Include="Carte\FabriqueCase.cs" />
+    <Compile Include="Interface\IStrategySuggestion.cs" />
     <Compile Include="JoueurCOM.cs" />
+    <Compile Include="JoueurCOM2.cs" />
     <Compile Include="Peuple\FabriquePeupleAbstraite.cs" />
     <Compile Include="Peuple\FabriquePeupleGaulois.cs" />
     <Compile Include="Peuple\FabriquePeupleNain.cs" />
@@ -80,6 +82,9 @@
     <Compile Include="Peuple\PeupleViking.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interface\IUnite.cs" />
+    <Compile Include="SuggAgressif.cs" />
+    <Compile Include="Suggestion.cs" />
+    <Compile Include="SuggPacifiste.cs" />
     <Compile Include="Unite.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,24 +9,20 @@ using System.Xml;
 namespace Modele
 {
     [XmlInclude(typeof(CarteClassique))]
-    public abstract class Carte : ICarte, IXmlSerializable
+    public abstract class Carte : ICarte
     {
-
-        enum PeupleInt { Gaulois = 1, Viking = 0, Nain = 2 };
-        enum CaseInt { Plaine = 0, Eau = 1, Montagne = 2, Desert = 3, Foret = 4 };
-
         public Carte()
         {
             fabriqueCase = new FabriqueCase();
         }
 
 
-        protected List<Unite>[][] unites;
-        [XmlIgnore]
-        public List<Unite>[][] Unites
+
+        protected List<Unite> unites;
+        public List<Unite> Unites
         {
-            get { return unites; }
-            set { unites = value; }
+            get {return unites;}
+            set {unites = value;}
         }
 
         protected Case[][] cases;
@@ -71,20 +67,89 @@ namespace Modele
             set { largeur = value; }
         }
 
-        public bool estAdjacente(int x, int y, int x2, int y2)
+
+        public void calculerPoints()
         {
-            return ((Math.Abs(x - x2) <= 1) && (Math.Abs(y - y2) <= 1));
+
+            foreach (Unite u in unites)
+            {
+                IJoueur joueur = u.Proprietaire;
+                IPeuple peuple = u.Proprietaire.Peuple;
+
+                joueur.Points += Cases[u.Coord.X][u.Coord.Y].bonusPoints(peuple);
+
+            }
+
         }
 
-        public abstract Unite getAdversaire();
-        public abstract void calculerPoints();
+        public void placeUnite(List<Unite> list)
+        {
+            WrapperMapAleatoire wrap = new WrapperMapAleatoire();
+            List<int> emplUnites = new List<int>();
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    emplUnites.Add(getUniteFromCoord(new Coordonnees(i, j)).Count);
+                }
+            }
+
+            List<int> carteInt = new List<int>();
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    int tile = -1;
+                    if (Cases[i][j] is CaseDesert)
+                    {
+                        tile = 0;
+                    }
+                    else if (Cases[i][j] is CaseEau)
+                    {
+                        tile = 1;
+                    }
+                    else if (Cases[i][j] is CaseForet)
+                    {
+                        tile = 2;
+                    }
+                    else if (Cases[i][j] is CaseMontagne)
+                    {
+                        tile = 3;
+                    }
+                    else if (Cases[i][j] is CasePlaine)
+                    {
+                        tile = 4;
+                    }
+                    else
+                        tile = -1;
+                    carteInt.Add(tile);
+                }
+            }
+
+            int peuple = -1;
+            IPeuple p = list[0].Proprietaire.Peuple;
+
+            if (p is PeupleViking)
+                peuple = 0;
+            else if (p is PeupleNain)
+                peuple = 1;
+            else if (p is PeupleGaulois)
+                peuple = 2;
+
+
+            List<int> coord = wrap.getEmplacementJoueur(emplUnites, carteInt, Largeur, peuple);
+            foreach (Unite u in list)
+            {
+                u.Coord = new Coordonnees(coord[0], coord[1]);
+                unites.Add(u);
+            }
+        }
 
         public void chargerCarte(ICreationCarte creationCarte)
         {
             creationCarte.chargerCarte(this);
         }
 
-        public abstract bool caseVide(int x, int y);
 
         public Case getCase(int x, int y)
         {
@@ -96,372 +161,133 @@ namespace Modele
             Cases[x][y] = _case;
         }
 
-        public int[] getCoord(IUnite u)
-        {
-            int[] coord = new int[2];
-
-            for (int i = 0; i < largeur; i++)
-            {
-                for (int j = 0; j < hauteur; j++)
-                {
-                    if (unites[i][j] != null && unites[i][j].Contains(u))
-                    {
-                        coord[0] = i;
-                        coord[1] = j;
-                        break;
-                    }
-                }
-            }
-
-            return coord;
-        }
-
         public int getNombreUniteRestante(Joueur joueur)
         {
             int res = 0;
-            for (int i = 0; i < largeur; i++)
+            foreach (Unite u in unites)
             {
-                for (int j = 0; j < hauteur; j++)
-                {
-                    if (unites[i][j] != null && unites[i][j].Count > 0 && unites[i][j][0].IdProprietaire == joueur.Id)
-                    {
-                        res += unites[i][j].Count;
-                    }
-                }
+                if (u.IdProprietaire == joueur.Id)
+                    res++;
             }
 
             return res;
         }
 
-        public abstract void selectionneUnite(IUnite unite);
-
-        public abstract void selectionneCase(int x, int y);
-
-        public abstract void placeUnite(List<Unite> list);
 
         public void actualiseDeplacement()
         {
-            for (int i = 0; i < largeur; i++)
+            foreach(Unite u in unites)
             {
-                for (int j = 0; j < hauteur; j++)
-                {
-                    if (unites[i][j] != null && unites[i][j].Count > 0)
-                    {
-                        foreach(Unite u in unites[i][j])
-                        {
-                            u.PointsDepl += 1;
-                        }
-                    }
-                }
+                u.PointsDepl += 1;
             }
         }
 
-
-        public void deplaceUnites(List<Unite> u, int column, int row, int nbPtDepl)
+        public List<Unite> getUniteJoueur(Joueur j)
         {
-            List<Unite> dest = unites[column][row];
-            for (int i = 0; i < largeur; i++)
+            return unites.Where(u => u.IdProprietaire==j.Id).ToList();
+        }
+
+        public List<Unite> getUniteFromCoord(Coordonnees coord)
+        {
+            return unites.Where(u => u.Coord == coord).ToList();
+        }
+
+        public List<Unite> getUniteFromCoordAndJoueur(Coordonnees coord, Joueur j)
+        {
+            return unites.Where(u => u.Coord == coord && u.IdProprietaire == j.Id).ToList();
+        }
+
+        private bool estAdjacent(Coordonnees a, Coordonnees b)
+        {
+            return Math.Abs(Math.Abs(a.X - b.X) - Math.Abs(a.Y - b.Y))==1;
+        }
+
+        private bool caseAccessible(Coordonnees c, Unite u)
+        {
+            List<Unite> listUniteCase = getUniteFromCoord(c);
+            return listUniteCase.Count == 0 || (listUniteCase.Count > 0 && listUniteCase[0].IdProprietaire == u.IdProprietaire);
+        }
+
+
+        public void deplaceUnites(List<Unite> u, Coordonnees destCoord, int nbPtDepl, int[][][] sugg)
+        {
+            foreach(Unite unit in u)
             {
-                for (int j = 0; j < hauteur; j++)
+                List<Unite> dest = getUniteFromCoord(destCoord);
+                if (unites.Contains(unit))
                 {
-                    if (unites[i][j] != null && unites[i][j].Count > 0)
+                    if (caseAccessible(destCoord,unit)) // si case vide ou case avec alliés
                     {
-                        foreach(Unite unit in u)//probleme ici
+                        unit.Coord = destCoord;
+                        unit.PointsDepl = nbPtDepl;
+                    }
+                    else // sinon combat
+                    {
+                        Unite unitDef = dest[0]; //getmeilleurunitedef(dest);
+
+                        unit.attaquer(unitDef);
+
+                        if (!unit.estEnVie())
                         {
-                            if (unites[i][j].Contains(unit))
+                            unites.Remove(unit);
+                        }
+                        if (!unitDef.estEnVie())
+                        {
+                            unites.Remove(unitDef);
+                            if (getUniteFromCoord(destCoord).Count == 0)
                             {
-                                if (dest == null)
+                                unit.Coord = destCoord;
+                            }
+                            else
+                            {
+                                if (!estAdjacent(destCoord,unit.Coord)) // si l'unité n'est pas sur une case adjacente à l'adversaire, on rapproche l'unité
                                 {
-                                    unites[column][row] = new List<Unite>();
-                                    dest = unites[column][row];
-                                }
-
-                                if (dest.Count == 0 || (dest.Count > 0 && dest[0].IdProprietaire == unit.IdProprietaire))
-                                {
-                                    unites[column][row].Add(unit);
-                                    unites[i][j].Remove(unit);
-                                    unit.PointsDepl = nbPtDepl;
-                                    //unit.PointsDepl -= Math.Abs(column - i) + Math.Abs(row - j);
-                                    //calculPointDepl(Unite u, int xOrig, yOrig, int xDest, int yDest);
-                                }
-                                else
-                                {
-                                    Unite unitDef = unites[column][row][0]; 
-                                    Random randCombat = new Random();
-                                    Random rand = new Random();
-                                    int nbToursCombat = 3+randCombat.Next((Math.Max(unit.PointsVie,unitDef.PointsVie))+2);
-                                    int n = 0;
-                                    //Console.WriteLine("combat nbTours "+nbToursCombat);
-                                    while (nbToursCombat-n>0 && unit.estEnVie() && unitDef.estEnVie())
+                                    Coordonnees coordApres = null;
+                                    int deplMax = int.MinValue;
+                                    if (destCoord.X - 1 >= 0 && sugg[destCoord.X - 1][destCoord.Y][0] != 0 && caseAccessible(new Coordonnees(destCoord.X - 1, destCoord.Y),unit))
                                     {
-                                        double ratioVie = (double)unit.PointsVie / (double)unit.PointsVieMax;
-                                        double ratioVieDef = (double)unitDef.PointsVie / (double)unitDef.PointsVieMax;
-                                        double attaUnit = (double)unit.PointsAttaque * (double)ratioVie;
-                                        double defUnitdef = (double)unitDef.PointsDefense * (double)ratioVieDef;
-                                        double ratioAttDef = (double)(attaUnit / defUnitdef);
-                                        double ratioChanceDef=0;
-                                        if (ratioAttDef > 1) // avantage attaquant
+                                        if (sugg[destCoord.X - 1][destCoord.Y][1] > deplMax)
                                         {
-                                            ratioChanceDef = 1/ratioAttDef;
-                                            ratioChanceDef *= 0.5;
-                                            ratioChanceDef = 0.5-ratioChanceDef;
-                                            ratioChanceDef += 0.5;
+                                            deplMax = sugg[destCoord.X - 1][destCoord.Y][1];
+                                            coordApres = new Coordonnees(destCoord.X - 1, destCoord.Y);
                                         }
-                                        else if (ratioAttDef == 1) //égalité, aucun n'a l'avantage
+                                    }
+                                    if (destCoord.X + 1 < Largeur && sugg[destCoord.X + 1][destCoord.Y][0] != 0 && caseAccessible(new Coordonnees(destCoord.X + 1, destCoord.Y), unit))
+                                    {
+                                        if (sugg[destCoord.X + 1][destCoord.Y][1] > deplMax)
                                         {
-                                            ratioChanceDef = ratioAttDef * 0.5; // 50% de chnce de gagner
+                                            deplMax = sugg[destCoord.X + 1][destCoord.Y][1];
+                                            coordApres = new Coordonnees(destCoord.X + 1, destCoord.Y);
                                         }
-                                        else // avantage défense
-                                        {
-                                            ratioChanceDef = ratioAttDef;
-                                            ratioChanceDef *= 0.5;
-                                        }
-                                        double ratioCombat = (double)((double)rand.Next(100)/100);
-                                        //Console.WriteLine(ratioChanceDef+" "+ratioCombat+" "+ratioVie);
-                                        if (ratioCombat <= ratioChanceDef)
-                                        {
-                                           // Console.WriteLine(unit.Proprietaire.Nom+" gagne tour " + (n+1));
-                                            unitDef.perdPV(1);
-                                        }
-                                        else
-                                        {
-                                            //Console.WriteLine(unitDef.Proprietaire.Nom + " perd tour" + (n + 1));
-                                            unit.perdPV(1);
-                                        }
-                                        n++;
                                     }
 
-                                    if (!unit.estEnVie())
+                                    if (destCoord.Y - 1 >= 0 && sugg[destCoord.X][destCoord.Y - 1][0] != 0 && caseAccessible(new Coordonnees(destCoord.X, destCoord.Y - 1), unit))
                                     {
-                                        unites[i][j].Remove(unit);
-                                    }
-                                    if (!unitDef.estEnVie())
-                                    {
-                                        unites[column][row].Remove(unitDef);
-                                        if (unites[column][row].Count == 0)
+                                        if (sugg[destCoord.X][destCoord.Y - 1][1] > deplMax)
                                         {
-                                            unites[column][row].Add(unit);
-                                            unites[i][j].Remove(unit);
+                                            deplMax = sugg[destCoord.X][destCoord.Y - 1][1];
+                                            coordApres = new Coordonnees(destCoord.X, destCoord.Y - 1);
                                         }
-                                        unit.PointsDepl = nbPtDepl;
                                     }
 
-
+                                    if (destCoord.Y + 1 < Hauteur && sugg[destCoord.X][destCoord.Y + 1][0] != 0 && caseAccessible(new Coordonnees(destCoord.X, destCoord.Y + 1), unit))
+                                    {
+                                        if (sugg[destCoord.X][destCoord.Y + 1][1] > deplMax)
+                                        {
+                                            deplMax = sugg[destCoord.X][destCoord.Y + 1][1];
+                                            coordApres = new Coordonnees(destCoord.X, destCoord.Y + 1);
+                                        }
+                                    }
+                                    unit.Coord = coordApres;
                                 }
                             }
+                            unit.PointsDepl = nbPtDepl;
                         }
+
+
                     }
                 }
             }
-        }
-
-        public int[][][] suggestion(Unite unite, int x, int y)
-        {
-            WrapperMapAleatoire wrap = new WrapperMapAleatoire();
-            List<int> emplUnites = new List<int>();
-            for (int i = 0; i < Largeur; i++)
-            {
-                for (int j = 0; j < Hauteur; j++)
-                {
-                    if (Unites[i][j] != null && Unites[i][j].Count > 0 && Unites[i][j][0].IdProprietaire != unite.IdProprietaire)
-                        emplUnites.Add(Unites[i][j].Count);
-                    else
-                        emplUnites.Add(0);
-                }
-            }
-
-            List<int> carteInt = new List<int>();
-            for (int i = 0; i < Largeur; i++)
-            {
-                for (int j = 0; j < Hauteur; j++)
-                {
-                    CaseInt tile = CaseInt.Plaine;
-                    if (Cases[i][j] is CaseDesert)
-                    {
-                        tile = CaseInt.Desert;
-                    }
-                    else if (Cases[i][j] is CaseEau)
-                    {
-                        tile = CaseInt.Eau;
-                    }
-                    else if (Cases[i][j] is CaseForet)
-                    {
-                        tile = CaseInt.Foret;
-                    }
-                    else if (Cases[i][j] is CaseMontagne)
-                    {
-                        tile = CaseInt.Montagne;
-                    }
-                    else if (Cases[i][j] is CasePlaine)
-                    {
-                        tile = CaseInt.Plaine;
-                    }
-                    carteInt.Add((int)tile);
-                }
-            }
-
-            PeupleInt peuple = PeupleInt.Gaulois;
-            IPeuple p = unite.Proprietaire.Peuple;
-
-            if (p is PeupleViking)
-                peuple = PeupleInt.Viking;
-            else if (p is PeupleNain)
-                peuple = PeupleInt.Nain;
-            else if (p is PeupleGaulois)
-                peuple = PeupleInt.Gaulois;
-
-            List<int> sugg = wrap.getSuggestion(carteInt, emplUnites, Largeur, x, y, unite.PointsDepl, (int)peuple);
-
-            int[][][] res = new int[Largeur][][];
-            for (int i = 0; i < Largeur; i++)
-            {
-                res[i] = new int[Hauteur][];
-                for (int j = 0; j < Hauteur; j++)
-                {
-                    res[i][j] = new int[2];
-                }
-            }
-
-            for (int i = 0; i < Largeur; i++)
-            {
-                for (int j = 0; j < Hauteur; j++)
-                {
-                    res[i][j][0] = sugg[i*Largeur + j];
-                }
-            }
-
-            for (int i = 0; i < Largeur; i++)
-            {
-                for (int j = 0; j < Hauteur; j++)
-                {
-                    res[i][j][1] = sugg[Largeur*Hauteur + (i * Largeur + j)];
-                }
-            }
-
-            return res;
-        }
-
-        public System.Xml.Schema.XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml(System.Xml.XmlReader reader)
-        {
-            while (reader.Read())
-            {
-                if (reader.NodeType == XmlNodeType.Element)
-                {
-                    if (reader.Name == "Largeur")
-                    {
-                        if (reader.Read())
-                        {
-                            if (reader.NodeType == XmlNodeType.Text)
-                                this.Largeur = int.Parse(reader.Value);
-                        }
-                    }
-                    else if (reader.Name == "Hauteur")
-                    {
-                        if (reader.Read())
-                        {
-                            if (reader.NodeType == XmlNodeType.Text)
-                                this.Hauteur = int.Parse(reader.Value);
-                        }
-                    }
-                    else if (reader.Name == "NbToursMax")
-                    {
-                        if (reader.Read())
-                        {
-                            if (reader.NodeType == XmlNodeType.Text)
-                                this.NbToursMax = int.Parse(reader.Value);
-                        }
-                    }
-                    else if (reader.Name == "NbUniteParPeuble")
-                    {
-                        if (reader.Read())
-                        {
-                            if (reader.NodeType == XmlNodeType.Text)
-                                this.NbUniteParPeuble = int.Parse(reader.Value);
-                        }
-                    }
-                    else if (reader.Name == "Cases")
-                    {
-                        if (reader.Read())
-                        {
-                            if (reader.NodeType == XmlNodeType.Element)
-                            {
-                                XmlSerializer xs = new XmlSerializer(typeof(Case[][]));
-                                this.Cases = xs.Deserialize(reader) as Case[][];
-                            }
-                        }
-                    }
-                    else if (reader.Name == "Unites")
-                    {
-                        while (reader.Read())
-                        {
-                            if (reader.NodeType == XmlNodeType.Element)
-                            {
-
-                                if (Unites == null)
-                                {
-                                    Unites = new List<Unite>[Largeur][];
-                                    for (int i = 0; i < Largeur; i++)
-                                    {
-                                        Unites[i] = new List<Unite>[Hauteur];
-                                    }
-                                }
-                                int x = int.Parse(reader.GetAttribute("x"));
-                                int y = int.Parse(reader.GetAttribute("y"));
-                                if (reader.Read())
-                                {
-                                    if (reader.NodeType == XmlNodeType.Element)
-                                    {
-                                        XmlSerializer xs = new XmlSerializer(typeof(List<Unite>));
-                                        this.Unites[x][y] = xs.Deserialize(reader) as List<Unite>;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public void WriteXml(System.Xml.XmlWriter writer)
-        {
-
-
-            XmlSerializer xs;
-
-            writer.WriteElementString("Largeur", this.Largeur.ToString());
-            writer.WriteElementString("Hauteur", this.Hauteur.ToString());
-            writer.WriteElementString("NbToursMax", this.NbToursMax.ToString());
-            writer.WriteElementString("NbUniteParPeuble", this.NbUniteParPeuble.ToString());
-
-
-            writer.WriteStartElement("Cases");
-            xs = new XmlSerializer(typeof(Case[][]));
-            xs.Serialize(writer, this.Cases);
-            writer.WriteEndElement();
-
-            
-            writer.WriteStartElement("Unites");
-            for (int i = 0; i < Largeur; i++)
-            {
-                for (int j = 0; j < Hauteur; j++)
-                {
-                    if (this.Unites[i][j] != null && this.Unites[i][j].Count > 0)
-                    {
-                        writer.WriteStartElement("Coordonnees");
-                        writer.WriteAttributeString("x", i.ToString());
-                        writer.WriteAttributeString("y", j.ToString());
-                        xs = new XmlSerializer(typeof(List<Unite>));
-                        xs.Serialize(writer, this.Unites[i][j]);
-                        writer.WriteEndElement();
-                    }
-                }
-            }
-            writer.WriteEndElement();
         }
     }
 }

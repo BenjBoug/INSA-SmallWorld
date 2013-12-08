@@ -30,6 +30,7 @@ namespace InterfaceGraphique
         List<Unite> listUnitSelected;
         int[][][] allowedMouv;
         private Semaphore _pool;
+        private Semaphore _poolInit;
 
 
         public MainWindow()
@@ -39,6 +40,7 @@ namespace InterfaceGraphique
             listUnitSelected = new List<Unite>();
             tileFactory = new ImageFactory();
             _pool = new Semaphore(0, 1);
+            _poolInit = new Semaphore(0, 1);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,7 +49,7 @@ namespace InterfaceGraphique
         }
 
 
-        private void updateUI(object sender, EventArgs e)
+        private void updateUI()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -66,13 +68,14 @@ namespace InterfaceGraphique
         {
             Task.Factory.StartNew(() =>
             {
-                _pool.WaitOne();
+                _poolInit.WaitOne();
                 while (!partie.Finpartie)
                 {
                     partie.joueurActuel().jouerTour(partie);
                     partie.tourSuivant();
+                    updateUI();
+                    System.Threading.Thread.Sleep(300);
                     _pool.WaitOne();
-                    System.Threading.Thread.Sleep(30);
                 }
                 endGame();
             });
@@ -85,7 +88,6 @@ namespace InterfaceGraphique
 
         private void initUI()
         {
-            partie.FinTours += updateUI;
             Console.WriteLine("initUI ");
             canvasMap.Children.Clear();
             canvasMap.Children.Add(selectionRectangle);
@@ -95,7 +97,7 @@ namespace InterfaceGraphique
             loadGrid();
             loadControlGauche();
             loadControlDroit();
-            _pool.Release();
+            _poolInit.Release();
         }
 
         public void loadPartie(MonteurCarte monteurC, List<IJoueur> joueurs)
@@ -189,13 +191,12 @@ namespace InterfaceGraphique
 
             if (selectionRectangle.Visibility == Visibility.Visible)
                 typeCase.Text += "Type: " + (selectionRectangle.Tag as ICase).ToString();
-            
+
+
+            List<Unite> tmp = partie.Carte.getUniteFromCoord(new Coordonnees(column, row));
             TextBlock nbUnite = new TextBlock();
             nbUnite.Text = "Nb Unités: ";
-            if (partie.Carte.Unites[column][row] != null)
-                nbUnite.Text += partie.Carte.Unites[column][row].Count();
-            else
-                nbUnite.Text += "0";
+            nbUnite.Text += tmp.Count();
 
             panelGrp.Children.Add(rect);
             panelInfo.Children.Add(typeCase);
@@ -205,20 +206,20 @@ namespace InterfaceGraphique
             grpInfo.Content = panelGrp;
             controlDroit.Children.Add(grpInfo);
 
-            if (partie.Carte.Unites[column][row] != null && selectionRectangle.Visibility == Visibility.Visible)
+
+            List<Unite> tmpLit = partie.Carte.getUniteFromCoordAndJoueur(new Coordonnees(column, row), partie.joueurActuel());
+
+            if (tmpLit.Count>0 && selectionRectangle.Visibility == Visibility.Visible)
             {
                 ScrollViewer scrollInfoUnite = new ScrollViewer();
                 scrollInfoUnite.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 scrollInfoUnite.Height = 400;
                 StackPanel panelScroll = new StackPanel();
-                foreach (Unite u in partie.Carte.Unites[column][row])
+                foreach (Unite u in tmpLit)
                 {
-                    if (u.Proprietaire == partie.joueurActuel())
-                    {
-                        GroupeUnite grp = new GroupeUnite(u);
-                        grp.MouseDown += grpUnit_MouseDown;
-                        panelScroll.Children.Add(grp);
-                    }
+                    GroupeUnite grp = new GroupeUnite(u);
+                    grp.MouseDown += grpUnit_MouseDown;
+                    panelScroll.Children.Add(grp);
                 }
                 scrollInfoUnite.Content = panelScroll;
                 controlDroit.Children.Add(scrollInfoUnite);
@@ -235,7 +236,7 @@ namespace InterfaceGraphique
                 for (int c = 0; c < partie.Carte.Largeur; c++)
                 {
                     var tile = partie.Carte.Cases[c][l];
-                    var unite =  partie.Carte.Unites[c][l];
+                    var unite = partie.Carte.getUniteFromCoord(new Coordonnees(c, l));
                     var rect = createRectangle(c, l, tile, unite);
                     canvasMap.Children.Add(rect);
                 }
@@ -309,7 +310,7 @@ namespace InterfaceGraphique
 
             if (listUnitSelected.Count > 0 && allowedMouv != null && allowedMouv[column][row][0] > 0)
             {
-                partie.Carte.deplaceUnites(listUnitSelected, column, row, allowedMouv[column][row][1]);
+                partie.Carte.deplaceUnites(listUnitSelected, new Coordonnees(column, row), allowedMouv[column][row][1], allowedMouv);
                 listUnitSelected.Clear();
             }
             else
@@ -399,7 +400,7 @@ namespace InterfaceGraphique
                             unit = u;
                     }
                 }
-                allowedMouv = partie.Carte.suggestion(unit, column, row); // on charge les suggestions pour cette unités ( et qui servira pour toutes les unités select)
+                allowedMouv = partie.joueurActuel().StrategySuggestion.getSuggestion(partie.Carte, unit); // on charge les suggestions pour cette unités ( et qui servira pour toutes les unités select)
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {

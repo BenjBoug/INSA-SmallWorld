@@ -21,12 +21,13 @@ namespace Modele
 
         }
 
-        public Joueur(FabriquePeuple fab, String color, String nom)
+        public Joueur(FabriquePeuple fab, String color, String nom, IStrategySuggestion sugg)
         {
             Peuple = fab.creerPeuple();
             Points = 0;
             Couleur = color;
             Nom = nom;
+            this.strategySuggestion = sugg;
         }
 
         private int id;
@@ -82,6 +83,14 @@ namespace Modele
             {
                 handler(this, EventArgs.Empty);
             }
+        }
+
+        IStrategySuggestion strategySuggestion;
+
+        public IStrategySuggestion StrategySuggestion
+        {
+            get {return strategySuggestion;}
+            set {strategySuggestion = value;}
         }
 
     }

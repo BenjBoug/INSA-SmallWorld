@@ -8,7 +8,8 @@ namespace Modele
 {
     public class JoueurConcret : Joueur
     {
-        public JoueurConcret(FabriquePeuple fab, String color, String nom) : base(fab,color,nom)
+        public JoueurConcret(FabriquePeuple fab, String color, String nom)
+            : base(fab, color, nom,new Suggestion())
         {
             sem = new Semaphore(0, 1);
         }
