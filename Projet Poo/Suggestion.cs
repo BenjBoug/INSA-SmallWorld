@@ -16,7 +16,7 @@ namespace Modele
 
             int x = unite.Coord.X;
             int y = unite.Coord.Y;
-            WrapperMapAleatoire wrap = new WrapperMapAleatoire();
+            WrapperSuggestion wrap = new WrapperSuggestion();
 
             List<int> emplUnites = getUnitesToList(carte, unite);
             List<int> carteInt = getCasesToList(carte);

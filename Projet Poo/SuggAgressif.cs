@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LibCLR;
 
 namespace Modele
 {
@@ -59,22 +60,47 @@ namespace Modele
                 double distMin = int.MaxValue;
                 foreach (Coordonnees c in listCoordAttaquable)
                 {
-                    if (distance(unite.Coord, c) < distMin)
+                    if (unite.Coord.distance(c) < distMin)
                     {
                         plusProche = c;
-                        distMin = distance(unite.Coord, c);
+                        distMin = unite.Coord.distance(c);
                     }
                 }
-                List<Node> path = pathFinding(new Node(unite.Coord), new Node(plusProche));
+                //List<Node> path = pathFinding(new Node(unite.Coord), new Node(plusProche));
 
-                foreach (Node n in path)
+                WrapperAStar aStart = new WrapperAStar();
+                int peuple = -1;
+                IPeuple p = unite.Proprietaire.Peuple;
+
+                if (p is PeupleViking)
+                    peuple = 0;
+                else if (p is PeupleNain)
+                    peuple = 1;
+                else if (p is PeupleGaulois)
+                    peuple = 2;
+                
+                List<Coordonnees> path = convertListInttoListCoord(aStart.pathFinding(carte.toList(),peuple,carte.Largeur,unite.Coord.X,unite.Coord.Y,plusProche.X,plusProche.Y));
+                if (path != null && path.Count>0)
                 {
-                    if (res[n.Coord.X][n.Coord.Y][0] != 0)
-                        res[n.Coord.X][n.Coord.Y][0] = res[n.Coord.X][n.Coord.Y][1] + 10;
+                    foreach (Coordonnees coord in path)
+                    {
+                        if (res[coord.X][coord.Y][0] != 0)
+                            res[coord.X][coord.Y][0] = res[coord.X][coord.Y][1] + 10;
+                    }
                 }
 
             }
 
+            return res;
+        }
+
+        private List<Coordonnees> convertListInttoListCoord(List<int> path)
+        {
+            List<Coordonnees> res = new List<Coordonnees>();
+            for (int i = 0; i < path.Count; i += 2)
+            {
+                res.Add(new Coordonnees(path[i],path[i+1]));
+            }
             return res;
         }
 
@@ -86,7 +112,7 @@ namespace Modele
 
             openset.Add(start);
             start.G_score = 0;
-            start.F_score = start.G_score = distance(start, goal);
+            start.F_score = start.G_score + start.distance(goal);
             Node current=null;
             while (openset.Count>0)
             {
@@ -100,8 +126,8 @@ namespace Modele
                 closedset.Add(current);
                 foreach (Node neighbor in neighbor_nodes(current))
                 {
-                    double tentative_g_score = current.G_score + distance(current,neighbor);
-                    double tentative_f_score = tentative_g_score + distance(neighbor, goal);
+                    double tentative_g_score = current.G_score + current.distance(neighbor);
+                    double tentative_f_score = tentative_g_score + neighbor.distance(goal);
 
                     if (closedset.Contains(neighbor) && tentative_f_score >= neighbor.F_score)
                         continue;
@@ -119,7 +145,7 @@ namespace Modele
                 }
             }
 
-            return reconstruct_path(came_from, current);
+            return null;
         }
 
         private List<Node> reconstruct_path(Dictionary<Node, Node> came_from, Node current)
@@ -261,6 +287,11 @@ namespace Modele
             {
                 return this.coord == other.coord;
             }
+
+            public double distance(Node b)
+            {
+                return coord.distance(b.coord);
+            }
         }
 
         private class ByFScore : IComparer<Node>
@@ -269,70 +300,6 @@ namespace Modele
             public int Compare(Node x, Node y)
             {
                 return (int) (x.F_score - y.F_score);
-            }
-        }
-
-        private double distance(Node a, Node b)
-        {
-            return Math.Sqrt(Math.Pow(a.Coord.X - b.Coord.X, 2) + Math.Pow(a.Coord.Y - b.Coord.Y, 2));
-        }
-        private double distance(Coordonnees a, Coordonnees b)
-        {
-            return Math.Sqrt(Math.Pow(a.X - b.X, 2) + Math.Pow(a.Y - b.Y, 2));
-        }
-        private int[][] getCoeffEnnemis(Carte carte, Unite unite)
-        {
-            int[][] res = new int[carte.Largeur][];
-            for (int i = 0; i < carte.Largeur; i++)
-            {
-                res[i] = new int[carte.Hauteur];
-                for (int j = 0; j < carte.Hauteur; j++)
-                {
-                    res[i][j]=0;
-                }
-            }
-            coeffFromCoord(unite.Coord,carte,res,0);
-
-            int k = 1;
-            foreach (Unite u in carte.Unites.Where(u => u.IdProprietaire!=unite.IdProprietaire))
-            {
-                coeffFromCoord(u.Coord, carte, res, 0);
-                k++;
-            } 
-            
-            for (int i = 0; i < carte.Largeur; i++)
-            {
-                for (int j = 0; j < carte.Hauteur; j++)
-                {
-                    res[i][j] /= k;
-                }
-            }
-
-            return res;
-        }
-
-        private void coeffFromCoord(Coordonnees coord, Carte carte, int[][] sugg, int coef)
-        {
-            sugg[coord.X][coord.Y]+=coef;
-            if (coord.X - 1 >= 0)
-            {
-                if (sugg[coord.X-1][coord.Y]<coef)
-                    coeffFromCoord(new Coordonnees(coord.X - 1, coord.Y), carte, sugg, coef + 1);
-            }
-            if (coord.X + 1 < carte.Largeur)
-            {
-                if (sugg[coord.X + 1][coord.Y] < coef)
-                    coeffFromCoord(new Coordonnees(coord.X + 1, coord.Y), carte, sugg, coef + 1);
-            }
-            if (coord.Y - 1 >= 0)
-            {
-                if (sugg[coord.X][coord.Y - 1] < coef)
-                    coeffFromCoord(new Coordonnees(coord.X, coord.Y - 1), carte, sugg, coef + 1);
-            }
-            if (coord.Y + 1 < carte.Hauteur)
-            {
-                if (sugg[coord.X][coord.Y + 1] < coef)
-                 coeffFromCoord(new Coordonnees(coord.X, coord.Y + 1), carte, sugg, coef + 1);
             }
         }
     }

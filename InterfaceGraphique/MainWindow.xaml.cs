@@ -266,13 +266,10 @@ namespace InterfaceGraphique
         {
             var rectangle = new Tile(tile, tileFactory, listUnite);
 
-            // mise à jour des attributs (column et Row) référencant la position dans la grille à rectangle
             Canvas.SetLeft(rectangle, c * 50);
             Canvas.SetTop(rectangle, l * 50);
             Canvas.SetZIndex(rectangle,5);
 
-            // enregistrement d'un écouteur d'evt sur le rectangle : 
-            // source = rectangle / evt = MouseLeftButtonDown / délégué = rectangle_MouseLeftButtonDown
             rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
             return rectangle;
         }
@@ -290,7 +287,6 @@ namespace InterfaceGraphique
             rectangle.Width = 50;
             rectangle.Height = 50;
 
-            //rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
 
             return rectangle;
         }

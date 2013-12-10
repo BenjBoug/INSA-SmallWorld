@@ -82,17 +82,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LibCLR.h" />
+    <ClInclude Include="tools.h" />
+    <ClInclude Include="WrapperMapAleatoire.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
+    <ClInclude Include="WrapperAStar.h" />
+    <ClInclude Include="WrapperPlaceJoueur.h" />
+    <ClInclude Include="WrapperSuggestion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="LibCLR.cpp" />
+    <ClCompile Include="tools.cpp" />
+    <ClCompile Include="WrapperMapAleatoire.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="WrapperAStar.cpp" />
+    <ClCompile Include="WrapperPlaceJoueur.cpp" />
+    <ClCompile Include="WrapperSuggestion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

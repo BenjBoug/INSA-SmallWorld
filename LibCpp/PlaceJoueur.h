@@ -7,19 +7,16 @@
 #endif
 #include <iostream>
 #include <ctime>
-#include <vector>
+#include "Enum.h"
 
 using namespace std;
 
-class MapAleatoire
+class PlaceJoueur
 {
 public:
+	DLL PlaceJoueur(void);
+	DLL ~PlaceJoueur(void);
 
-
-	DLL MapAleatoire(void);
-	DLL ~MapAleatoire(void);
-
-	DLL vector<int> generer(int taille,int nbTerrain);
-private:
+	DLL int * placeJoueur(int **,int**, int taille,int peuple);
 };
 

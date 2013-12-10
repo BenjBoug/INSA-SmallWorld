@@ -84,7 +84,7 @@ namespace Modele
 
         public void placeUnite(List<Unite> list)
         {
-            WrapperMapAleatoire wrap = new WrapperMapAleatoire();
+            WrapperPlaceJoueur wrap = new WrapperPlaceJoueur();
             List<int> emplUnites = new List<int>();
             for (int i = 0; i < Largeur; i++)
             {
@@ -93,7 +93,27 @@ namespace Modele
                     emplUnites.Add(getUniteFromCoord(new Coordonnees(i, j)).Count);
                 }
             }
+            int peuple = -1;
+            IPeuple p = list[0].Proprietaire.Peuple;
 
+            if (p is PeupleViking)
+                peuple = 0;
+            else if (p is PeupleNain)
+                peuple = 1;
+            else if (p is PeupleGaulois)
+                peuple = 2;
+
+
+            List<int> coord = wrap.getEmplacementJoueur(emplUnites, toList(), Largeur, peuple);
+            foreach (Unite u in list)
+            {
+                u.Coord = new Coordonnees(coord[0], coord[1]);
+                unites.Add(u);
+            }
+        }
+
+        public List<int> toList()
+        {
             List<int> carteInt = new List<int>();
             for (int i = 0; i < Largeur; i++)
             {
@@ -125,24 +145,7 @@ namespace Modele
                     carteInt.Add(tile);
                 }
             }
-
-            int peuple = -1;
-            IPeuple p = list[0].Proprietaire.Peuple;
-
-            if (p is PeupleViking)
-                peuple = 0;
-            else if (p is PeupleNain)
-                peuple = 1;
-            else if (p is PeupleGaulois)
-                peuple = 2;
-
-
-            List<int> coord = wrap.getEmplacementJoueur(emplUnites, carteInt, Largeur, peuple);
-            foreach (Unite u in list)
-            {
-                u.Coord = new Coordonnees(coord[0], coord[1]);
-                unites.Add(u);
-            }
+            return carteInt;
         }
 
         public void chargerCarte(ICreationCarte creationCarte)

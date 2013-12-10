@@ -53,6 +53,12 @@ namespace Modele
             return fooItem.X == this.X && fooItem.y == this.y;
         }
 
+
+        public double distance(Coordonnees b)
+        {
+            return Math.Sqrt(Math.Pow(this.X - b.X, 2) + Math.Pow(this.Y - b.Y, 2));
+        }
+
         public override int GetHashCode()
         {
             int hash = 13;
