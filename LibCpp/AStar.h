@@ -7,11 +7,13 @@
 #endif
 
 
-#include "Node.h"
-#include "Coordonnees.h"
+#include "NodeFactory.h"
+#include "PathNotFoundException.h"
 #include <vector>
-#include <map>
+#include <list>
+#include <unordered_map>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -21,21 +23,20 @@ public:
 	DLL AStar(void);
 	DLL ~AStar(void);
 	
-	DLL vector<Node*> pathFinding(vector<int> carte, int peupleUnite, int taille, Coordonnees *start, Coordonnees *goal);
+	DLL vector<Node*>* pathFinding(vector<int> carte, int peupleUnite, int taille, Coordonnees &start, Coordonnees &goal);
 
-	vector<Node*> pathFinding(Node *start, Node *goal);
+	vector<Node*>* pathFinding(Node *start, Node *goal);
 	
 private:
-	vector<Node*> reconstruct_path(map<Node*, Node*> came_from, Node *current);
-	vector<Node*> neighbor_nodes(Node *current);
-	Node * isInClosedSet(Coordonnees c);
+	vector<Node*>* reconstruct_path(unordered_map<Node*, Node*> came_from, Node *current);
+	vector<Node*>* neighbor_nodes(Node *current);
 
 	vector<int> carte;
 	int peupleUnite;
 	int taille;
 
-    vector<Node*> closedset;
-    vector<Node*> openset;
-    map<Node*, Node*> came_from;
+    list<Node*> closedset;
+    list<Node*> openset;
+    unordered_map<Node*, Node*> came_from;
+	NodeFactory factory;
 };
-

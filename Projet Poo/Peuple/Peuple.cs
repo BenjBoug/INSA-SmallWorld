@@ -11,6 +11,9 @@ namespace Modele
     [XmlInclude(typeof(PeupleViking))]
     public abstract class Peuple : IPeuple
     {
-
+        public virtual int calculPoints(Carte c, Unite u)
+        {
+            return c.Cases[u.Coord.X][u.Coord.Y].bonusPoints(this);
+        }
     }
 }

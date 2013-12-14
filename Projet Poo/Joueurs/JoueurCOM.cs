@@ -5,8 +5,22 @@ using System.Text;
 
 namespace Modele
 {
-    public class JoueurCOM2 : Joueur
+    public class JoueurCOM : Joueur
     {
+        public JoueurCOM() : base()
+        {
+            unitesSelect = new List<Unite>();
+        }
+
+        public JoueurCOM(FabriquePeuple fab, String color, String nom, StrategySugg sugg)
+            : base(fab, color, nom,sugg)
+        {
+            unitesSelect = new List<Unite>();
+        }
+
+        private List<Unite> unitesSelect;
+
+
         public override void jouerTour(Partie partie)
         {
             Carte carte = partie.Carte;
@@ -18,7 +32,7 @@ namespace Modele
             {
                 List<Unite> listUnitoMove = new List<Unite>();
                 int nbUnit = unites.Count();
-                foreach (Unite u in unites)
+                foreach(Unite u in unites)
                 {
                     listUnitoMove.Clear();
                     if (u.PointsDepl > 0)
@@ -33,7 +47,7 @@ namespace Modele
                                 if (allowedMouv[x][y][0] > max)
                                 {
                                     coord.Clear();
-                                    coord.Add(new Coordonnees(x, y));
+                                    coord.Add(new Coordonnees(x,y));
                                     max = allowedMouv[x][y][0];
                                 }
                                 else if (allowedMouv[x][y][0] == max && max != 0)
@@ -55,7 +69,7 @@ namespace Modele
 
         public override void finirTour()
         {
-
+            
         }
     }
 }

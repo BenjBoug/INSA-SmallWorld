@@ -5,10 +5,7 @@ using System.Text;
 
 namespace Modele
 {
-    public interface IPeuple
+    public class UniteElite : Unite
     {
-
-        int calculPoints(Carte c, Unite u);
-       // int toInt();
     }
 }

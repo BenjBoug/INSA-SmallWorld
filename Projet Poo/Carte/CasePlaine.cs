@@ -11,7 +11,7 @@ namespace Modele
         {
             return "Plaine";
         }
-        public override int bonusPoints(IPeuple p)
+        public override int bonusPoints(Peuple p)
         {
             if (p is PeupleNain)
                 return 0;

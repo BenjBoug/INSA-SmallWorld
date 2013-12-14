@@ -54,6 +54,11 @@ namespace InterfaceGraphique
             }));
         }
 
+        public void setNbUnite(int nbUnit)
+        {
+            nbUnites.Text = "Unités réstantes : "+nbUnit;
+        }
+
         public void select(Joueur joueurActif)
         {
             if (joueurActif == Joueur)

@@ -7,7 +7,7 @@ namespace Modele
 {
     public class SuggPacifiste : Suggestion
     {
-        public int[][][] getSuggestion(Carte carte, Unite unite)
+        public override int[][][] getSuggestion(Carte carte, Unite unite)
         {
             int[][][] res = base.getSuggestion(carte, unite);
 

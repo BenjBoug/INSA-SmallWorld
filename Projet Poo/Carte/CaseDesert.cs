@@ -12,7 +12,7 @@ namespace Modele
             return "Désert";
         }
 
-        public override int bonusPoints(IPeuple p)
+        public override int bonusPoints(Peuple p)
         {
             if (p is PeupleViking)
                 return 0;

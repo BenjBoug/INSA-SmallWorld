@@ -59,7 +59,6 @@ namespace InterfaceGraphique
                 loadSuggestion();
                 loadControlDroit();
                 refreshControlGauche();
-                //Console.WriteLine("updateUi ");
                 _pool.Release();
             }));
         }
@@ -74,7 +73,7 @@ namespace InterfaceGraphique
                     partie.joueurActuel().jouerTour(partie);
                     partie.tourSuivant();
                     updateUI();
-                    System.Threading.Thread.Sleep(300);
+                    System.Threading.Thread.Sleep(100);
                     _pool.WaitOne();
                 }
                 endGame();
@@ -134,7 +133,9 @@ namespace InterfaceGraphique
             foreach (GroupeJoueur grp in panelListeJoueur.Children)
             {
                 grp.select(partie.joueurActuel());
-                if (partie.Carte.getNombreUniteRestante(grp.Joueur)==0)
+                int nbUnit = partie.Carte.getNombreUniteRestante(grp.Joueur);
+                grp.setNbUnite(nbUnit);
+                if (nbUnit == 0)
                 {
                     grp.IsEnabled = false;
                 }
@@ -348,7 +349,7 @@ namespace InterfaceGraphique
         {
 
             partie.joueurActuel().finirTour();
-
+            (sender as Button).IsEnabled = false;
             e.Handled = true;
         }
 
@@ -426,7 +427,6 @@ namespace InterfaceGraphique
             myFileStream.Close();
 
             initUI();
-
             startGame();
         }
     }

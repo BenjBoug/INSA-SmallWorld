@@ -14,6 +14,7 @@ namespace Modele
         List<Node> closedset = new List<Node>();
         List<Node> openset = new List<Node>();
         Dictionary<Node, Node> came_from = new Dictionary<Node, Node>();
+        WrapperAStar aStart = new WrapperAStar();
         public override int[][][] getSuggestion(Carte carte, Unite unite)
         {
             this.carte = carte;
@@ -66,9 +67,18 @@ namespace Modele
                         distMin = unite.Coord.distance(c);
                     }
                 }
-                //List<Node> path = pathFinding(new Node(unite.Coord), new Node(plusProche));
+                /*
+                List<Node> path = pathFinding(new Node(unite.Coord), new Node(plusProche));
+                if (path != null && path.Count > 0)
+                {
+                    foreach (Node n in path)
+                    {
+                        if (res[n.Coord.X][n.Coord.Y][0] != 0)
+                            res[n.Coord.X][n.Coord.Y][0] = res[n.Coord.X][n.Coord.Y][1] + 10;
+                    }
+                }
+                */
 
-                WrapperAStar aStart = new WrapperAStar();
                 int peuple = -1;
                 IPeuple p = unite.Proprietaire.Peuple;
 
@@ -80,6 +90,7 @@ namespace Modele
                     peuple = 2;
                 
                 List<Coordonnees> path = convertListInttoListCoord(aStart.pathFinding(carte.toList(),peuple,carte.Largeur,unite.Coord.X,unite.Coord.Y,plusProche.X,plusProche.Y));
+                
                 if (path != null && path.Count>0)
                 {
                     foreach (Coordonnees coord in path)
@@ -88,6 +99,7 @@ namespace Modele
                             res[coord.X][coord.Y][0] = res[coord.X][coord.Y][1] + 10;
                     }
                 }
+                  
 
             }
 

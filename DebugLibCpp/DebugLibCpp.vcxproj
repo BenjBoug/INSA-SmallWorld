@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0333E6D8-8783-44E8-B257-6BF2E92EF6FF}</ProjectGuid>
-    <RootNamespace>LibCpp</RootNamespace>
+    <ProjectGuid>{53094764-1F7B-4812-B501-E579E4AA877B}</ProjectGuid>
+    <RootNamespace>DebugLibCpp</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -44,15 +44,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>DLLEXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BrowseInformation>true</BrowseInformation>
+      <AdditionalIncludeDirectories>E:\Programmation\Projet\Projet\Projet Poo\LibCpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <Bscmake>
-      <PreserveSbr>true</PreserveSbr>
-    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -69,25 +65,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AStar.h" />
-    <ClInclude Include="Coordonnees.h" />
-    <ClInclude Include="Enum.h" />
-    <ClInclude Include="MapAleatoire.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="NodeFactory.h" />
-    <ClInclude Include="PathNotFoundException.h" />
-    <ClInclude Include="PlaceJoueur.h" />
-    <ClInclude Include="Suggestion.h" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AStar.cpp" />
-    <ClCompile Include="Coordonnees.cpp" />
-    <ClCompile Include="MapAleatoire.cpp" />
-    <ClCompile Include="Node.cpp" />
-    <ClCompile Include="NodeFactory.cpp" />
-    <ClCompile Include="PathNotFoundException.cpp" />
-    <ClCompile Include="PlaceJoueur.cpp" />
-    <ClCompile Include="Suggestion.cpp" />
+    <ProjectReference Include="..\LibCpp\LibCpp.vcxproj">
+      <Project>{0333e6d8-8783-44e8-b257-6bf2e92ef6ff}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

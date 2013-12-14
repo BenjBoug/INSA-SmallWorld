@@ -1,6 +1,5 @@
 #pragma once
-#include "AStar.h"
-#include "Coordonnees.h"
+#include "AStar.h"s
 #include "tools.h"
 #include <vector>
 using namespace System;

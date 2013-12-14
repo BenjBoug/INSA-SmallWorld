@@ -24,7 +24,7 @@ namespace TestLibCpp
 			{
 				carte.push_back(0);
 			}
-			vector<Node*> path = astar->pathFinding(carte,0,TAILLE,new Coordonnees(0,0),new Coordonnees(TAILLE-1,TAILLE-1));
+			//vector<Node*> path = astar->pathFinding(carte,0,TAILLE,new Coordonnees(0,0),new Coordonnees(TAILLE-1,TAILLE-1));
 		}
 
 	};

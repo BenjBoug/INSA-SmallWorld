@@ -76,7 +76,7 @@ namespace Modele
                 IJoueur joueur = u.Proprietaire;
                 IPeuple peuple = u.Proprietaire.Peuple;
 
-                joueur.Points += Cases[u.Coord.X][u.Coord.Y].bonusPoints(peuple);
+                joueur.Points += peuple.calculPoints(this, u);
 
             }
 
@@ -166,14 +166,7 @@ namespace Modele
 
         public int getNombreUniteRestante(Joueur joueur)
         {
-            int res = 0;
-            foreach (Unite u in unites)
-            {
-                if (u.IdProprietaire == joueur.Id)
-                    res++;
-            }
-
-            return res;
+            return getUniteJoueur(joueur).Count;
         }
 
 
@@ -286,8 +279,6 @@ namespace Modele
                             }
                             unit.PointsDepl = nbPtDepl;
                         }
-
-
                     }
                 }
             }

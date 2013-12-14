@@ -11,12 +11,12 @@ namespace Modele
         {
             return "Eau";
         }
-        public override int bonusPoints(IPeuple p)
+        public override int bonusPoints(Peuple p)
         {
             return 0;
         }
 
-        public override bool estAccessible(IPeuple p)
+        public override bool estAccessible(Peuple p)
         {
             if (p is PeupleViking)
                 return true;

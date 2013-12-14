@@ -7,7 +7,8 @@ namespace Modele
 {
     public interface ICase
     {
-        int bonusPoints(IPeuple p);
-        bool estAccessible(IPeuple p);
+        int bonusPoints(Peuple p);
+        bool estAccessible(Peuple p);
+        //int toInt();
     }
 }

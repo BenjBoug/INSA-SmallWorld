@@ -21,7 +21,7 @@ namespace Modele
 
         }
 
-        public Joueur(FabriquePeuple fab, String color, String nom, IStrategySuggestion sugg)
+        public Joueur(FabriquePeuple fab, String color, String nom, StrategySugg sugg)
         {
             Peuple = fab.creerPeuple();
             Points = 0;
@@ -85,9 +85,9 @@ namespace Modele
             }
         }
 
-        IStrategySuggestion strategySuggestion;
+        StrategySugg strategySuggestion;
 
-        public IStrategySuggestion StrategySuggestion
+        public StrategySugg StrategySuggestion
         {
             get {return strategySuggestion;}
             set {strategySuggestion = value;}

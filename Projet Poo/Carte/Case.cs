@@ -13,13 +13,12 @@ namespace Modele
     [XmlInclude(typeof(CaseForet))]
     public abstract class Case : ICase
     {
-        public virtual int bonusPoints(IPeuple p)
+        public virtual int bonusPoints(Peuple p)
         {
             return 1;
         }
 
-
-        public virtual bool estAccessible(IPeuple p)
+        public virtual bool estAccessible(Peuple p)
         {
             return true;
         }

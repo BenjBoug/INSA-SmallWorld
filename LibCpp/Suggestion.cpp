@@ -102,5 +102,29 @@ void Suggestion::calculDeplClassique(int **carte, int **unites, int xActuel, int
                 }
             }
         }
+		else if(peupleJActuel==Viking)
+		{
+			if (xActuel-1>=0)
+			{
+				if (carte[xActuel-1][yActuel]==Eau)
+					sugg[xActuel-1][yActuel][0]+=1;
+			}
+			if (xActuel+1<taille)
+			{
+				if (carte[xActuel+1][yActuel]==Eau)
+					sugg[xActuel+1][yActuel][0]+=1;
+			}
+			if (yActuel-1>=0)
+			{
+				if (carte[xActuel][yActuel-1]==Eau)
+					sugg[xActuel][yActuel-1][0]+=1;
+			}
+			if (yActuel+1<taille)
+			{
+				if (carte[xActuel][yActuel+1]==Eau)
+					sugg[xActuel][yActuel+1][0]+=1;
+			}
+		}
+
 	}
 }

@@ -6,12 +6,12 @@ using LibCLR;
 
 namespace Modele
 {
-    public class Suggestion : IStrategySuggestion
+    public class Suggestion : StrategySugg
     {
         protected enum PeupleInt { Gaulois = 1, Viking = 0, Nain = 2 };
         protected enum CaseInt { Plaine = 0, Eau = 1, Montagne = 2, Desert = 3, Foret = 4 };
 
-        public virtual int[][][] getSuggestion(Carte carte, Unite unite)
+        public override int[][][] getSuggestion(Carte carte, Unite unite)
         {
 
             int x = unite.Coord.X;
