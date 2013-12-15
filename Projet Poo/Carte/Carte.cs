@@ -205,7 +205,7 @@ namespace Modele
         }
 
 
-        public void deplaceUnites(List<Unite> u, Coordonnees destCoord, int nbPtDepl, int[][][] sugg)
+        public void deplaceUnites(List<Unite> u, Coordonnees destCoord, SuggMap sugg)
         {
             foreach(Unite unit in u)
             {
@@ -215,7 +215,7 @@ namespace Modele
                     if (caseAccessible(destCoord,unit)) // si case vide ou case avec alliés
                     {
                         unit.Coord = destCoord;
-                        unit.PointsDepl = nbPtDepl;
+                        unit.PointsDepl = sugg[destCoord].Depl;
                     }
                     else // sinon combat
                     {
@@ -240,44 +240,48 @@ namespace Modele
                                 {
                                     Coordonnees coordApres = null;
                                     int deplMax = int.MinValue;
-                                    if (destCoord.X - 1 >= 0 && sugg[destCoord.X - 1][destCoord.Y][0] != 0 && caseAccessible(new Coordonnees(destCoord.X - 1, destCoord.Y),unit))
+                                    Coordonnees tmp = new Coordonnees(destCoord.X - 1, destCoord.Y);
+                                    if (destCoord.X - 1 >= 0 && sugg[tmp].Sugg != 0 && caseAccessible(tmp,unit))
                                     {
-                                        if (sugg[destCoord.X - 1][destCoord.Y][1] > deplMax)
+                                        if (sugg[tmp].Depl > deplMax)
                                         {
-                                            deplMax = sugg[destCoord.X - 1][destCoord.Y][1];
-                                            coordApres = new Coordonnees(destCoord.X - 1, destCoord.Y);
+                                            deplMax = sugg[tmp].Depl;
+                                            coordApres = tmp;
                                         }
                                     }
-                                    if (destCoord.X + 1 < Largeur && sugg[destCoord.X + 1][destCoord.Y][0] != 0 && caseAccessible(new Coordonnees(destCoord.X + 1, destCoord.Y), unit))
+                                    tmp = new Coordonnees(destCoord.X + 1, destCoord.Y);
+                                    if (destCoord.X + 1 < Largeur && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit))
                                     {
-                                        if (sugg[destCoord.X + 1][destCoord.Y][1] > deplMax)
+                                        if (sugg[tmp].Depl > deplMax)
                                         {
-                                            deplMax = sugg[destCoord.X + 1][destCoord.Y][1];
-                                            coordApres = new Coordonnees(destCoord.X + 1, destCoord.Y);
-                                        }
-                                    }
-
-                                    if (destCoord.Y - 1 >= 0 && sugg[destCoord.X][destCoord.Y - 1][0] != 0 && caseAccessible(new Coordonnees(destCoord.X, destCoord.Y - 1), unit))
-                                    {
-                                        if (sugg[destCoord.X][destCoord.Y - 1][1] > deplMax)
-                                        {
-                                            deplMax = sugg[destCoord.X][destCoord.Y - 1][1];
-                                            coordApres = new Coordonnees(destCoord.X, destCoord.Y - 1);
+                                            deplMax = sugg[tmp].Depl;
+                                            coordApres = tmp;
                                         }
                                     }
 
-                                    if (destCoord.Y + 1 < Hauteur && sugg[destCoord.X][destCoord.Y + 1][0] != 0 && caseAccessible(new Coordonnees(destCoord.X, destCoord.Y + 1), unit))
+                                    tmp = new Coordonnees(destCoord.X, destCoord.Y-1);
+                                    if (destCoord.Y - 1 >= 0 && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit))
                                     {
-                                        if (sugg[destCoord.X][destCoord.Y + 1][1] > deplMax)
+                                        if (sugg[tmp].Depl > deplMax)
                                         {
-                                            deplMax = sugg[destCoord.X][destCoord.Y + 1][1];
-                                            coordApres = new Coordonnees(destCoord.X, destCoord.Y + 1);
+                                            deplMax = sugg[tmp].Depl;
+                                            coordApres = tmp;
+                                        }
+                                    }
+
+                                    tmp = new Coordonnees(destCoord.X, destCoord.Y+1);
+                                    if (destCoord.Y + 1 < Hauteur && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit))
+                                    {
+                                        if (sugg[tmp].Depl > deplMax)
+                                        {
+                                            deplMax = sugg[tmp].Depl;
+                                            coordApres = tmp;
                                         }
                                     }
                                     unit.Coord = coordApres;
                                 }
                             }
-                            unit.PointsDepl = nbPtDepl;
+                            unit.PointsDepl = sugg[destCoord].Depl;
                         }
                     }
                 }

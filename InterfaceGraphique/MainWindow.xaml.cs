@@ -28,7 +28,7 @@ namespace InterfaceGraphique
         Partie partie;
         TileFactory tileFactory;
         List<Unite> listUnitSelected;
-        int[][][] allowedMouv;
+        SuggMap allowedMouv;
         private Semaphore _pool;
         private Semaphore _poolInit;
 
@@ -36,7 +36,7 @@ namespace InterfaceGraphique
         public MainWindow()
         {
             InitializeComponent();
-            allowedMouv = null;
+            allowedMouv = new SuggMap();
             listUnitSelected = new List<Unite>();
             tileFactory = new ImageFactory();
             _pool = new Semaphore(0, 1);
@@ -248,16 +248,13 @@ namespace InterfaceGraphique
         {
             if (allowedMouv != null)
             {
-                for (int l = 0; l < partie.Carte.Hauteur; l++)
+                foreach (var pair in allowedMouv)
                 {
-                    for (int c = 0; c < partie.Carte.Largeur; c++)
+                    if (pair.Value.Sugg >= 1)
                     {
-                        if (allowedMouv[c][l][0] >= 1)
-                        {
-                            var rect = createSuggestion(c, l);
-                            rect.StrokeThickness = allowedMouv[c][l][0] + 1;
-                            canvasMap.Children.Add(rect);
-                        }
+                        var rect = createSuggestion(pair.Key.X, pair.Key.Y);
+                        rect.StrokeThickness = pair.Value.Sugg + 1;
+                        canvasMap.Children.Add(rect);
                     }
                 }
             }
@@ -305,9 +302,9 @@ namespace InterfaceGraphique
             selectionRectangle.Tag = tile;
 
 
-            if (listUnitSelected.Count > 0 && allowedMouv != null && allowedMouv[column][row][0] > 0)
+            if (listUnitSelected.Count > 0 && allowedMouv.Count > 0)
             {
-                partie.Carte.deplaceUnites(listUnitSelected, new Coordonnees(column, row), allowedMouv[column][row][1], allowedMouv);
+                partie.Carte.deplaceUnites(listUnitSelected, new Coordonnees(column, row), allowedMouv);
                 listUnitSelected.Clear();
             }
             else

@@ -11,6 +11,6 @@ namespace Modele
     [XmlInclude(typeof(SuggPacifiste))]
     public abstract class StrategySugg : IStrategySuggestion
     {
-        public abstract int[][][] getSuggestion(Carte carte, Unite unite);
+        public abstract SuggMap getSuggestion(Carte carte, Unite unite);
     }
 }

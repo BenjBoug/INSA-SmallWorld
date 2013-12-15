@@ -44,7 +44,7 @@ namespace Modele
         void chargerCarte(ICreationCarte creationCarte);
         void setCase(int x, int y, Case _case);
         void actualiseDeplacement();
-        void deplaceUnites(List<Unite> u, Coordonnees coord, int depl, int[][][] sugg);
+        void deplaceUnites(List<Unite> u, Coordonnees coord, SuggMap sugg);
 
     }
 }

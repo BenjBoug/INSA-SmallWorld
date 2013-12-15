@@ -11,7 +11,7 @@ namespace Modele
         protected enum PeupleInt { Gaulois = 1, Viking = 0, Nain = 2 };
         protected enum CaseInt { Plaine = 0, Eau = 1, Montagne = 2, Desert = 3, Foret = 4 };
 
-        public override int[][][] getSuggestion(Carte carte, Unite unite)
+        public override SuggMap getSuggestion(Carte carte, Unite unite)
         {
 
             int x = unite.Coord.X;
@@ -33,13 +33,14 @@ namespace Modele
 
             List<int> sugg = wrap.getSuggestion(carteInt, emplUnites, carte.Largeur, x, y, unite.PointsDepl, (int)peuple);
 
-            int[][][] res = new int[carte.Largeur][][];
+            SuggMap res = new SuggMap();
             for (int i = 0; i < carte.Largeur; i++)
             {
-                res[i] = new int[carte.Hauteur][];
                 for (int j = 0; j < carte.Hauteur; j++)
                 {
-                    res[i][j] = new int[2];
+                    SuggData data = new SuggData();
+                    data.Sugg = sugg[i * carte.Largeur + j];
+                    res[new Coordonnees(i, j)] = data;
                 }
             }
 
@@ -47,15 +48,7 @@ namespace Modele
             {
                 for (int j = 0; j < carte.Hauteur; j++)
                 {
-                    res[i][j][0] = sugg[i * carte.Largeur + j];
-                }
-            }
-
-            for (int i = 0; i < carte.Largeur; i++)
-            {
-                for (int j = 0; j < carte.Hauteur; j++)
-                {
-                    res[i][j][1] = sugg[carte.Largeur * carte.Hauteur + (i * carte.Largeur + j)];
+                    res[new Coordonnees(i, j)].Depl = sugg[carte.Largeur * carte.Hauteur + (i * carte.Largeur + j)];
                 }
             }
 

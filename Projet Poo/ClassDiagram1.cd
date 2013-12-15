@@ -313,21 +313,11 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Modele.SuggData">
-    <Position X="6.75" Y="16" Width="1.5" />
+    <Position X="6.75" Y="15.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAIA=</HashCode>
       <FileName>Joueurs\SuggData.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="Modele.SuggestionList">
-    <Position X="6.75" Y="14.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Joueurs\SuggestionList.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="SuggData" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="Modele.UniteBlindee">
     <Position X="15.25" Y="16.25" Width="1.5" />
@@ -341,6 +331,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Unites\UniteElite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.SuggMap">
+    <Position X="4.5" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SuggMap.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Modele.ICarte" Collapsed="true">

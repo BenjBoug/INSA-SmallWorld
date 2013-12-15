@@ -37,30 +37,29 @@ namespace Modele
                     listUnitoMove.Clear();
                     if (u.PointsDepl > 0)
                     {
-                        int[][][] allowedMouv = this.StrategySuggestion.getSuggestion(partie.Carte, u);
+                        SuggMap allowedMouv = this.StrategySuggestion.getSuggestion(partie.Carte, u);
                         List<Coordonnees> coord = new List<Coordonnees>();
                         int max = 0;
-                        for (int x = 0; x < carte.Largeur; x++)
+                        Console.WriteLine("{0}",
+                        allowedMouv.Count);
+                        foreach (var pair in allowedMouv)
                         {
-                            for (int y = 0; y < carte.Hauteur; y++)
+                            if (pair.Value.Sugg > max)
                             {
-                                if (allowedMouv[x][y][0] > max)
-                                {
-                                    coord.Clear();
-                                    coord.Add(new Coordonnees(x,y));
-                                    max = allowedMouv[x][y][0];
-                                }
-                                else if (allowedMouv[x][y][0] == max && max != 0)
-                                {
-                                    coord.Add(new Coordonnees(x, y));
-                                }
+                                coord.Clear();
+                                coord.Add(pair.Key);
+                                max = pair.Value.Sugg;
+                            }
+                            else if (pair.Value.Sugg == max && max != 0)
+                            {
+                                coord.Add(pair.Key);
                             }
                         }
                         if (coord.Count > 0)
                         {
                             listUnitoMove.Add(u);
                             int choix = rand.Next(coord.Count());
-                            carte.deplaceUnites(listUnitoMove, coord[choix], allowedMouv[coord[choix].X][coord[choix].Y][1], allowedMouv);
+                            carte.deplaceUnites(listUnitoMove, coord[choix], allowedMouv);
                         }
                     }
                 }

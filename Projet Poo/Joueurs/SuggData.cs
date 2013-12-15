@@ -7,7 +7,12 @@ namespace Modele
 {
     public class SuggData
     {
-        SuggData(int sugg, int depl)
+        public SuggData()
+        {
+            this.sugg = 0;
+            this.depl = 0;
+        }
+        public SuggData(int sugg, int depl)
         {
             this.sugg = sugg;
             this.depl = depl;

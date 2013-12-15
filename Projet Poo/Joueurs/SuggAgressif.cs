@@ -15,20 +15,20 @@ namespace Modele
         List<Node> openset = new List<Node>();
         Dictionary<Node, Node> came_from = new Dictionary<Node, Node>();
         WrapperAStar aStart = new WrapperAStar();
-        public override int[][][] getSuggestion(Carte carte, Unite unite)
+        public override SuggMap getSuggestion(Carte carte, Unite unite)
         {
             this.carte = carte;
             this.unite = unite;
+            
             //on récupère les suggestions classique en fonction du terrain
-            int[][][] res = base.getSuggestion(carte, unite);
-
+            SuggMap res = base.getSuggestion(carte, unite);
             
             List<Coordonnees> listCoordAttaquableProche = new List<Coordonnees>();
             List<Coordonnees> listCoordAttaquable = new List<Coordonnees>();
             // cherche les unités a proximité, et les autres
             foreach (Unite u in carte.Unites.Where(z => z.IdProprietaire!=unite.IdProprietaire))
             {
-                if (res[u.Coord.X][u.Coord.Y][0] != 0)
+                if (res[u.Coord].Sugg != 0)
                 {
                     if (!listCoordAttaquableProche.Contains(u.Coord))
                         listCoordAttaquableProche.Add(u.Coord);
@@ -53,7 +53,7 @@ namespace Modele
                     }
                 }
 
-                res[coordAttable.X][coordAttable.Y][0] = int.MaxValue;
+                res[coordAttable].Sugg = int.MaxValue;
             }
             else if (listCoordAttaquable.Count>0) // sinon on se déplace vers elles
             {
@@ -95,8 +95,8 @@ namespace Modele
                 {
                     foreach (Coordonnees coord in path)
                     {
-                        if (res[coord.X][coord.Y][0] != 0)
-                            res[coord.X][coord.Y][0] = res[coord.X][coord.Y][1] + 10;
+                        if (res[coord].Sugg != 0)
+                            res[coord].Sugg = res[coord].Depl + 10;
                     }
                 }
                   
