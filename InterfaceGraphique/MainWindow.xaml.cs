@@ -29,6 +29,7 @@ namespace InterfaceGraphique
         TileFactory tileFactory;
         List<Unite> listUnitSelected;
         SuggMap allowedMouv;
+        Suggestion sugg;
         private Semaphore _pool;
         private Semaphore _poolInit;
 
@@ -37,10 +38,16 @@ namespace InterfaceGraphique
         {
             InitializeComponent();
             allowedMouv = new SuggMap();
+            sugg = new Suggestion();
             listUnitSelected = new List<Unite>();
             tileFactory = new ImageFactory();
             _pool = new Semaphore(0, 1);
             _poolInit = new Semaphore(0, 1);
+           
+            foreach (UIElement ch in controlGauche.Children)
+            {
+                ch.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -48,7 +55,9 @@ namespace InterfaceGraphique
 
         }
 
-
+        /// <summary>
+        /// Actualise l'interace graphique dans le Thread de la fenêtre
+        /// </summary>
         private void updateUI()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
@@ -62,7 +71,9 @@ namespace InterfaceGraphique
                 _pool.Release();
             }));
         }
-
+        /// <summary>
+        /// Créer le thread et la boucle principale du jeu, et le démarre
+        /// </summary>
         private void startGame()
         {
             Task.Factory.StartNew(() =>
@@ -73,18 +84,22 @@ namespace InterfaceGraphique
                     partie.joueurActuel().jouerTour(partie);
                     partie.tourSuivant();
                     updateUI();
-                    System.Threading.Thread.Sleep(100);
+                    System.Threading.Thread.Sleep(500);
                     _pool.WaitOne();
                 }
                 endGame();
             });
         }
-
+        /// <summary>
+        /// Affiche le gagnant
+        /// </summary>
         private void endGame()
         {
             MessageBox.Show(partie.getGagnant().Nom+" gagne la partie !");
         }
-
+        /// <summary>
+        /// Initialise l'interface graphique
+        /// </summary>
         private void initUI()
         {
             Console.WriteLine("initUI ");
@@ -96,10 +111,20 @@ namespace InterfaceGraphique
             loadGrid();
             loadControlGauche();
             loadControlDroit();
+
+            foreach (UIElement ch in controlGauche.Children)
+            {
+                ch.Visibility = Visibility.Visible;
+            }
+
             _poolInit.Release();
         }
-
-        public void loadPartie(MonteurCarte monteurC, List<IJoueur> joueurs)
+        /// <summary>
+        /// Créer la partie, initialise l'interface graphique et démarre la partie
+        /// </summary>
+        /// <param name="monteurC"></param>
+        /// <param name="joueurs"></param>
+        public void loadPartie(MonteurCarte monteurC, List<Joueur> joueurs)
         {
             
             Task.Factory.StartNew(() =>
@@ -117,7 +142,9 @@ namespace InterfaceGraphique
             });
         }
 
-        
+        /// <summary>
+        /// Actualise les éléments graphique sur le panel gauche de la fenêtre
+        /// </summary>
         private void refreshControlGauche()
         {
             labelJoueurActuel.Content = "C'est à " + partie.joueurActuel().Nom + " de jouer !";
@@ -142,7 +169,9 @@ namespace InterfaceGraphique
             }
                 
         }
-
+        /// <summary>
+        /// charge les éléments graphiques du panel gauche
+        /// </summary>
         private void loadControlGauche()
         {
             panelListeJoueur.Children.Clear();
@@ -158,7 +187,9 @@ namespace InterfaceGraphique
             refreshControlGauche();
         }
 
-
+        /// <summary>
+        /// charge les éléments graphique du panel droit
+        /// </summary>
         private void loadControlDroit()
         {
             controlDroit.Children.Clear();
@@ -208,7 +239,7 @@ namespace InterfaceGraphique
             controlDroit.Children.Add(grpInfo);
 
 
-            List<Unite> tmpLit = partie.Carte.getUniteFromCoordAndJoueur(new Coordonnees(column, row), partie.joueurActuel());
+            List<Unite> tmpLit = partie.Carte.getUniteFromCoord(new Coordonnees(column, row));
 
             if (tmpLit.Count>0 && selectionRectangle.Visibility == Visibility.Visible)
             {
@@ -219,7 +250,8 @@ namespace InterfaceGraphique
                 foreach (Unite u in tmpLit)
                 {
                     GroupeUnite grp = new GroupeUnite(u);
-                    grp.MouseDown += grpUnit_MouseDown;
+                    if (partie.joueurActuel()==u.Proprietaire)
+                        grp.MouseDown += grpUnit_MouseDown;
                     panelScroll.Children.Add(grp);
                 }
                 scrollInfoUnite.Content = panelScroll;
@@ -227,7 +259,9 @@ namespace InterfaceGraphique
             }
         }
 
-
+        /// <summary>
+        /// Charge le canvas avec les éléments de la carte
+        /// </summary>
         private void loadGrid()
         {
             canvasMap.Children.Clear();
@@ -243,7 +277,9 @@ namespace InterfaceGraphique
                 }
             }
         }
-
+        /// <summary>
+        /// Affiche les rectangles représentant les suggestions
+        /// </summary>
         private void loadSuggestion()
         {
             if (allowedMouv != null)
@@ -259,7 +295,14 @@ namespace InterfaceGraphique
                 }
             }
         }
-
+        /// <summary>
+        /// Construit une case pour le canvas, et affiche l nombre d'unités présente sur la case
+        /// </summary>
+        /// <param name="c">la colonne</param>
+        /// <param name="l">la ligne</param>
+        /// <param name="tile">la case</param>
+        /// <param name="listUnite">la liste d'unités présentent</param>
+        /// <returns></returns>
         private Tile createRectangle(int c, int l, ICase tile, List<Unite> listUnite)
         {
             var rectangle = new Tile(tile, tileFactory, listUnite);
@@ -394,7 +437,7 @@ namespace InterfaceGraphique
                             unit = u;
                     }
                 }
-                allowedMouv = partie.joueurActuel().StrategySuggestion.getSuggestion(partie.Carte, unit); // on charge les suggestions pour cette unités ( et qui servira pour toutes les unités select)
+                allowedMouv = sugg.getSuggestion(partie.Carte, unit); // on charge les suggestions pour cette unités ( et qui servira pour toutes les unités select)
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {

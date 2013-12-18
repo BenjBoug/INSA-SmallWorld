@@ -17,7 +17,9 @@ namespace Modele
 
         public abstract void creerCarte();
 
-
+        /// <summary>
+        /// Créer les structures de données d'une carte
+        /// </summary>
         protected void creerStructureCarte()
         {
             Carte.Cases = new Case[Carte.Largeur][];

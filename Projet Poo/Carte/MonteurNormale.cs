@@ -7,6 +7,9 @@ namespace Modele
 {
     public class MonteurNormale : MonteurCarte
     {
+        /// <summary>
+        /// Créer une carte Normale
+        /// </summary>
         public override void creerCarte()
         {
             Carte = new CarteClassique();
@@ -14,6 +17,9 @@ namespace Modele
             Carte.Hauteur = 15;
             Carte.NbToursMax = 30;
             Carte.NbUniteParPeuble = 8;
+            Carte.NbUniteClassique = 8;
+            Carte.NbUniteElite = 5;
+            Carte.NbUniteBlindee = 3;
             creerStructureCarte();
         }
     }

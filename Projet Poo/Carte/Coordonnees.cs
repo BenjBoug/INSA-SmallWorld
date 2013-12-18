@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace Modele
 {
+    /// <summary>
+    /// Représente une coordonnées en 2D. 
+    /// </summary>
     public class Coordonnees
     {
+        /// <summary>
+        /// Construit une coordonnees x=0,y=0
+        /// </summary>
         public Coordonnees()
         {
             x = 0;
@@ -21,14 +27,18 @@ namespace Modele
         }
 
         private int x;
-
+        /// <summary>
+        /// La valeur en X de la coordonnees
+        /// </summary>
         public int X
         {
             get { return x; }
             set { x = value; }
         }
         private int y;
-
+        /// <summary>
+        /// La valeur en Y de la coordonnees
+        /// </summary>
         public int Y
         {
             get { return y; }
@@ -39,7 +49,6 @@ namespace Modele
         {
             return (a.x==b.x && a.y==b.y);
         }
-
 
         public static bool operator !=(Coordonnees a, Coordonnees b)
         {
@@ -53,7 +62,11 @@ namespace Modele
             return fooItem.X == this.X && fooItem.y == this.y;
         }
 
-
+        /// <summary>
+        /// Calcul la distance entre deux coordonnées
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public double distance(Coordonnees b)
         {
             return Math.Sqrt(Math.Pow(this.X - b.X, 2) + Math.Pow(this.Y - b.Y, 2));

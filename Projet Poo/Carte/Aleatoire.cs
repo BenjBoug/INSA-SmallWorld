@@ -7,7 +7,10 @@ namespace Modele
 {
     public class Aleatoire : ICreationCarte
     {
-
+        /// <summary>
+        /// Charge la carte de façon aléatoire
+        /// </summary>
+        /// <param name="c">la carte a chargé</param>
         public void chargerCarte(Carte c)
         {
             WrapperMapAleatoire alea = new WrapperMapAleatoire();

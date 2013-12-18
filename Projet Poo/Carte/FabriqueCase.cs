@@ -21,7 +21,11 @@ namespace Modele
             casePlaine = null;
             caseMontagne = null;
         }
-
+        /// <summary>
+        /// Retourne une case en fonction d'un entier
+        /// </summary>
+        /// <param name="_case"></param>
+        /// <returns></returns>
         public Case getCase(int _case)
         {
             switch (_case)

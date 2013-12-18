@@ -15,6 +15,13 @@ namespace Modele
         List<Node> openset = new List<Node>();
         Dictionary<Node, Node> came_from = new Dictionary<Node, Node>();
         WrapperAStar aStart = new WrapperAStar();
+        /// <summary>
+        /// Récupère les suggestions aggressive. Ces suggestions sont fait en sorte de déplacer
+        /// l'unité vers une autre unité le plus proche avec l'algorithme A*
+        /// </summary>
+        /// <param name="carte">La carte sur laquel l'unité se trouve</param>
+        /// <param name="unite">L'unité à déplacer</param>
+        /// <returns></returns>
         public override SuggMap getSuggestion(Carte carte, Unite unite)
         {
             this.carte = carte;
@@ -73,12 +80,12 @@ namespace Modele
                 {
                     foreach (Node n in path)
                     {
-                        if (res[n.Coord.X][n.Coord.Y][0] != 0)
-                            res[n.Coord.X][n.Coord.Y][0] = res[n.Coord.X][n.Coord.Y][1] + 10;
+                        if (res[n.Coord].Sugg != 0)
+                            res[n.Coord].Sugg = res[n.Coord].Depl + 10;
                     }
                 }
                 */
-
+                
                 int peuple = -1;
                 IPeuple p = unite.Proprietaire.Peuple;
 

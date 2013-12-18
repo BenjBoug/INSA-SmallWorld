@@ -63,27 +63,27 @@ void Suggestion::calculDeplClassique(int **carte, int **unites, int xActuel, int
 		{
 			if (unites[xActuel][yActuel]==0)
 			{
-			sugg[xActuel+1][yActuel][0]=verif[peupleJActuel][carte[xActuel+1][yActuel]];
-			if (sugg[xActuel+1][yActuel][1]<depl && sugg[xActuel+1][yActuel][0]>0)
-				calculDeplClassique(carte,unites,xActuel+1,yActuel,depl-1,peupleJActuel,taille,sugg);
+				sugg[xActuel+1][yActuel][0]=verif[peupleJActuel][carte[xActuel+1][yActuel]];
+				if (sugg[xActuel+1][yActuel][1]<depl && sugg[xActuel+1][yActuel][0]>0)
+					calculDeplClassique(carte,unites,xActuel+1,yActuel,depl-1,peupleJActuel,taille,sugg);
 			}
 		}
 		if (yActuel-1>=0)
 		{
 			if (unites[xActuel][yActuel]==0)
 			{
-			sugg[xActuel][yActuel-1][0]=verif[peupleJActuel][carte[xActuel][yActuel-1]];
-			if (sugg[xActuel][yActuel-1][1]<depl && sugg[xActuel][yActuel-1][0]>0)
-				calculDeplClassique(carte,unites,xActuel,yActuel-1,depl-1,peupleJActuel,taille,sugg);
+				sugg[xActuel][yActuel-1][0]=verif[peupleJActuel][carte[xActuel][yActuel-1]];
+				if (sugg[xActuel][yActuel-1][1]<depl && sugg[xActuel][yActuel-1][0]>0)
+					calculDeplClassique(carte,unites,xActuel,yActuel-1,depl-1,peupleJActuel,taille,sugg);
 			}
 		}
 		if (yActuel+1<taille)
 		{
 			if (unites[xActuel][yActuel]==0)
 			{
-			sugg[xActuel][yActuel+1][0]=verif[peupleJActuel][carte[xActuel][yActuel+1]];
-			if (sugg[xActuel][yActuel+1][1]<depl && sugg[xActuel][yActuel+1][0]>0)
-				calculDeplClassique(carte,unites,xActuel,yActuel+1,depl-1,peupleJActuel,taille,sugg);
+				sugg[xActuel][yActuel+1][0]=verif[peupleJActuel][carte[xActuel][yActuel+1]];
+				if (sugg[xActuel][yActuel+1][1]<depl && sugg[xActuel][yActuel+1][0]>0)
+					calculDeplClassique(carte,unites,xActuel,yActuel+1,depl-1,peupleJActuel,taille,sugg);
 			}
 		}
 

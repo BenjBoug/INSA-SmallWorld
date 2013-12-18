@@ -12,15 +12,19 @@ namespace Modele
             unitesSelect = new List<Unite>();
         }
 
-        public JoueurCOM(FabriquePeuple fab, String color, String nom, StrategySugg sugg)
-            : base(fab, color, nom,sugg)
+        public JoueurCOM(FabriquePeuple fab, String color, String nom)
+            : base(fab, color, nom)
         {
             unitesSelect = new List<Unite>();
         }
 
         private List<Unite> unitesSelect;
 
-
+        /// <summary>
+        /// Pour chaque unité de l'IA, on récupère les suggestions de déplacement de l'unité, et on la déplace vers
+        /// la case avec le coefficient de suggestion le plus élevé.
+        /// </summary>
+        /// <param name="partie">la partie en cours</param>
         public override void jouerTour(Partie partie)
         {
             Carte carte = partie.Carte;
@@ -30,18 +34,14 @@ namespace Modele
             List<Unite> unites = carte.getUniteJoueur(this);
             if (unites.Count > 0)
             {
-                List<Unite> listUnitoMove = new List<Unite>();
                 int nbUnit = unites.Count();
                 foreach(Unite u in unites)
                 {
-                    listUnitoMove.Clear();
                     if (u.PointsDepl > 0)
                     {
-                        SuggMap allowedMouv = this.StrategySuggestion.getSuggestion(partie.Carte, u);
+                        SuggMap allowedMouv = u.StrategySuggestion.getSuggestion(partie.Carte, u);
                         List<Coordonnees> coord = new List<Coordonnees>();
                         int max = 0;
-                        Console.WriteLine("{0}",
-                        allowedMouv.Count);
                         foreach (var pair in allowedMouv)
                         {
                             if (pair.Value.Sugg > max)
@@ -57,15 +57,17 @@ namespace Modele
                         }
                         if (coord.Count > 0)
                         {
-                            listUnitoMove.Add(u);
                             int choix = rand.Next(coord.Count());
-                            carte.deplaceUnites(listUnitoMove, coord[choix], allowedMouv);
+                            carte.deplaceUnite(u, coord[choix], allowedMouv);
                         }
                     }
                 }
             }
+            finirTour();
         }
-
+        /// <summary>
+        /// Aucune action spécial à faire à la fin du tour...
+        /// </summary>
         public override void finirTour()
         {
             

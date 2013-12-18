@@ -39,12 +39,12 @@ namespace Modele
         }
         
         void calculerPoints();
-        Case getCase(int x, int y);
         void placeUnite(List<Unite> l);
         void chargerCarte(ICreationCarte creationCarte);
         void setCase(int x, int y, Case _case);
         void actualiseDeplacement();
         void deplaceUnites(List<Unite> u, Coordonnees coord, SuggMap sugg);
+        void deplaceUnite(Unite u, Coordonnees coord, SuggMap sugg);
 
     }
 }

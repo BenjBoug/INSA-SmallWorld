@@ -10,7 +10,12 @@ namespace Modele
     {
         protected enum PeupleInt { Gaulois = 1, Viking = 0, Nain = 2 };
         protected enum CaseInt { Plaine = 0, Eau = 1, Montagne = 2, Desert = 3, Foret = 4 };
-
+        /// <summary>
+        /// Récupère les suggestions en fonction du peuple de l'unité et de la case
+        /// </summary>
+        /// <param name="carte"></param>
+        /// <param name="unite"></param>
+        /// <returns></returns>
         public override SuggMap getSuggestion(Carte carte, Unite unite)
         {
 

@@ -21,16 +21,18 @@ namespace Modele
 
         }
 
-        public Joueur(FabriquePeuple fab, String color, String nom, StrategySugg sugg)
+        public Joueur(FabriquePeuple fab, String color, String nom)
         {
             Peuple = fab.creerPeuple();
             Points = 0;
             Couleur = color;
             Nom = nom;
-            this.strategySuggestion = sugg;
         }
 
         private int id;
+        /// <summary>
+        /// Entier représentant un joueur 
+        /// </summary>
         public int Id
         {
             get { return id; }
@@ -38,7 +40,9 @@ namespace Modele
         }
 
         private Peuple _peuple;
-
+        /// <summary>
+        /// Le peuple du joueur
+        /// </summary>
         public Peuple Peuple
         {
             get { return _peuple; }
@@ -46,7 +50,9 @@ namespace Modele
         }
 
         private int points;
-
+        /// <summary>
+        /// Les points que le joueur a gagné
+        /// </summary>
         public int Points
         {
             get { return points; }
@@ -54,7 +60,9 @@ namespace Modele
         }
 
         private String couleur;
-
+        /// <summary>
+        /// La couleur représentant le joueur
+        /// </summary>
         public String Couleur
         {
             get { return couleur; }
@@ -62,18 +70,27 @@ namespace Modele
         }
 
         private String nom;
-
+        /// <summary>
+        /// Le nom du joueur
+        /// </summary>
         public String Nom
         {
             get { return nom; }
             set { nom = value; }
         }
 
-
+        /// <summary>
+        /// Fait jouer un tour le joueur
+        /// </summary>
+        /// <param name="partie">la partie sur laquel le joueur joue</param>
         public abstract void jouerTour(Partie partie);
-
+        /// <summary>
+        /// Fini un tour
+        /// </summary>
         public abstract void finirTour();
-
+        /// <summary>
+        /// Evenement déclencher quand les points du joueurs change
+        /// </summary>
         public event PointChangeEventHandler PointChange;
 
         protected void OnPointChange()
@@ -83,14 +100,6 @@ namespace Modele
             {
                 handler(this, EventArgs.Empty);
             }
-        }
-
-        StrategySugg strategySuggestion;
-
-        public StrategySugg StrategySuggestion
-        {
-            get {return strategySuggestion;}
-            set {strategySuggestion = value;}
         }
 
     }

@@ -72,12 +72,11 @@
   <Class Name="Modele.Joueur">
     <Position X="7.5" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABACAAiAAIAIgAAAAAAAIEAEACAAAAAQAAAQAAEAAgA=</HashCode>
+      <HashCode>AAACAAiAAIAIgAAAAAAAIEAEACAAAAAQAAAAAAEAAgA=</HashCode>
       <FileName>Joueurs\Joueur.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_peuple" />
-      <Property Name="StrategySuggestion" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -90,17 +89,18 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Modele.Unite">
-    <Position X="16" Y="12.5" Width="2.25" />
+    <Position X="9.25" Y="13.75" Width="2.25" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IAAAgSAABAEAAAAEgQAABAEABABAAAAQSAAAAEAAAAE=</HashCode>
+      <HashCode>IBAAgSAABAEAAAAEgQAABAEABABAAQAQSAAQAEAAAAE=</HashCode>
       <FileName>Unites\Unite.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="proprietaire" />
+      <Property Name="StrategySuggestion" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
@@ -245,7 +245,7 @@
   <Class Name="Modele.Carte" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAEEgBAACAA2AAAAEAYgECFGAAAAQCAAIIAA=</HashCode>
+      <HashCode>AAAEAACAAEEghAACAA0AAAAEAZgECFGQAAAQCAAJIIE=</HashCode>
       <FileName>Carte\Carte.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -258,92 +258,92 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.SuggAgressif" Collapsed="true">
-    <Position X="3.5" Y="13.75" Width="1.5" />
+    <Position X="3.5" Y="16.75" Width="1.5" />
     <NestedTypes>
       <Class Name="Modele.SuggAgressif.Node" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Joueurs\SuggAgressif.cs</NewMemberFileName>
+          <NewMemberFileName>Unites\SuggAgressif.cs</NewMemberFileName>
         </TypeIdentifier>
         <Lollipop Position="0.2" />
       </Class>
       <Class Name="Modele.SuggAgressif.ByFScore" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Joueurs\SuggAgressif.cs</NewMemberFileName>
+          <NewMemberFileName>Unites\SuggAgressif.cs</NewMemberFileName>
         </TypeIdentifier>
         <Lollipop Position="0.2" />
       </Class>
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAIgAAAAAAAAAAgEEAQAAgBAAAAAAgBAAAAAAABAAAA=</HashCode>
-      <FileName>Joueurs\SuggAgressif.cs</FileName>
+      <FileName>Unites\SuggAgressif.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.SuggPacifiste" Collapsed="true">
-    <Position X="6" Y="13.75" Width="1.5" />
+    <Position X="6" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
-      <FileName>Joueurs\SuggPacifiste.cs</FileName>
+      <FileName>Unites\SuggPacifiste.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.Suggestion" Collapsed="true">
-    <Position X="4.75" Y="12.5" Width="1.5" />
+    <Position X="4.75" Y="15.5" Width="1.5" />
     <NestedTypes>
       <Enum Name="Modele.Suggestion.PeupleInt" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Joueurs\Suggestion.cs</NewMemberFileName>
+          <NewMemberFileName>Unites\Suggestion.cs</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
       <Enum Name="Modele.Suggestion.CaseInt" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Joueurs\Suggestion.cs</NewMemberFileName>
+          <NewMemberFileName>Unites\Suggestion.cs</NewMemberFileName>
         </TypeIdentifier>
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAgAAAIAAAAAAAAA=</HashCode>
-      <FileName>Joueurs\Suggestion.cs</FileName>
+      <FileName>Unites\Suggestion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.StrategySugg">
-    <Position X="4.75" Y="11" Width="1.5" />
+    <Position X="4.75" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
-      <FileName>Joueurs\StrategySugg.cs</FileName>
+      <FileName>Unites\StrategySugg.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Modele.SuggData">
-    <Position X="6.75" Y="15.25" Width="1.5" />
+    <Position X="1" Y="14.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAIA=</HashCode>
-      <FileName>Joueurs\SuggData.cs</FileName>
+      <FileName>Unites\SuggData.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.UniteBlindee">
-    <Position X="15.25" Y="16.25" Width="1.5" />
+    <Position X="8.5" Y="17.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Unites\UniteBlindee.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.UniteElite">
-    <Position X="17.75" Y="16.25" Width="1.5" />
+    <Position X="11" Y="17.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Unites\UniteElite.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.SuggMap">
-    <Position X="4.5" Y="15.5" Width="1.5" />
+    <Position X="1" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SuggMap.cs</FileName>
+      <FileName>Unites\SuggMap.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Modele.ICarte" Collapsed="true">
     <Position X="10.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAEEABAAAAAmAAAAEAYgAAEAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAEAAAAAEEABAAAAAkAAAAEAYgAAEAAAAAAAAAAAIA=</HashCode>
       <FileName>Interface\ICarte.cs</FileName>
     </TypeIdentifier>
   </Interface>

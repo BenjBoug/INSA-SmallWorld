@@ -9,7 +9,7 @@ namespace Modele
     public class JoueurConcret : Joueur
     {
         public JoueurConcret(FabriquePeuple fab, String color, String nom)
-            : base(fab, color, nom,new Suggestion())
+            : base(fab, color, nom)
         {
             sem = new Semaphore(0, 1);
         }
@@ -20,12 +20,18 @@ namespace Modele
             sem = new Semaphore(0, 1);
         }
 
-        Semaphore sem;
-
+        private Semaphore sem;
+        /// <summary>
+        /// Pour un joueur concret, on bloque le Thread du jeu avec un sémaphore
+        /// </summary>
+        /// <param name="partie"></param>
         public override void jouerTour(Partie partie)
         {
             sem.WaitOne();
         }
+        /// <summary>
+        /// On libère le thread du jeu
+        /// </summary>
         public override void finirTour()
         {
             sem.Release();

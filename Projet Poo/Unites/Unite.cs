@@ -10,15 +10,21 @@ namespace Modele
     {
         public Unite()
         {
-            pointsAttaque = 5;
-            pointsDefense = 3;
+            pointsAttaque = 2;
+            pointsDefense = 1;
             pointsDepl = 1;
-            pointsVie = 10;
+            pointsVie = 2;
             pointsVieMax = pointsVie;
             coord = new Coordonnees();
+            strategySuggestion = new Suggestion();
         }
 
-        private Coordonnees coord;
+        public virtual int getDeplSuppl()
+        {
+            return 1;
+        }
+
+        protected Coordonnees coord;
 
         public Coordonnees Coord
         {
@@ -26,14 +32,14 @@ namespace Modele
             set { coord = value; }
         }
 
-        private int pointsDefense;
+        protected int pointsDefense;
 
         public int PointsDefense
         {
             get { return pointsDefense; }
             set { pointsDefense = value; }
         }
-        private int pointsAttaque;
+        protected int pointsAttaque;
 
         public int PointsAttaque
         {
@@ -41,7 +47,7 @@ namespace Modele
             set { pointsAttaque = value; }
         }
 
-        private int pointsVieMax;
+        protected int pointsVieMax;
 
         public int PointsVieMax
         {
@@ -50,14 +56,14 @@ namespace Modele
         }
 
 
-        private int pointsVie;
+        protected int pointsVie;
 
         public int PointsVie
         {
             get { return pointsVie; }
             set { pointsVie = value; }
         }
-        private int pointsDepl;
+        protected int pointsDepl;
 
         public int PointsDepl
         {
@@ -80,7 +86,10 @@ namespace Modele
             set { idProp = value; }
         }
 
-
+        /// <summary>
+        /// Attaque une unité, les chances de victoire snt calculé en fonction des points de vie, des points d'attaque/défense.
+        /// </summary>
+        /// <param name="unitDef"></param>
         public void attaquer(IUnite unitDef)
         {
             Random randCombat = new Random();
@@ -135,6 +144,13 @@ namespace Modele
         public bool estEnVie()
         {
             return PointsVie > 0;
+        }
+
+        protected StrategySugg strategySuggestion;
+        public StrategySugg StrategySuggestion
+        {
+            get { return strategySuggestion; }
+            set { strategySuggestion = value; }
         }
 
 
