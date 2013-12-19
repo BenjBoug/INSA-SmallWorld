@@ -24,6 +24,7 @@ public:
 	{
 		return _y;
 	}
+	
 	inline void setX(int _x)
 	{
 		this->_x=_x;

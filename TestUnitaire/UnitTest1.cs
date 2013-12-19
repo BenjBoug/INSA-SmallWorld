@@ -8,14 +8,6 @@ namespace TestUnitaire
     public class UnitTestCarte
     {
         [TestMethod]
-        unsafe public void TestGenerationMap()
-        {
-            WrapperMapAleatoire wrapMap = new WrapperMapAleatoire();
-
-            //génére une carte 5x5 avec au moins 5 chiffres différents de 0 à 4
-            //int** map = wrapMap.generer(5, 5);
-        }
-        [TestMethod]
         public void TestMonteurDemo()
         {
             Carte c;
@@ -24,10 +16,6 @@ namespace TestUnitaire
             c = monteur.Carte;
             Assert.IsNotNull(c);
             Assert.IsNotNull(c.Cases);
-            Assert.AreEqual<int>(c.Largeur, 5);
-            Assert.AreEqual<int>(c.Hauteur, 5);
-            Assert.AreEqual<int>(c.NbToursMax, 10);
-            Assert.AreEqual<int>(c.NbUniteParPeuble, 5);
         }
         [TestMethod]
         public void TestMonteurPetite()
@@ -38,10 +26,6 @@ namespace TestUnitaire
             c = monteur.Carte;
             Assert.IsNotNull(c);
             Assert.IsNotNull(c.Cases);
-            Assert.AreEqual<int>(c.Largeur, 5);
-            Assert.AreEqual<int>(c.Hauteur, 5);
-            Assert.AreEqual<int>(c.NbToursMax, 15);
-            Assert.AreEqual<int>(c.NbUniteParPeuble, 8);
         }
         [TestMethod]
         public void TestMonteurNormale()
@@ -52,10 +36,41 @@ namespace TestUnitaire
             c = monteur.Carte;
             Assert.IsNotNull(c);
             Assert.IsNotNull(c.Cases);
-            Assert.AreEqual<int>(c.Largeur, 5);
-            Assert.AreEqual<int>(c.Hauteur, 5);
-            Assert.AreEqual<int>(c.NbToursMax, 25);
-            Assert.AreEqual<int>(c.NbUniteParPeuble, 15);
+        }
+
+        [TestMethod]
+        public void TestDeplacement()
+        {
+            Carte c = creerCarteRapide();
+
+            Unite unite = new Unite();
+            unite.Coord = new Coordonnees(0,0);
+            unite.Proprietaire = new JoueurConcret(new FabriquePeupleGaulois(), "Red", "j");
+            unite.IdProprietaire = 0;
+
+            SuggMap sugg = unite.StrategySuggestion.getSuggestion(c,unite);
+            
+            c.deplaceUnite(unite,new Coordonnees(0,1),sugg);
+
+            Assert.AreEqual<Coordonnees>(unite.Coord, new Coordonnees(0, 1));
+
+        }
+
+        private Carte creerCarteRapide()
+        {
+            Carte c = new CarteClassique();
+            c.Largeur=5;
+            c.Hauteur=5;
+
+            for(int i=0;i<5;i++)
+            {
+                for (int j=0;j<5;j++)
+                {
+                    c.Cases[i][j] = c.FabriqueCase.getCase(3);
+                }
+            }
+
+            return c;
         }
     }
 }

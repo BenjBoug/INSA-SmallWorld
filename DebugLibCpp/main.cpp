@@ -32,6 +32,6 @@ int main()
 	}
 
 	for(int i=0;i<0;i++)
-		vector<Node*> path = astar->pathFinding(carte,1,TAILLE,new Coordonnees(0,0),new Coordonnees(TAILLE-1,TAILLE-1));
+		vector<Node*> path = astar->pathFinding(carte,1,TAILLE,Coordonnees(0,0),Coordonnees(TAILLE-1,TAILLE-1));
     return 0;
 }

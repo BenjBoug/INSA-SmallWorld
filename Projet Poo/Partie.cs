@@ -55,13 +55,14 @@ namespace Modele
         }
         private Carte carte;
 
-        [XmlElement("CarteClassique", typeof(CarteClassique))]
         public Carte Carte
         {
             get { return carte; }
             set { carte = value; }
         }
-
+        /// <summary>
+        /// Fini le tour
+        /// </summary>
         public void tourSuivant()
         {
             OnFinTours();
@@ -82,12 +83,19 @@ namespace Modele
             }
             makeClassement();
         }
-
+        /// <summary>
+        /// Fonction de comparaison pour créer le classement.
+        /// </summary>
+        /// <param name="j1"></param>
+        /// <param name="j2"></param>
+        /// <returns></returns>
         private int CompareForClassemnt(Joueur j1, Joueur j2)
         {
             return j1.Points - j2.Points;
         }
-
+        /// <summary>
+        /// Créer le classement
+        /// </summary>
         private void makeClassement()
         {
             if (finpartie)
@@ -115,7 +123,10 @@ namespace Modele
                 }
             }
         }
-
+        /// <summary>
+        /// retourne le gagnant de la partie
+        /// </summary>
+        /// <returns></returns>
         public Joueur getGagnant()
         {
             if (Finpartie)
@@ -127,7 +138,10 @@ namespace Modele
                 return null;
             }
         }
-
+        /// <summary>
+        /// Retourne le nombre de joueur encore vivant
+        /// </summary>
+        /// <returns></returns>
         private int getNbJoueursVivant()
         {
             int res=0;
@@ -139,7 +153,9 @@ namespace Modele
 
             return res;
         }
-
+        /// <summary>
+        /// Passe au joueur courant, si tout les joueurs ont joués, on incrémente le nombre de tours, et on reprend au début de la liste des joueurs.
+        /// </summary>
         public void joueurSuivant()
         {
             if (++IndiceJoueurActuel >= listJoueurs.Count)
@@ -150,18 +166,26 @@ namespace Modele
                 carte.calculerPoints();
             }
         }
-
+        /// <summary>
+        /// Ajoute un joueur à la partie
+        /// </summary>
+        /// <param name="j"></param>
         public void ajoutJoueur(Joueur j)
         {
             listJoueurs.Add(j);
             j.Id = listJoueurs.IndexOf(j);
         }
-
+        /// <summary>
+        /// Retourne le joueur courant
+        /// </summary>
+        /// <returns></returns>
         public Joueur joueurActuel()
         {
             return listJoueurs[IndiceJoueurActuel];
         }
-
+        /// <summary>
+        /// Associe les ids du proprietaire de chaque unite à l'objet joueur
+        /// </summary>
         public void associeJoueursUnite()
         {
 

@@ -14,6 +14,9 @@
             <Setter Property="Visibility" Value= "Collapsed"/>
         </Style>
     </Window.Resources>
+    <Window.Background>
+        <ImageBrush/>
+    </Window.Background>
 
 
     <StackPanel Orientation="Vertical">
@@ -28,9 +31,11 @@
             </Menu.Background>
             <MenuItem Header="_Fichier">
                 <MenuItem Header="_Nouveau">
-                    <MenuItem Header="_Partie 1vs1..." Click="MenuItem_Click"/>
-                    <MenuItem Header="_Partie 1vsCOM..." IsEnabled="False"/>
-                    <MenuItem Header="_Partie en ligne..." IsEnabled="False"/>
+                    <MenuItem Header="_Partie local..." Click="MenuItem_Click"/>
+                    <MenuItem Header="_Partie en ligne" IsEnabled="False">
+                        <MenuItem Header="Créer partie..."/>
+                        <MenuItem Header="Rejoindre partie..."/>
+                    </MenuItem>
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Ouvrir..." Click="MenuItem_Click_2" />
@@ -58,7 +63,7 @@
                 <StackPanel Name="panelListeJoueur"/>
                 <Button Name="boutonFinir" Content="Finir Tour !" Click="Button_Click"/>
             </StackPanel>
-            <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="White">
                 <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Rectangle Style="{StaticResource selectionStyle}" Name="selectionRectangle" RadiusX="5" RadiusY="5" />
                 </Canvas>

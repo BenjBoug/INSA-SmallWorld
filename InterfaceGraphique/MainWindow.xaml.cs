@@ -17,6 +17,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.ComponentModel;
 using System.Threading;
+using Microsoft.Win32;
 
 namespace InterfaceGraphique
 {
@@ -460,14 +461,30 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
-            XmlSerializer mySerializer = new XmlSerializer(typeof(Partie1v1));
-            FileStream myFileStream = new FileStream("myFileName.xml", FileMode.Open);
-            partie = (Partie)mySerializer.Deserialize(myFileStream);
-            partie.associeJoueursUnite();
-            myFileStream.Close();
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            //openFileDialog1.InitialDirectory = folderBrowserDialog1.SelectedPath;
+            openFileDialog1.FileName = null;
 
-            initUI();
-            startGame();
+            string openFileName;
+
+            Nullable<bool> res = openFileDialog1.ShowDialog();
+
+            if (res == true)
+            {
+                openFileName = openFileDialog1.FileName;
+                try
+                {
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(Partie1v1));
+                    partie = (Partie)mySerializer.Deserialize(openFileDialog1.OpenFile());
+                    partie.associeJoueursUnite();
+                    initUI();
+                    startGame();
+                }
+                catch (Exception exp)
+                {
+                    MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
+                }
+            }
         }
     }
 }

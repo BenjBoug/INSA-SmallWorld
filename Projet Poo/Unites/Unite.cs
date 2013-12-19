@@ -6,6 +6,8 @@ using System.Xml.Serialization;
 
 namespace Modele
 {
+    [XmlInclude(typeof(UniteBlindee))]
+    [XmlInclude(typeof(UniteElite))]
     public class Unite : IUnite
     {
         public Unite()
@@ -133,14 +135,20 @@ namespace Modele
                 n++;
             }
         }
-
+        /// <summary>
+        /// Retire des points de vie à l'unité
+        /// </summary>
+        /// <param name="nb">le nombre de points de vie à enlevés</param>
         public void perdPV(int nb)
         {
             PointsVie -= nb;
             if (PointsVie < 0)
                 PointsVie = 0;
         }
-
+        /// <summary>
+        /// Test si l'unité est en vie
+        /// </summary>
+        /// <returns>true si l'unité est en vie, false sinon</returns>
         public bool estEnVie()
         {
             return PointsVie > 0;

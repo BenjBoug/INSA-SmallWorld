@@ -177,7 +177,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.Partie1v1">
-    <Position X="13" Y="12" Width="1.5" />
+    <Position X="12.75" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Partie1v1.cs</FileName>
@@ -390,7 +390,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Modele.IStrategySuggestion">
-    <Position X="3" Y="11" Width="1.5" />
+    <Position X="4.5" Y="12.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>Interface\IStrategySuggestion.cs</FileName>
