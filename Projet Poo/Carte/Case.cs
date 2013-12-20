@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace Modele
 {
+    [Serializable]
     [XmlInclude(typeof(CaseDesert))]
     [XmlInclude(typeof(CasePlaine))]
     [XmlInclude(typeof(CaseEau))]

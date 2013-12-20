@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Modele
 {
+    [Serializable]
     public class SuggPacifiste : Suggestion
     {
         public override SuggMap getSuggestion(Carte carte, Unite unite)

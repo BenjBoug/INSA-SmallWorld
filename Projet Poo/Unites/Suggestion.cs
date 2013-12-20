@@ -6,6 +6,7 @@ using LibCLR;
 
 namespace Modele
 {
+    [Serializable]
     public class Suggestion : StrategySugg
     {
         protected enum PeupleInt { Gaulois = 1, Viking = 0, Nain = 2 };

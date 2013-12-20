@@ -7,13 +7,20 @@ using LibCLR;
 
 namespace Modele
 {
+    [Serializable]
     public class SuggAgressif : Suggestion
     {
+        [NonSerialized]
         Carte carte;
+        [NonSerialized]
         Unite unite;
+        [NonSerialized]
         List<Node> closedset = new List<Node>();
+        [NonSerialized]
         List<Node> openset = new List<Node>();
+        [NonSerialized]
         Dictionary<Node, Node> came_from = new Dictionary<Node, Node>();
+        [NonSerialized]
         WrapperAStar aStart = new WrapperAStar();
         /// <summary>
         /// Récupère les suggestions aggressive. Ces suggestions sont fait en sorte de déplacer

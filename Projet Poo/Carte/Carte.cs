@@ -8,6 +8,7 @@ using System.Xml;
 
 namespace Modele
 {
+    [Serializable]
     [XmlInclude(typeof(CarteClassique))]
     public abstract class Carte : ICarte
     {
@@ -34,6 +35,7 @@ namespace Modele
             get { return cases; }
             set { cases = value; }
         }
+        [NonSerialized]
         private FabriqueCase fabriqueCase;
         /// <summary>
         /// La frabrique des cases
@@ -269,11 +271,36 @@ namespace Modele
         /// <param name="c">la coordonnees de destination</param>
         /// <param name="u">l'unité qui doit se déplacer</param>
         /// <returns>vrai si la case est accessible, faux sinon</returns>
-        private bool caseAccessible(Coordonnees c, Unite u)
+        private bool caseAccessible(Coordonnees c, Unite u, SuggMap sugg)
         {
             List<Unite> listUniteCase = getUniteFromCoord(c);
-            return listUniteCase.Count == 0 || (listUniteCase.Count > 0 && listUniteCase[0].IdProprietaire == u.IdProprietaire);
+            return sugg[c].Sugg > 0 && listUniteCase.Count == 0 || (listUniteCase.Count > 0 && listUniteCase[0].IdProprietaire == u.IdProprietaire);
         }
+
+        /// <summary>
+        /// Retourne la meilleur unité défensive de la liste
+        /// </summary>
+        /// <param name="units">la liste des unités</param>
+        /// <returns>la meilleur unité defensive</returns>
+        private Unite getMeilleurUniteDef(List<Unite> units)
+        {
+            Unite res=null;
+            double maxDef = 0;
+            foreach (Unite u in units)
+            {
+                if (maxDef <= (double)(u.PointsVie / u.PointsVieMax) * (double)u.PointsDefense)
+                {
+                    maxDef = (double)(u.PointsVie / u.PointsVieMax) * (double)u.PointsDefense;
+                    res = u;
+                }
+            }
+            if (res == null)
+            {
+                maxDef = 0;
+            }
+            return res;
+        }
+
         /// <summary>
         /// Déplace un unité sur la case de destination.
         /// Attaque les unités ennemis présentes sur la case et se déplace après le combat si la case est vide
@@ -283,79 +310,82 @@ namespace Modele
         /// <param name="sugg">les suggesions de deplacement</param>
         public void deplaceUnite(Unite unit, Coordonnees destCoord, SuggMap sugg)
         {
-            List<Unite> dest = getUniteFromCoord(destCoord);
-            if (unites.Contains(unit))
+            if (sugg[destCoord].Sugg > 0)
             {
-                if (caseAccessible(destCoord, unit)) // si case vide ou case avec alliés
+                List<Unite> dest = getUniteFromCoord(destCoord);
+                if (unites.Contains(unit))
                 {
-                    unit.Coord = destCoord;
-                    unit.PointsDepl = sugg[destCoord].Depl;
-                }
-                else // sinon combat
-                {
-                    Unite unitDef = dest[0]; //getmeilleurunitedef(dest);
-
-                    unit.attaquer(unitDef);
-
-                    if (!unit.estEnVie())
+                    if (caseAccessible(destCoord, unit,sugg)) // si case vide ou case avec alliés
                     {
-                        unites.Remove(unit);
-                    }
-                    if (!unitDef.estEnVie())
-                    {
-                        unites.Remove(unitDef);
-                        if (getUniteFromCoord(destCoord).Count == 0)
-                        {
-                            unit.Coord = destCoord;
-                        }
-                        else
-                        {
-                            if (!estAdjacent(destCoord, unit.Coord)) // si l'unité n'est pas sur une case adjacente à l'adversaire, on rapproche l'unité
-                            {
-                                Coordonnees coordApres = null;
-                                int deplMax = int.MinValue;
-                                Coordonnees tmp = new Coordonnees(destCoord.X - 1, destCoord.Y);
-                                if (destCoord.X - 1 >= 0 && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit))
-                                {
-                                    if (sugg[tmp].Depl > deplMax)
-                                    {
-                                        deplMax = sugg[tmp].Depl;
-                                        coordApres = tmp;
-                                    }
-                                }
-                                tmp = new Coordonnees(destCoord.X + 1, destCoord.Y);
-                                if (destCoord.X + 1 < Largeur && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit))
-                                {
-                                    if (sugg[tmp].Depl > deplMax)
-                                    {
-                                        deplMax = sugg[tmp].Depl;
-                                        coordApres = tmp;
-                                    }
-                                }
-
-                                tmp = new Coordonnees(destCoord.X, destCoord.Y - 1);
-                                if (destCoord.Y - 1 >= 0 && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit))
-                                {
-                                    if (sugg[tmp].Depl > deplMax)
-                                    {
-                                        deplMax = sugg[tmp].Depl;
-                                        coordApres = tmp;
-                                    }
-                                }
-
-                                tmp = new Coordonnees(destCoord.X, destCoord.Y + 1);
-                                if (destCoord.Y + 1 < Hauteur && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit))
-                                {
-                                    if (sugg[tmp].Depl > deplMax)
-                                    {
-                                        deplMax = sugg[tmp].Depl;
-                                        coordApres = tmp;
-                                    }
-                                }
-                                unit.Coord = coordApres;
-                            }
-                        }
+                        unit.Coord = destCoord;
                         unit.PointsDepl = sugg[destCoord].Depl;
+                    }
+                    else // sinon combat
+                    {
+                        Unite unitDef = getMeilleurUniteDef(dest);
+
+                        unit.attaquer(unitDef);
+
+                        if (!unit.estEnVie())
+                        {
+                            unites.Remove(unit);
+                        }
+                        if (!unitDef.estEnVie())
+                        {
+                            unites.Remove(unitDef);
+                            if (getUniteFromCoord(destCoord).Count == 0)
+                            {
+                                unit.Coord = destCoord;
+                            }
+                            else
+                            {
+                                if (!estAdjacent(destCoord, unit.Coord)) // si l'unité n'est pas sur une case adjacente à l'adversaire, on rapproche l'unité
+                                {
+                                    Coordonnees coordApres = null;
+                                    int deplMax = int.MinValue;
+                                    Coordonnees tmp = new Coordonnees(destCoord.X - 1, destCoord.Y);
+                                    if (destCoord.X - 1 >= 0 && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit, sugg))
+                                    {
+                                        if (sugg[tmp].Depl > deplMax)
+                                        {
+                                            deplMax = sugg[tmp].Depl;
+                                            coordApres = tmp;
+                                        }
+                                    }
+                                    tmp = new Coordonnees(destCoord.X + 1, destCoord.Y);
+                                    if (destCoord.X + 1 < Largeur && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit, sugg))
+                                    {
+                                        if (sugg[tmp].Depl > deplMax)
+                                        {
+                                            deplMax = sugg[tmp].Depl;
+                                            coordApres = tmp;
+                                        }
+                                    }
+
+                                    tmp = new Coordonnees(destCoord.X, destCoord.Y - 1);
+                                    if (destCoord.Y - 1 >= 0 && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit, sugg))
+                                    {
+                                        if (sugg[tmp].Depl > deplMax)
+                                        {
+                                            deplMax = sugg[tmp].Depl;
+                                            coordApres = tmp;
+                                        }
+                                    }
+
+                                    tmp = new Coordonnees(destCoord.X, destCoord.Y + 1);
+                                    if (destCoord.Y + 1 < Hauteur && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit, sugg))
+                                    {
+                                        if (sugg[tmp].Depl > deplMax)
+                                        {
+                                            deplMax = sugg[tmp].Depl;
+                                            coordApres = tmp;
+                                        }
+                                    }
+                                    unit.Coord = coordApres;
+                                }
+                            }
+                            unit.PointsDepl = sugg[destCoord].Depl;
+                        }
                     }
                 }
             }

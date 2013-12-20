@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Modele
 {
+    [Serializable]
     public class UniteBlindee : Unite
     {
         private int deplSupp;

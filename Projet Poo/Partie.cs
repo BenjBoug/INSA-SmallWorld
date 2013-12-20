@@ -11,6 +11,7 @@ namespace Modele
 
     public delegate void FinTourEventHandler(object sender, EventArgs e);
 
+    [Serializable]
     [XmlInclude(typeof(Partie1v1))]
     public abstract class Partie : IPartie
     {
@@ -22,6 +23,7 @@ namespace Modele
             classement = new Stack<Joueur>();
         }
 
+        [NonSerialized]
         private Stack<Joueur> classement;
 
 
@@ -195,7 +197,7 @@ namespace Modele
             }
 
         }
-        
+
         public event FinTourEventHandler FinTours;
 
         protected void OnFinTours()

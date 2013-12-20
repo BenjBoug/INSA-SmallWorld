@@ -7,6 +7,11 @@ namespace Modele
 {
     public class MonteurPetite : MonteurCarte
     {
+        public MonteurPetite(ICreationCarte crea)
+            : base(crea)
+        {
+
+        }
         /// <summary>
         /// Créer une carte Petite
         /// </summary>

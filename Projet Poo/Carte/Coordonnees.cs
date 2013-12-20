@@ -9,6 +9,7 @@ namespace Modele
     /// <summary>
     /// Représente une coordonnées en 2D. 
     /// </summary>
+    [Serializable]
     public class Coordonnees
     {
         /// <summary>

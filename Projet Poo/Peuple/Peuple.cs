@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace Modele
 {
+    [Serializable]
     [XmlInclude(typeof(PeupleGaulois))]
     [XmlInclude(typeof(PeupleNain))]
     [XmlInclude(typeof(PeupleViking))]

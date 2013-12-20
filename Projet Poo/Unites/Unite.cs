@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace Modele
 {
+    [Serializable]
     [XmlInclude(typeof(UniteBlindee))]
     [XmlInclude(typeof(UniteElite))]
     public class Unite : IUnite
@@ -72,6 +73,7 @@ namespace Modele
             get { return pointsDepl; }
             set { pointsDepl = value; }
         }
+        [NonSerialized]
         private Joueur proprietaire;
 
         [XmlIgnore]

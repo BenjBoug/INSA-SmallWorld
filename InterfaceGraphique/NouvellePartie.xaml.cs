@@ -34,11 +34,11 @@ namespace InterfaceGraphique
             joueurs.Add(new JoueurCOM(new FabriquePeupleViking(), "Yellow"/*(couleurJoueur2.SelectedItem as PropertyInfo).Name*/, "COM4"));
 
             if (comboCarte.SelectedIndex == 0)
-                ((MainWindow)Owner).loadPartie(new MonteurDemo(), joueurs);
+                ((MainWindow)Owner).loadPartie(new MonteurDemo(new Aleatoire()), joueurs);
             else if (comboCarte.SelectedIndex == 1)
-                ((MainWindow)Owner).loadPartie(new MonteurPetite(), joueurs);
+                ((MainWindow)Owner).loadPartie(new MonteurPetite(new Aleatoire()), joueurs);
             else if (comboCarte.SelectedIndex == 2)
-                ((MainWindow)Owner).loadPartie(new MonteurNormale(), joueurs);
+                ((MainWindow)Owner).loadPartie(new MonteurNormale(new Aleatoire()), joueurs);
             this.Close();
         }
 

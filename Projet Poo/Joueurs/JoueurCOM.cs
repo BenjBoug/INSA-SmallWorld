@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Modele
 {
+    [Serializable]
     public class JoueurCOM : Joueur
     {
         public JoueurCOM() : base()
@@ -18,6 +19,7 @@ namespace Modele
             unitesSelect = new List<Unite>();
         }
 
+        [NonSerialized]
         private List<Unite> unitesSelect;
 
         /// <summary>

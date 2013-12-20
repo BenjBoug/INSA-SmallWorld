@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 
 namespace Modele
 {
+    [Serializable]
     public class CarteClassique : Carte
     {
         public CarteClassique() : base()

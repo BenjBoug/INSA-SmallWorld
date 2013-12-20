@@ -7,6 +7,11 @@ namespace Modele
 {
     public class MonteurNormale : MonteurCarte
     {
+        public MonteurNormale(ICreationCarte crea)
+            : base(crea)
+        {
+
+        }
         /// <summary>
         /// Créer une carte Normale
         /// </summary>

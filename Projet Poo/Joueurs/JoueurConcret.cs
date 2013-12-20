@@ -6,6 +6,7 @@ using System.Threading;
 
 namespace Modele
 {
+    [Serializable]
     public class JoueurConcret : Joueur
     {
         public JoueurConcret(FabriquePeuple fab, String color, String nom)
@@ -20,6 +21,7 @@ namespace Modele
             sem = new Semaphore(0, 1);
         }
 
+        [NonSerialized]
         private Semaphore sem;
         /// <summary>
         /// Pour un joueur concret, on bloque le Thread du jeu avec un sémaphore

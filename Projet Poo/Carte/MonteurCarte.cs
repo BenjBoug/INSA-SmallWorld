@@ -7,6 +7,12 @@ namespace Modele
 {
     public abstract class MonteurCarte
     {
+        public MonteurCarte(ICreationCarte stragCreation)
+        {
+            this.stragCreation = stragCreation;
+        }
+
+        protected ICreationCarte stragCreation;
         private Carte carte;
 
         public Carte Carte
@@ -26,10 +32,8 @@ namespace Modele
             for (int i = 0; i < Carte.Largeur; i++)
                 Carte.Cases[i] = new Case[Carte.Hauteur];
 
-            
             Carte.Unites = new List<Unite>();
-
-            Carte.chargerCarte(new Aleatoire());
+            Carte.chargerCarte(stragCreation);
         }
 
     }

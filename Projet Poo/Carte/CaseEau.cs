@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Modele
 {
+    [Serializable]
     public class CaseEau : Case
     {
         public override string ToString()

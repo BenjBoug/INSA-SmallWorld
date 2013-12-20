@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Modele
 {
+    [Serializable]
     public class PeupleGaulois : Peuple
     {
         public override string ToString()

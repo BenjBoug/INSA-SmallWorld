@@ -18,6 +18,8 @@ using System.IO;
 using System.ComponentModel;
 using System.Threading;
 using Microsoft.Win32;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 namespace InterfaceGraphique
 {
@@ -452,18 +454,42 @@ namespace InterfaceGraphique
         {
             if (partie != null)
             {
-                XmlSerializer mySerializer = new XmlSerializer(partie.GetType());
-                StreamWriter myWriter = new StreamWriter("myFileName.xml");
-                mySerializer.Serialize(myWriter, partie);
-                myWriter.Close();
+
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.FileName = "saveSmallWorld"; // Default file name
+                dlg.DefaultExt = ".sav"; // Default file extension
+                dlg.Filter = "Save SmallWorld (.sav)|*.sav"; // Filter files by extension
+
+                // Show save file dialog box
+                Nullable<bool> result = dlg.ShowDialog();
+
+                // Process save file dialog box results
+                if (result == true)
+                {
+                    // Save document
+                    string filename = dlg.FileName;
+
+                    /*
+                    IFormatter formatter = new BinaryFormatter();
+                    Stream stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
+                    formatter.Serialize(stream, partie);
+                    stream.Close();
+                    */
+                    
+                    XmlSerializer mySerializer = new XmlSerializer(partie.GetType());
+                    StreamWriter myWriter = new StreamWriter(filename);
+                    mySerializer.Serialize(myWriter, partie);
+                    myWriter.Close();
+                }
             }
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            //openFileDialog1.InitialDirectory = folderBrowserDialog1.SelectedPath;
+            openFileDialog1.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             openFileDialog1.FileName = null;
+            openFileDialog1.Filter = "Save SmallWorld (.sav)|*.sav"; // Filter files by extension
 
             string openFileName;
 
@@ -474,8 +500,17 @@ namespace InterfaceGraphique
                 openFileName = openFileDialog1.FileName;
                 try
                 {
+                    /*
+                    IFormatter formatter = new BinaryFormatter();
+                    Stream stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    partie = (Partie)formatter.Deserialize(stream);
+                    stream.Close();
+                    */
+                    
                     XmlSerializer mySerializer = new XmlSerializer(typeof(Partie1v1));
                     partie = (Partie)mySerializer.Deserialize(openFileDialog1.OpenFile());
+
+
                     partie.associeJoueursUnite();
                     initUI();
                     startGame();

@@ -12,6 +12,7 @@ namespace Modele
 
     public delegate void PointChangeEventHandler(object sender, EventArgs e);
 
+    [Serializable]
     [XmlInclude(typeof(JoueurConcret))]
     [XmlInclude(typeof(JoueurCOM))]
     public abstract class Joueur : IJoueur
