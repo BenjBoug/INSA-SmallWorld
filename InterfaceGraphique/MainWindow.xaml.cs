@@ -510,7 +510,6 @@ namespace InterfaceGraphique
                     XmlSerializer mySerializer = new XmlSerializer(typeof(Partie1v1));
                     partie = (Partie)mySerializer.Deserialize(openFileDialog1.OpenFile());
 
-
                     partie.associeJoueursUnite();
                     initUI();
                     startGame();
@@ -520,6 +519,11 @@ namespace InterfaceGraphique
                     MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
                 }
             }
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

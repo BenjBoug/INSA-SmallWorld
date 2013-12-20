@@ -19,10 +19,10 @@ namespace Modele
 
         public void chargerCarte(Carte c)
         {
-            //XmlSerializer mySerializer = new XmlSerializer(c.GetType());
-            BinaryFormatter mySerializer = new BinaryFormatter();
-            FileStream myFileStream = new FileStream(fileName, FileMode.Open);
-            c = (Carte)mySerializer.Deserialize(myFileStream);
+            XmlSerializer mySerializer = new XmlSerializer(c.Cases.GetType());
+            StreamReader myWriter = new StreamReader(fileName);
+            c.Cases = (Case[][]) mySerializer.Deserialize(myWriter);
+            myWriter.Close();
         }
     }
 }

@@ -32,16 +32,13 @@
             <MenuItem Header="_Fichier">
                 <MenuItem Header="_Nouveau">
                     <MenuItem Header="_Partie local..." Click="MenuItem_Click"/>
-                    <MenuItem Header="_Partie en ligne" IsEnabled="False">
-                        <MenuItem Header="Créer partie..."/>
-                        <MenuItem Header="Rejoindre partie..."/>
-                    </MenuItem>
+                    <MenuItem Header="_Partie en ligne..." IsEnabled="False"/>
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Ouvrir..." Click="MenuItem_Click_2" />
                 <Separator />
                 <MenuItem Header="_Sauvegarder" Click="MenuItem_Click_1" />
-                <MenuItem Header="_Sauvegarder sous..." />
+                <MenuItem Header="_Sauvegarder sous..." Click="MenuItem_Click_3" />
                 <Separator />
                 <MenuItem Header="_Quitter" />
             </MenuItem>
