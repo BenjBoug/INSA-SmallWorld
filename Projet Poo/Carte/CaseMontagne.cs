@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LibCLR;
 
 namespace Modele
 {
@@ -18,6 +19,10 @@ namespace Modele
                 return 0;
             else
                 return base.bonusPoints(p);
+        }
+        public override int toInt()
+        {
+            return (int)CaseInt.Montagne;
         }
     }
 }

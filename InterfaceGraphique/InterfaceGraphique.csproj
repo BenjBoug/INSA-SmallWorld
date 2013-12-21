@@ -81,10 +81,17 @@
     <Compile Include="class\TileFactory\ImageFactory.cs" />
     <Compile Include="class\TileFactory\RectangleFactory.cs" />
     <Compile Include="class\TileFactory\TileFactory.cs" />
+    <Compile Include="GroupeNouveauJoueur.xaml.cs">
+      <DependentUpon>GroupeNouveauJoueur.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tile.xaml.cs">
       <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
     <Page Include="GroupeJoueur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GroupeNouveauJoueur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

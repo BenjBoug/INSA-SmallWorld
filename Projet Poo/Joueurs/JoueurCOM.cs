@@ -36,7 +36,6 @@ namespace Modele
             List<Unite> unites = carte.getUniteJoueur(this);
             if (unites.Count > 0)
             {
-                int nbUnit = unites.Count();
                 foreach(Unite u in unites)
                 {
                     if (u.PointsDepl > 0)

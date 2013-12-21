@@ -161,30 +161,7 @@ namespace Modele
             {
                 for (int j = 0; j < Hauteur; j++)
                 {
-                    int tile = -1;
-                    if (Cases[i][j] is CaseDesert)
-                    {
-                        tile = 0;
-                    }
-                    else if (Cases[i][j] is CaseEau)
-                    {
-                        tile = 1;
-                    }
-                    else if (Cases[i][j] is CaseForet)
-                    {
-                        tile = 2;
-                    }
-                    else if (Cases[i][j] is CaseMontagne)
-                    {
-                        tile = 3;
-                    }
-                    else if (Cases[i][j] is CasePlaine)
-                    {
-                        tile = 4;
-                    }
-                    else
-                        tile = -1;
-                    carteInt.Add(tile);
+                    carteInt.Add(Cases[i][j].toInt());
                 }
             }
             return carteInt;
@@ -267,6 +244,7 @@ namespace Modele
         }
         /// <summary>
         /// Teste si la cases est accessible à une unité. C-a-d que la case est vide ou qu'elle contient des unités du même joueur
+        /// et que les suggestions le permettent
         /// </summary>
         /// <param name="c">la coordonnees de destination</param>
         /// <param name="u">l'unité qui doit se déplacer</param>
@@ -274,7 +252,7 @@ namespace Modele
         private bool caseAccessible(Coordonnees c, Unite u, SuggMap sugg)
         {
             List<Unite> listUniteCase = getUniteFromCoord(c);
-            return sugg[c].Sugg > 0 && listUniteCase.Count == 0 || (listUniteCase.Count > 0 && listUniteCase[0].IdProprietaire == u.IdProprietaire);
+            return coordInBound(c) && sugg[c].Sugg > 0 && listUniteCase.Count == 0 || (listUniteCase.Count > 0 && listUniteCase[0].IdProprietaire == u.IdProprietaire);
         }
 
         /// <summary>
@@ -310,7 +288,7 @@ namespace Modele
         /// <param name="sugg">les suggesions de deplacement</param>
         public void deplaceUnite(Unite unit, Coordonnees destCoord, SuggMap sugg)
         {
-            if (sugg[destCoord].Sugg > 0)
+            if (sugg.Keys.Contains(destCoord) && sugg[destCoord].Sugg > 0)
             {
                 List<Unite> dest = getUniteFromCoord(destCoord);
                 if (unites.Contains(unit))
@@ -343,43 +321,34 @@ namespace Modele
                                 {
                                     Coordonnees coordApres = null;
                                     int deplMax = int.MinValue;
+                                    //OUEST
                                     Coordonnees tmp = new Coordonnees(destCoord.X - 1, destCoord.Y);
-                                    if (destCoord.X - 1 >= 0 && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit, sugg))
+                                    if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
                                     {
-                                        if (sugg[tmp].Depl > deplMax)
-                                        {
                                             deplMax = sugg[tmp].Depl;
                                             coordApres = tmp;
-                                        }
                                     }
+                                    //EST
                                     tmp = new Coordonnees(destCoord.X + 1, destCoord.Y);
-                                    if (destCoord.X + 1 < Largeur && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit, sugg))
+                                    if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
                                     {
-                                        if (sugg[tmp].Depl > deplMax)
-                                        {
                                             deplMax = sugg[tmp].Depl;
                                             coordApres = tmp;
-                                        }
+                                        
                                     }
-
+                                    //NORD
                                     tmp = new Coordonnees(destCoord.X, destCoord.Y - 1);
-                                    if (destCoord.Y - 1 >= 0 && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit, sugg))
+                                    if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
                                     {
-                                        if (sugg[tmp].Depl > deplMax)
-                                        {
                                             deplMax = sugg[tmp].Depl;
                                             coordApres = tmp;
-                                        }
                                     }
-
+                                    //SUD
                                     tmp = new Coordonnees(destCoord.X, destCoord.Y + 1);
-                                    if (destCoord.Y + 1 < Hauteur && sugg[tmp].Sugg != 0 && caseAccessible(tmp, unit, sugg))
+                                    if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
                                     {
-                                        if (sugg[tmp].Depl > deplMax)
-                                        {
                                             deplMax = sugg[tmp].Depl;
                                             coordApres = tmp;
-                                        }
                                     }
                                     unit.Coord = coordApres;
                                 }
@@ -402,6 +371,43 @@ namespace Modele
             {
                 deplaceUnite(unit, destCoord, sugg);
             }
+        }
+
+        /// <summary>
+        /// Test si la coordonnees est bien contenu dans la map
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private bool coordInBound(Coordonnees c)
+        {
+            return c.X >= 0 && c.X < Largeur && c.Y >= 0 && c.Y < Hauteur;
+        }
+
+        private enum Direction
+        {
+            OUEST, EST, SUD, NORD
+        }
+
+        private bool coordInBoundAfterMove(Coordonnees c, Direction dir)
+        {
+            Coordonnees tmp = c;
+            switch (dir)
+            {
+                case Direction.OUEST:
+                    tmp.X -= 1;
+                    break;
+                case Direction.EST:
+                    tmp.X += 1;
+                    break;
+                case Direction.SUD:
+                    tmp.Y += 1;
+                    break;
+                case Direction.NORD:
+                    tmp.Y -= 1;
+                    break;
+            }
+
+            return coordInBound(tmp);
         }
     }
 }

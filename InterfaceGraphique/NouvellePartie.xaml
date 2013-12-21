@@ -1,75 +1,32 @@
 ﻿<Window x:Class="InterfaceGraphique.NouvellePartie"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="NouvellePartie" Height="348" Width="377" Background="#FFF7F7F7" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner">
+        Title="NouvellePartie" Background="#FFF7F7F7" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner">
     <Grid>
         <GroupBox Header="Nouvelle partie" Height="Auto" Width="Auto" Grid.ColumnSpan="2" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="False">
             <StackPanel Height="Auto" Width="Auto">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                     <Label Content="Type de Carte:" MinWidth="150" HorizontalContentAlignment="right"/>
                     <ComboBox x:Name="comboCarte" MinWidth="150">
-                        <ComboBoxItem Content="Démo" IsSelected="True"/>
-                        <ComboBoxItem Content="Petite"/>
-                        <ComboBoxItem Content="Normale"/>
+                        <ComboBoxItem Content="Démo 5x5" IsSelected="True"/>
+                        <ComboBoxItem Content="Petite 10x10"/>
+                        <ComboBoxItem Content="Normale 15x15"/>
                     </ComboBox>
                 </StackPanel>
-                <GroupBox Header="Joueur 1">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="Nom:" MinWidth="50" HorizontalContentAlignment="right"/>
-                            <TextBox x:Name="nomJoueur1" MinWidth="150" Text="Joueur 1"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="Couleur:" MinWidth="50" HorizontalContentAlignment="Right"/>
-                            <ComboBox x:Name="couleurJoueur1" MinWidth="150">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
-                                            <TextBlock Text="{Binding Name}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                    <Label Content="Chargement:" MinWidth="150" HorizontalContentAlignment="right"/>
+                    <ComboBox x:Name="comboChargement" MinWidth="150" SelectionChanged="comboChargement_SelectionChanged">
+                        <ComboBoxItem Content="Aléatoire" IsSelected="True"/>
+                        <ComboBoxItem Content="Charger fichier"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="panelChampsCarte">
+                    <TextBox Width="200" Margin="0,0,10,0"></TextBox>
+                    <Button Width="22"/>
 
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="Peuple:"  HorizontalContentAlignment="right" MinWidth="50"/>
-                            <ComboBox x:Name="peupleJoueur1" MinWidth="150">
-                                <ComboBoxItem Content="Gaulois" IsSelected="True"/>
-                                <ComboBoxItem Content="Nain"/>
-                                <ComboBoxItem Content="Viking"/>
-                            </ComboBox>
-                        </StackPanel>
-                    </StackPanel>
-                </GroupBox>
-                <GroupBox Header="Joueur 2">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="Nom:" MinWidth="50" HorizontalContentAlignment="right"/>
-                            <TextBox x:Name="nomJoueur2" MinWidth="150" Text="Joueur 2"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="Couleur:" MinWidth="50" HorizontalContentAlignment="Right"/>
-                            <ComboBox x:Name="couleurJoueur2" MinWidth="150">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
-                                            <TextBlock Text="{Binding Name}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="Peuple:"  HorizontalContentAlignment="right" MinWidth="50"/>
-                            <ComboBox x:Name="peupleJoueur2" MinWidth="150">
-                                <ComboBoxItem Content="Gaulois" IsSelected="True"/>
-                                <ComboBoxItem Content="Nain"/>
-                                <ComboBoxItem Content="Viking"/>
-                            </ComboBox>
-                        </StackPanel>
+                </StackPanel>
+                <GroupBox Header="Joueurs">
+                    <StackPanel Orientation="Vertical" Name="panelJoueurs">
                     </StackPanel>
                 </GroupBox>
                 <StackPanel Margin="8" Orientation="Horizontal" HorizontalAlignment="Center">

@@ -18,11 +18,17 @@ namespace InterfaceGraphique
         {
             InitializeComponent();
 
-            couleurJoueur1.ItemsSource = typeof(Colors).GetProperties();
-            couleurJoueur1.SelectedIndex = 0;
+            List<string> listCouleur = new List<string>();
+            listCouleur.Add("Red");
+            listCouleur.Add("Blue");
+            listCouleur.Add("Yellow");
+            listCouleur.Add("Black");
 
-            couleurJoueur2.ItemsSource = typeof(Colors).GetProperties();
-            couleurJoueur2.SelectedIndex = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                GroupeNouveauJoueur grp = new GroupeNouveauJoueur();
+                panelJoueurs.Children.Add(grp);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -57,6 +63,14 @@ namespace InterfaceGraphique
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void comboChargement_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboChargement.SelectedIndex == 1)
+                panelChampsCarte.Visibility = Visibility.Visible;
+           /* else
+                panelChampsCarte.Visibility = Visibility.Collapsed;*/
         }
     }
 }

@@ -12,6 +12,12 @@ namespace Modele
     [XmlInclude(typeof(PeupleViking))]
     public abstract class Peuple : IPeuple
     {
+        public enum PeupleInt
+        {
+            Viking = 0,
+            Gaulois = 1,
+            Nain = 2
+        };
         /// <summary>
         /// Calcul les points
         /// </summary>

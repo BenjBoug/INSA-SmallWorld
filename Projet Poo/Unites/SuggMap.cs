@@ -8,5 +8,10 @@ namespace Modele
 {
     public class SuggMap : Dictionary<Coordonnees,SuggData>
     {
+
+        public bool coordOk(Coordonnees c)
+        {
+            return this.Keys.Contains(c);
+        }
     }
 }

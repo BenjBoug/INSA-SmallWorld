@@ -9,8 +9,6 @@ namespace Modele
     [Serializable]
     public class Suggestion : StrategySugg
     {
-        protected enum PeupleInt { Gaulois = 1, Viking = 0, Nain = 2 };
-        protected enum CaseInt { Plaine = 0, Eau = 1, Montagne = 2, Desert = 3, Foret = 4 };
         /// <summary>
         /// Récupère les suggestions en fonction du peuple de l'unité et de la case
         /// </summary>
@@ -25,19 +23,18 @@ namespace Modele
             WrapperSuggestion wrap = new WrapperSuggestion();
 
             List<int> emplUnites = getUnitesToList(carte, unite);
-            List<int> carteInt = getCasesToList(carte);
 
-            PeupleInt peuple = PeupleInt.Gaulois;
+            Peuple.PeupleInt peuple = Peuple.PeupleInt.Gaulois;
             IPeuple p = unite.Proprietaire.Peuple;
 
             if (p is PeupleViking)
-                peuple = PeupleInt.Viking;
+                peuple = Peuple.PeupleInt.Viking;
             else if (p is PeupleNain)
-                peuple = PeupleInt.Nain;
+                peuple = Peuple.PeupleInt.Nain;
             else if (p is PeupleGaulois)
-                peuple = PeupleInt.Gaulois;
+                peuple = Peuple.PeupleInt.Gaulois;
 
-            List<int> sugg = wrap.getSuggestion(carteInt, emplUnites, carte.Largeur, x, y, unite.PointsDepl, (int)peuple);
+            List<int> sugg = wrap.getSuggestion(carte.toList(), emplUnites, carte.Largeur, x, y, unite.PointsDepl, (int)peuple);
 
             SuggMap res = new SuggMap();
             for (int i = 0; i < carte.Largeur; i++)
@@ -58,40 +55,6 @@ namespace Modele
                 }
             }
 
-            return res;
-        }
-
-        protected List<int> getCasesToList(Carte carte)
-        {
-            List<int> res = new List<int>();
-            for (int i = 0; i < carte.Largeur; i++)
-            {
-                for (int j = 0; j < carte.Hauteur; j++)
-                {
-                    CaseInt tile = CaseInt.Plaine;
-                    if (carte.Cases[i][j] is CaseDesert)
-                    {
-                        tile = CaseInt.Desert;
-                    }
-                    else if (carte.Cases[i][j] is CaseEau)
-                    {
-                        tile = CaseInt.Eau;
-                    }
-                    else if (carte.Cases[i][j] is CaseForet)
-                    {
-                        tile = CaseInt.Foret;
-                    }
-                    else if (carte.Cases[i][j] is CaseMontagne)
-                    {
-                        tile = CaseInt.Montagne;
-                    }
-                    else if (carte.Cases[i][j] is CasePlaine)
-                    {
-                        tile = CaseInt.Plaine;
-                    }
-                    res.Add((int)tile);
-                }
-            }
             return res;
         }
 

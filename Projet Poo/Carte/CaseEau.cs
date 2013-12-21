@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LibCLR;
 
 namespace Modele
 {
@@ -23,6 +24,10 @@ namespace Modele
                 return true;
             else
                 return false;
+        }
+        public override int toInt()
+        {
+            return (int)CaseInt.Eau;
         }
     }
 }

@@ -36,6 +36,8 @@ namespace Modele
             
             //on récupère les suggestions classique en fonction du terrain
             SuggMap res = base.getSuggestion(carte, unite);
+
+            Console.WriteLine(""+res[unite.Coord].Sugg);
             
             List<Coordonnees> listCoordAttaquableProche = new List<Coordonnees>();
             List<Coordonnees> listCoordAttaquable = new List<Coordonnees>();
@@ -69,18 +71,9 @@ namespace Modele
 
                 res[coordAttable].Sugg = int.MaxValue;
             }
-            else if (listCoordAttaquable.Count>0) // sinon on se déplace vers elles
+            else if (listCoordAttaquable.Count>0) // sinon on se déplace vers les plus proche
             {
-                Coordonnees plusProche=null;
-                double distMin = int.MaxValue;
-                foreach (Coordonnees c in listCoordAttaquable)
-                {
-                    if (unite.Coord.distance(c) < distMin)
-                    {
-                        plusProche = c;
-                        distMin = unite.Coord.distance(c);
-                    }
-                }
+                Coordonnees plusProche = unite.Coord.getClosiestCoord(listCoordAttaquable);
                 /*
                 List<Node> path = pathFinding(new Node(unite.Coord), new Node(plusProche));
                 if (path != null && path.Count > 0)

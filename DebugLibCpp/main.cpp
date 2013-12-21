@@ -1,37 +1,43 @@
 #include <iostream> 
 #include <vector>
-#include "Node.h"
-#include "AStar.h"
+#include "Suggestion.h"
 using namespace std;
 
 #define TAILLE 5
  
 int main() 
 { 
-	
-	AStar * astar = new AStar();
-	vector<int> carte;
-	for(int i=0;i<TAILLE;i++)
+	int ** carte = new int*[TAILLE];
+    for (int i=0;i<TAILLE;i++)
+        carte[i] = new int[TAILLE];
+
+
+    int ** unites = new int*[TAILLE];
+    for (int i=0;i<TAILLE;i++)
+        unites[i] = new int[TAILLE];
+
+
+    for (int i=0;i<TAILLE;i++)
+    {
+        for (int j=0;j<TAILLE;j++)
+        {
+			unites[i][j] = 0;
+            carte[i][j] = 0;//rand()%5;
+        }
+    }
+
+	Suggestion* sugg = new Suggestion();
+
+	vector<int*> res = sugg->suggestion(carte, unites, TAILLE,0,0, 4, 0);
+
+	for(int i =0; i<TAILLE;i++)
 	{
-		for(int j=0;j<TAILLE;j++)
+		for(int j =0; j<TAILLE;j++)
 		{
-			if (j==2)
-			{
-				if (i==3)
-					carte.push_back(0);
-				else
-					carte.push_back(1);
-			}
-			else
-			{
-				carte.push_back(0);
-			}
-			cout << carte.back() << " ";
+			cout << res[i * TAILLE + j][0];
 		}
 		cout << endl;
 	}
-
-	for(int i=0;i<0;i++)
-		vector<Node*> path = astar->pathFinding(carte,1,TAILLE,Coordonnees(0,0),Coordonnees(TAILLE-1,TAILLE-1));
+	system("pause");
     return 0;
 }

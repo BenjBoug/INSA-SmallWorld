@@ -14,6 +14,15 @@ namespace Modele
     [XmlInclude(typeof(CaseForet))]
     public abstract class Case : ICase
     {
+        public enum CaseInt
+        {
+            Plaine = 0,
+            Eau = 1,
+            Montagne = 2,
+            Desert = 3,
+            Foret = 4
+        };
+
         /// <summary>
         /// le bonus de points sur la case en fonction du peuple
         /// </summary>
@@ -32,6 +41,12 @@ namespace Modele
         {
             return true;
         }
+
+        /// <summary>
+        /// Retourne l'entier représentant la case
+        /// </summary>
+        /// <returns></returns>
+        public abstract int toInt();
 
     }
 

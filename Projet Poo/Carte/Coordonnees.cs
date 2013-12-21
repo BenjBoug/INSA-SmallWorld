@@ -62,6 +62,26 @@ namespace Modele
 
             return fooItem.X == this.X && fooItem.y == this.y;
         }
+        /// <summary>
+        /// Retourne la coordonnées de la liste la plus proche de l'instance.
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public Coordonnees getClosiestCoord(List<Coordonnees> list)
+        {
+            Coordonnees plusProche = null;
+            double distMin = int.MaxValue;
+            foreach (Coordonnees c in list)
+            {
+                if (distance(c) < distMin)
+                {
+                    plusProche = c;
+                    distMin = distance(c);
+                }
+            }
+
+            return plusProche;
+        }
 
         /// <summary>
         /// Calcul la distance entre deux coordonnées

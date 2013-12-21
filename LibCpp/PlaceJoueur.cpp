@@ -25,7 +25,7 @@ int * PlaceJoueur::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int 
 		coord[0]=rand()%2*(taille-1);
 		coord[1]=rand()%2*(taille-1);
 	} 
-	while (tabJoueurs[coord[0]][coord[1]]!=0 || (carte[coord[0]][coord[1]]==Eau && peuple != Viking));
+	while (tabJoueurs[coord[0]][coord[1]]!=0);
 
 	return coord;
 }

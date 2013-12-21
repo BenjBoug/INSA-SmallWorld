@@ -11,5 +11,3 @@ int ** listToTab(List<int>^tab,int taille);
 List<int>^ vectorToList(vector<int> tab);
 List<int>^ vectorToList(vector<int*> tab);
 vector<int> listToVector(List<int>^ tab);
-
-

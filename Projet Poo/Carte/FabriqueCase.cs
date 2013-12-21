@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LibCLR;
 
 namespace Modele
 {
@@ -21,6 +22,7 @@ namespace Modele
             casePlaine = null;
             caseMontagne = null;
         }
+
         /// <summary>
         /// Retourne une case en fonction d'un entier
         /// </summary>
@@ -30,29 +32,29 @@ namespace Modele
         {
             switch (_case)
             {
-                case 0:
+                case (int)Case.CaseInt.Plaine:
+                    if (casePlaine == null)
+                        casePlaine = new CasePlaine();
+                    return casePlaine;
+                case (int)Case.CaseInt.Eau:
                     if (caseEau == null)
                         caseEau = new CaseEau();
                     return caseEau;
-                case 1:
-                    if (caseForet == null)
-                        caseForet = new CaseForet();
-                    return caseForet;
 
-                case 2:
+                case (int)Case.CaseInt.Montagne:
+                    if (caseMontagne == null)
+                        caseMontagne = new CaseMontagne();
+                    return caseMontagne;
+
+                case (int)Case.CaseInt.Desert:
                     if (caseDesert == null)
                         caseDesert = new CaseDesert();
                     return caseDesert;
 
-                case 3:
-                    if (casePlaine == null)
-                        casePlaine = new CasePlaine();
-                    return casePlaine;
-
-                case 4:
-                    if (caseMontagne == null)
-                        caseMontagne = new CaseMontagne();
-                    return caseMontagne;
+                case (int)Case.CaseInt.Foret:
+                    if (caseForet == null)
+                        caseForet = new CaseForet();
+                    return caseForet;
                 default:
                     return null;
                     //throw new Excetion...
