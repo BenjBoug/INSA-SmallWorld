@@ -67,7 +67,12 @@ namespace Modele
         public String Couleur
         {
             get { return couleur; }
-            set { couleur = value; }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException(); 
+                couleur = value;
+            }
         }
 
         private String nom;
@@ -77,7 +82,12 @@ namespace Modele
         public String Nom
         {
             get { return nom; }
-            set { nom = value; }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException(); 
+                nom = value;
+            }
         }
 
         /// <summary>

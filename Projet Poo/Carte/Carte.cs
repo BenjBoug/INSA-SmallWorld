@@ -56,7 +56,12 @@ namespace Modele
         public int NbUniteBlindee
         {
             get { return nbUniteBlindee; }
-            set { nbUniteBlindee = value; }
+            set
+            {
+                if (value<0)
+                    throw new ArgumentException(); 
+                nbUniteBlindee = value;
+            }
         }
         /// <summary>
         /// Nombre maximum d'unités élites par joueur
@@ -64,7 +69,12 @@ namespace Modele
         public int NbUniteElite
         {
             get { return nbUniteElite; }
-            set { nbUniteElite = value; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException(); 
+                nbUniteElite = value;
+            }
         }
         /// <summary>
         /// Nombre maximum d'unités classique par joueur
@@ -72,13 +82,23 @@ namespace Modele
         public int NbUniteClassique
         {
             get { return nbUniteClassique; }
-            set { nbUniteClassique = value; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException(); 
+                nbUniteClassique = value;
+            }
         }
 
         public int NbUniteParPeuble
         {
             get { return nbUniteParPeuble; }
-            set { nbUniteParPeuble = value; }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException(); 
+                nbUniteParPeuble = value;
+            }
         }
         /// <summary>
         /// Nombre de tours maximum par partie
@@ -86,7 +106,12 @@ namespace Modele
         public int NbToursMax
         {
             get { return nbToursMax; }
-            set { nbToursMax = value; }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException(); 
+                nbToursMax = value;
+            }
         }
         /// <summary>
         /// La hauteur de la carte en case
@@ -94,7 +119,12 @@ namespace Modele
         public int Hauteur
         {
             get { return hauteur; }
-            set { hauteur = value; }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException(); 
+                hauteur = value;
+            }
         }
         /// <summary>
         /// La largeur de la carte en case
@@ -102,7 +132,11 @@ namespace Modele
         public int Largeur
         {
             get { return largeur; }
-            set { largeur = value; }
+            set {
+                if (value <= 0)
+                    throw new ArgumentException(); 
+                largeur = value;
+            }
         }
 
         /// <summary>
@@ -124,14 +158,7 @@ namespace Modele
         public void placeUnite(List<Unite> list)
         {
             WrapperPlaceJoueur wrap = new WrapperPlaceJoueur();
-            List<int> emplUnites = new List<int>();
-            for (int i = 0; i < Largeur; i++)
-            {
-                for (int j = 0; j < Hauteur; j++)
-                {
-                    emplUnites.Add(getUniteFromCoord(new Coordonnees(i, j)).Count);
-                }
-            }
+            List<int> emplUnites = getUnitesToListInt();
             int peuple = -1;
             IPeuple p = list[0].Proprietaire.Peuple;
 
@@ -149,6 +176,19 @@ namespace Modele
                 u.Coord = new Coordonnees(coord[0], coord[1]);
                 unites.Add(u);
             }
+        }
+
+        private List<int> getUnitesToListInt()
+        {
+            List<int> emplUnites = new List<int>();
+            for (int i = 0; i < Largeur; i++)
+            {
+                for (int j = 0; j < Hauteur; j++)
+                {
+                    emplUnites.Add(getUniteFromCoord(new Coordonnees(i, j)).Count);
+                }
+            }
+            return emplUnites;
         }
         /// <summary>
         /// Convertie la carte en liste d'entier la représnetant
@@ -235,8 +275,8 @@ namespace Modele
         /// <summary>
         /// Teste si deux cases sont adjacentes
         /// </summary>
-        /// <param name="a">la 1er coordonnees de la case</param>
-        /// <param name="b">la 2eme cordonnees de la case</param>
+        /// <param name="a">la 1er coordonnees d'une case</param>
+        /// <param name="b">la 2eme cordonnees d'une case</param>
         /// <returns>return vrai si les cases sont adjacentes, faux sinon</returns>
         private bool estAdjacent(Coordonnees a, Coordonnees b)
         {
@@ -301,62 +341,75 @@ namespace Modele
                     else // sinon combat
                     {
                         Unite unitDef = getMeilleurUniteDef(dest);
-
-                        unit.attaquer(unitDef);
-
-                        if (!unit.estEnVie())
-                        {
-                            unites.Remove(unit);
-                        }
-                        if (!unitDef.estEnVie())
-                        {
-                            unites.Remove(unitDef);
-                            if (getUniteFromCoord(destCoord).Count == 0)
-                            {
-                                unit.Coord = destCoord;
-                            }
-                            else
-                            {
-                                if (!estAdjacent(destCoord, unit.Coord)) // si l'unité n'est pas sur une case adjacente à l'adversaire, on rapproche l'unité
-                                {
-                                    Coordonnees coordApres = null;
-                                    int deplMax = int.MinValue;
-                                    //OUEST
-                                    Coordonnees tmp = new Coordonnees(destCoord.X - 1, destCoord.Y);
-                                    if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
-                                    {
-                                            deplMax = sugg[tmp].Depl;
-                                            coordApres = tmp;
-                                    }
-                                    //EST
-                                    tmp = new Coordonnees(destCoord.X + 1, destCoord.Y);
-                                    if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
-                                    {
-                                            deplMax = sugg[tmp].Depl;
-                                            coordApres = tmp;
-                                        
-                                    }
-                                    //NORD
-                                    tmp = new Coordonnees(destCoord.X, destCoord.Y - 1);
-                                    if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
-                                    {
-                                            deplMax = sugg[tmp].Depl;
-                                            coordApres = tmp;
-                                    }
-                                    //SUD
-                                    tmp = new Coordonnees(destCoord.X, destCoord.Y + 1);
-                                    if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
-                                    {
-                                            deplMax = sugg[tmp].Depl;
-                                            coordApres = tmp;
-                                    }
-                                    unit.Coord = coordApres;
-                                }
-                            }
-                            unit.PointsDepl = sugg[destCoord].Depl;
-                        }
+                        combat(unit, unitDef, destCoord, sugg);
                     }
                 }
+            }
+        }
+        /// <summary>
+        /// Fait combattre 2 unités, et fait les déplacements appropriés en cas de victoire de l'attaquant.
+        /// </summary>
+        /// <param name="unit"></param>
+        /// <param name="unitDef"></param>
+        /// <param name="destCoord"></param>
+        /// <param name="sugg"></param>
+        private void combat(Unite unit, Unite unitDef, Coordonnees destCoord, SuggMap sugg)
+        {
+            unit.attaquer(unitDef);
+
+            if (!unit.estEnVie())
+            {
+                unites.Remove(unit);
+            }
+            if (!unitDef.estEnVie())
+            {
+                unites.Remove(unitDef);
+                if (getUniteFromCoord(destCoord).Count == 0)
+                {
+                    unit.Coord = destCoord;
+                }
+                else
+                {
+                    if (!estAdjacent(destCoord, unit.Coord)) // si l'unité n'est pas sur une case adjacente à l'adversaire, on rapproche l'unité
+                    {
+                        rapprocheAuPlusPret(unit, destCoord, sugg);
+                    }
+                }
+                unit.PointsDepl = sugg[destCoord].Depl;
+            }
+        }
+        /// <summary>
+        /// Rapproche l'unité au plus pret de la destination
+        /// </summary>
+        /// <param name="unit">l'unité a déplacé</param>
+        /// <param name="destCoord">la case de déstination</param>
+        /// <param name="sugg">Les suggestions</param>
+        private void rapprocheAuPlusPret(Unite unit, Coordonnees destCoord, SuggMap sugg)
+        {
+            Coordonnees coordApres = null;
+            int deplMax = int.MinValue;
+            //OUEST
+            Coordonnees tmp = new Coordonnees(destCoord.X - 1, destCoord.Y);
+            testDeplacementApresCombat(unit, sugg, ref coordApres, ref deplMax, tmp);
+            //EST
+            tmp = new Coordonnees(destCoord.X + 1, destCoord.Y);
+            testDeplacementApresCombat(unit, sugg, ref coordApres, ref deplMax, tmp);
+            //NORD
+            tmp = new Coordonnees(destCoord.X, destCoord.Y - 1);
+            testDeplacementApresCombat(unit, sugg, ref coordApres, ref deplMax, tmp);
+            //SUD
+            tmp = new Coordonnees(destCoord.X, destCoord.Y + 1);
+            testDeplacementApresCombat(unit, sugg, ref coordApres, ref deplMax, tmp);
+            unit.Coord = coordApres;
+        }
+
+
+        private void testDeplacementApresCombat(Unite unit, SuggMap sugg, ref Coordonnees coordApres, ref int deplMax, Coordonnees tmp)
+        {
+            if (caseAccessible(tmp, unit, sugg) && sugg[tmp].Depl > deplMax)
+            {
+                deplMax = sugg[tmp].Depl;
+                coordApres = tmp;
             }
         }
         /// <summary>

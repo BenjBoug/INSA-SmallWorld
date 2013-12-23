@@ -12,17 +12,28 @@ namespace Modele
     {
         public LectureFichier(string fileName)
         {
-            this.fileName = fileName;
+            if (File.Exists(fileName))
+                this.fileName = fileName;
+            else
+                throw new FileNotFoundException();
         }
 
         private string fileName;
 
         public void chargerCarte(Carte c)
         {
-            XmlSerializer mySerializer = new XmlSerializer(c.Cases.GetType());
-            StreamReader myWriter = new StreamReader(fileName);
-            c.Cases = (Case[][]) mySerializer.Deserialize(myWriter);
-            myWriter.Close();
+            try
+            {
+                XmlSerializer mySerializer = new XmlSerializer(c.Cases.GetType());
+                StreamReader myWriter = new StreamReader(fileName);
+                c.Cases = (Case[][])mySerializer.Deserialize(myWriter);
+                myWriter.Close();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
     }
 }

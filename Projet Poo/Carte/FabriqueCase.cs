@@ -8,11 +8,11 @@ namespace Modele
 {
     public class FabriqueCase
     {
-        public CaseEau caseEau;
-        public CaseForet caseForet;
-        public CaseDesert caseDesert;
-        public CasePlaine casePlaine;
-        public CaseMontagne caseMontagne;
+        private CaseEau caseEau;
+        private CaseForet caseForet;
+        private CaseDesert caseDesert;
+        private CasePlaine casePlaine;
+        private CaseMontagne caseMontagne;
 
         public FabriqueCase()
         {
@@ -56,9 +56,7 @@ namespace Modele
                         caseForet = new CaseForet();
                     return caseForet;
                 default:
-                    return null;
-                    //throw new Excetion...
-
+                    throw new ArgumentException();
             }
         }
     }

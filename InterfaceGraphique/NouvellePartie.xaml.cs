@@ -5,6 +5,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Modele;
 using System.Reflection;
+using System.IO;
 
 
 namespace InterfaceGraphique
@@ -39,13 +40,25 @@ namespace InterfaceGraphique
             joueurs.Add(new JoueurCOM(new FabriquePeupleViking(), "Black"/*(couleurJoueur2.SelectedItem as PropertyInfo).Name*/, "COM3"));
             joueurs.Add(new JoueurCOM(new FabriquePeupleViking(), "Yellow"/*(couleurJoueur2.SelectedItem as PropertyInfo).Name*/, "COM4"));
 
+            ICreationCarte strategyCreationCarte;
+            try
+            {
+                strategyCreationCarte = getSrategyCreationCarte();
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("Erreur: le fichier n'existe pas.");
+                return;
+            }
+
             if (comboCarte.SelectedIndex == 0)
-                ((MainWindow)Owner).loadPartie(new MonteurDemo(new Aleatoire()), joueurs);
+                ((MainWindow)Owner).loadPartie(new MonteurDemo(strategyCreationCarte), joueurs);
             else if (comboCarte.SelectedIndex == 1)
-                ((MainWindow)Owner).loadPartie(new MonteurPetite(new Aleatoire()), joueurs);
+                ((MainWindow)Owner).loadPartie(new MonteurPetite(strategyCreationCarte), joueurs);
             else if (comboCarte.SelectedIndex == 2)
-                ((MainWindow)Owner).loadPartie(new MonteurNormale(new Aleatoire()), joueurs);
+                ((MainWindow)Owner).loadPartie(new MonteurNormale(strategyCreationCarte), joueurs);
             this.Close();
+            e.Handled = true;
         }
 
         private FabriquePeuple getFabriquePeuple(ComboBox combo)
@@ -60,17 +73,29 @@ namespace InterfaceGraphique
                 return new FabriquePeupleNain(); // throw exception en temps normal ...
         }
 
+        private ICreationCarte getSrategyCreationCarte()
+        {
+            if (comboChargement.SelectedIndex == 0)
+                return new Aleatoire();
+            else
+                return new LectureFichier(fileName.Text);
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
+            e.Handled = true;
         }
 
         private void comboChargement_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboChargement.SelectedIndex == 1)
-                panelChampsCarte.Visibility = Visibility.Visible;
-           /* else
-                panelChampsCarte.Visibility = Visibility.Collapsed;*/
+            if (panelChampsCarte != null)
+            {
+                if (comboChargement.SelectedIndex == 1)
+                    panelChampsCarte.Visibility = Visibility.Visible;
+                else
+                    panelChampsCarte.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

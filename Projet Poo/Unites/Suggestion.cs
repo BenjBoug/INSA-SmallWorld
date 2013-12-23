@@ -36,6 +36,11 @@ namespace Modele
 
             List<int> sugg = wrap.getSuggestion(carte.toList(), emplUnites, carte.Largeur, x, y, unite.PointsDepl, (int)peuple);
 
+            return listIntToSuggMap(carte, sugg);
+        }
+
+        private static SuggMap listIntToSuggMap(Carte carte, List<int> sugg)
+        {
             SuggMap res = new SuggMap();
             for (int i = 0; i < carte.Largeur; i++)
             {

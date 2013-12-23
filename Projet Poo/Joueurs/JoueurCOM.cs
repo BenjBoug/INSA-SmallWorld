@@ -31,8 +31,6 @@ namespace Modele
         {
             Carte carte = partie.Carte;
             Random rand = new Random();
-
-
             List<Unite> unites = carte.getUniteJoueur(this);
             if (unites.Count > 0)
             {
@@ -41,21 +39,7 @@ namespace Modele
                     if (u.PointsDepl > 0)
                     {
                         SuggMap allowedMouv = u.StrategySuggestion.getSuggestion(partie.Carte, u);
-                        List<Coordonnees> coord = new List<Coordonnees>();
-                        int max = 0;
-                        foreach (var pair in allowedMouv)
-                        {
-                            if (pair.Value.Sugg > max)
-                            {
-                                coord.Clear();
-                                coord.Add(pair.Key);
-                                max = pair.Value.Sugg;
-                            }
-                            else if (pair.Value.Sugg == max && max != 0)
-                            {
-                                coord.Add(pair.Key);
-                            }
-                        }
+                        List<Coordonnees> coord = getMeilleursDeplacements(allowedMouv);
                         if (coord.Count > 0)
                         {
                             int choix = rand.Next(coord.Count());
@@ -65,6 +49,26 @@ namespace Modele
                 }
             }
             finirTour();
+        }
+
+        private List<Coordonnees> getMeilleursDeplacements(SuggMap allowedMouv)
+        {
+            List<Coordonnees> coord = new List<Coordonnees>();
+            int max = 0;
+            foreach (var pair in allowedMouv)
+            {
+                if (pair.Value.Sugg > max)
+                {
+                    coord.Clear();
+                    coord.Add(pair.Key);
+                    max = pair.Value.Sugg;
+                }
+                else if (pair.Value.Sugg == max && max != 0)
+                {
+                    coord.Add(pair.Key);
+                }
+            }
+            return coord;
         }
         /// <summary>
         /// Aucune action spécial à faire à la fin du tour...
