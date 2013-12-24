@@ -73,9 +73,29 @@ namespace InterfaceGraphique.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap caseDesert1 {
+            get {
+                object obj = ResourceManager.GetObject("caseDesert1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap caseEau {
             get {
                 object obj = ResourceManager.GetObject("caseEau", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap caseEau1 {
+            get {
+                object obj = ResourceManager.GetObject("caseEau1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,6 +113,16 @@ namespace InterfaceGraphique.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap caseForet1 {
+            get {
+                object obj = ResourceManager.GetObject("caseForet1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap caseMontagne {
             get {
                 object obj = ResourceManager.GetObject("caseMontagne", resourceCulture);
@@ -103,9 +133,29 @@ namespace InterfaceGraphique.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap caseMontagne1 {
+            get {
+                object obj = ResourceManager.GetObject("caseMontagne1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap casePlaine {
             get {
                 object obj = ResourceManager.GetObject("casePlaine", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap casePlaine1 {
+            get {
+                object obj = ResourceManager.GetObject("casePlaine1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

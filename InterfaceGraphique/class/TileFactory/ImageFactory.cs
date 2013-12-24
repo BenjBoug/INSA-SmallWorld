@@ -4,6 +4,7 @@ using Modele;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Resources;
 
 namespace InterfaceGraphique
 {
@@ -21,31 +22,31 @@ namespace InterfaceGraphique
             if (tile is CaseDesert)
             {
                 if (tileDesert == null)
-                    tileDesert = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseDesert.png", UriKind.Relative));
+                    tileDesert = new BitmapImage(new Uri("../../Resources/quitch/caseDesert.png", UriKind.Relative));
                 brush.ImageSource = tileDesert;
             }
             else if (tile is CaseEau)
             {
                 if (tileEau == null)
-                    tileEau = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseEau.png", UriKind.Relative));
+                    tileEau = new BitmapImage(new Uri("../../Resources/quitch/caseEau.png", UriKind.Relative));
                 brush.ImageSource = tileEau;
             }
             else if (tile is CaseForet)
             {
                 if (tileForet == null)
-                    tileForet = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseForet.png", UriKind.Relative));
+                    tileForet = new BitmapImage(new Uri("../../Resources/quitch/caseForet.png", UriKind.Relative));
                 brush.ImageSource = tileForet;
             }
             else if (tile is CaseMontagne)
             {
                 if (tileMontagne == null)
-                    tileMontagne = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/caseMontagne.png", UriKind.Relative));
+                    tileMontagne = new BitmapImage(new Uri("../../Resources/quitch/caseMontagne.png", UriKind.Relative));
                 brush.ImageSource = tileMontagne;
             }
             else if (tile is CasePlaine)
             {
                 if (tilePlaine == null)
-                    tilePlaine = new BitmapImage(new Uri("E:/Programmation/Projet/Projet/Projet Poo/InterfaceGraphique/Resources/casePlaine.png", UriKind.Relative));
+                    tilePlaine = new BitmapImage(new Uri("../../Resources/quitch/casePlaine.png", UriKind.Relative));
                 brush.ImageSource = tilePlaine;
             }
             return brush;

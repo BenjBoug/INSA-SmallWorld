@@ -188,11 +188,34 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\caseDesert.png" />
-    <Resource Include="Resources\caseEau.png" />
-    <Resource Include="Resources\caseForet.png" />
-    <Resource Include="Resources\caseMontagne.png" />
-    <Resource Include="Resources\casePlaine.png" />
+    <None Include="Resources\quitch\caseDesert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\quitch\caseEau.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\quitch\caseForet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\quitch\caseMontagne.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\quitch\casePlaine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\classic\caseDesert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\classic\caseEau.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\classic\caseForet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\classic\caseMontagne.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\classic\casePlaine.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
