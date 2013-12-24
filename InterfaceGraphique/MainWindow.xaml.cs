@@ -523,7 +523,51 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
-            
+        }
+
+        private void default_Click(object sender, RoutedEventArgs e)
+        {
+            tileFactory = new ImageFactory();
+
+            if (partie != null && partie.Carte != null)
+                loadGrid();
+            e.Handled = true;
+        }
+
+        private void groovy_Click(object sender, RoutedEventArgs e)
+        {
+            tileFactory = new ImageFactory("groovy");
+
+            if (partie != null && partie.Carte != null)
+                loadGrid();
+            e.Handled = true;
+        }
+
+        private void tropical_Click(object sender, RoutedEventArgs e)
+        {
+            tileFactory = new ImageFactory("tropical");
+
+            if (partie != null && partie.Carte != null)
+                loadGrid();
+            e.Handled = true;
+        }
+
+        private void noStyle_Click(object sender, RoutedEventArgs e)
+        {
+            tileFactory = new RectangleFactory();
+
+            if (partie != null && partie.Carte != null)
+                loadGrid();
+            e.Handled = true;
+        }
+
+        private void campaign_Click(object sender, RoutedEventArgs e)
+        {
+            tileFactory = new ImageFactory("campaign");
+
+            if (partie != null && partie.Carte != null)
+                loadGrid();
+            e.Handled = true;
         }
     }
 }

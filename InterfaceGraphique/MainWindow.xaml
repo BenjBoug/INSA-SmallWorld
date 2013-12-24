@@ -43,7 +43,12 @@
                 <MenuItem Header="_Quitter" />
             </MenuItem>
             <MenuItem Header="_Options">
-                <MenuItem x:Name="affTileCheckbox" Header="Afficher tiles" IsCheckable="True" IsChecked="True" Click="affTileCheckbox_Click">
+                <MenuItem Name="affTileCheckbox" Header="Afficher tiles" Click="affTileCheckbox_Click">
+                    <MenuItem Name="default" Header="Style par défaut" Click="default_Click"/>
+                    <MenuItem Name="groovy" Header="Style Groovy" Click="groovy_Click"/>
+                    <MenuItem Name="tropical" Header="Style Tropical" Click="tropical_Click"/>
+                    <MenuItem Name="campaign" Header="Style Campagne" Click="campaign_Click"/>
+                    <MenuItem Name="noStyle" Header="Pas de style" Click="noStyle_Click"/>
                 </MenuItem>
             </MenuItem>
         </Menu>
