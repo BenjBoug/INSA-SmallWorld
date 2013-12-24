@@ -24,15 +24,7 @@ namespace Modele
 
             List<int> emplUnites = getUnitesToList(carte, unite);
 
-            Peuple.PeupleInt peuple = Peuple.PeupleInt.Gaulois;
-            IPeuple p = unite.Proprietaire.Peuple;
-
-            if (p is PeupleViking)
-                peuple = Peuple.PeupleInt.Viking;
-            else if (p is PeupleNain)
-                peuple = Peuple.PeupleInt.Nain;
-            else if (p is PeupleGaulois)
-                peuple = Peuple.PeupleInt.Gaulois;
+            int peuple = unite.Proprietaire.Peuple.toInt();
 
             List<int> sugg = wrap.getSuggestion(carte.toList(), emplUnites, carte.Largeur, x, y, unite.PointsDepl, (int)peuple);
 

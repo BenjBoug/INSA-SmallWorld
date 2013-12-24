@@ -14,5 +14,8 @@ enum Peuple
 { 
 	Viking = 0,
 	Gaulois = 1, 
-	Nain = 2	
+	Nain = 2,
+	Elfe = 3
 };
+
+extern int verif[4][5];

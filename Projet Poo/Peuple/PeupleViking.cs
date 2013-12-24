@@ -13,6 +13,12 @@ namespace Modele
             return "Viking";
         }
 
+        public override int toInt()
+        {
+            return 0;
+        }
+
+
         public override int calculPoints(Carte c, Unite u)
         {
             int bonus = 0;
@@ -21,19 +27,10 @@ namespace Modele
             {
                 for(int j=0;j<c.Hauteur;j++)
                 {
-                    if (coord.X - 1 > 0 && c.Cases[coord.X-1][coord.Y] is CaseEau)
-                    {
-                        bonus = 1;
-                    }
-                    if (coord.X + 1 < c.Largeur && c.Cases[coord.X + 1][coord.Y] is CaseEau)
-                    {
-                        bonus = 1;
-                    }
-                    if (coord.Y - 1 > 0 && c.Cases[coord.X][coord.Y-1] is CaseEau)
-                    {
-                        bonus = 1;
-                    }
-                    if (coord.Y + 1 < c.Hauteur && c.Cases[coord.X][coord.Y+1] is CaseEau)
+                    if (coord.X - 1 > 0 && c.Cases[coord.X-1][coord.Y] is CaseEau
+                        || coord.X + 1 < c.Largeur && c.Cases[coord.X + 1][coord.Y] is CaseEau
+                        || coord.Y - 1 > 0 && c.Cases[coord.X][coord.Y-1] is CaseEau
+                        || coord.Y + 1 < c.Hauteur && c.Cases[coord.X][coord.Y+1] is CaseEau)
                     {
                         bonus = 1;
                     }

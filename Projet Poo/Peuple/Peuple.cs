@@ -10,14 +10,9 @@ namespace Modele
     [XmlInclude(typeof(PeupleGaulois))]
     [XmlInclude(typeof(PeupleNain))]
     [XmlInclude(typeof(PeupleViking))]
+    [XmlInclude(typeof(PeupleElfe))]
     public abstract class Peuple : IPeuple
     {
-        public enum PeupleInt
-        {
-            Viking = 0,
-            Gaulois = 1,
-            Nain = 2
-        };
         /// <summary>
         /// Calcul les points
         /// </summary>
@@ -28,5 +23,7 @@ namespace Modele
         {
             return c.Cases[u.Coord.X][u.Coord.Y].bonusPoints(this);
         }
+
+        public abstract int toInt();
     }
 }

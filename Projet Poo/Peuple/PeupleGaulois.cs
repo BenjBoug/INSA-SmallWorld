@@ -8,6 +8,11 @@ namespace Modele
     [Serializable]
     public class PeupleGaulois : Peuple
     {
+        public override int toInt()
+        {
+            return 1;
+        }
+
         public override string ToString()
         {
             return "Gaulois";

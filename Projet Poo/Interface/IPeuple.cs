@@ -9,6 +9,6 @@ namespace Modele
     {
 
         int calculPoints(Carte c, Unite u);
-       // int toInt();
+        int toInt();
     }
 }

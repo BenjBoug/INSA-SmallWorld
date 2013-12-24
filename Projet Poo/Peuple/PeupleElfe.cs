@@ -5,16 +5,15 @@ using System.Text;
 
 namespace Modele
 {
-    [Serializable]
-    public class PeupleNain : Peuple
+    public class PeupleElfe : Peuple
     {
         public override string ToString()
         {
-            return "Nain";
+            return "Elfe";
         }
         public override int toInt()
         {
-            return 2;
+            return 3;
         }
     }
 }

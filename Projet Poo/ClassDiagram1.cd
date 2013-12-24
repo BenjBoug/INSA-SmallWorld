@@ -88,9 +88,9 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Modele.Peuple" Collapsed="true">
-    <Position X="2.5" Y="5.5" Width="1.5" />
+    <Position X="5.75" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\Peuple.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -112,28 +112,52 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Modele.PeupleGaulois" Collapsed="true">
-    <Position X="0.5" Y="6.75" Width="1.5" />
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <InheritanceLine Type="Modele.Peuple" FixedFromPoint="true">
+      <Path>
+        <Point X="5.75" Y="5.312" />
+        <Point X="5.55" Y="5.312" />
+        <Point X="5.55" Y="4.596" />
+        <Point X="4.25" Y="4.596" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\PeupleGaulois.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.PeupleViking" Collapsed="true">
-    <Position X="2.5" Y="6.75" Width="1.5" />
+    <Position X="2.75" Y="5" Width="1.5" />
+    <InheritanceLine Type="Modele.Peuple" FixedFromPoint="true">
+      <Path>
+        <Point X="5.75" Y="5.312" />
+        <Point X="5.55" Y="5.312" />
+        <Point X="5.55" Y="5.346" />
+        <Point X="4.25" Y="5.346" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAIAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\PeupleViking.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.PeupleNain" Collapsed="true">
-    <Position X="4.5" Y="6.75" Width="1.5" />
+    <Position X="2.75" Y="5.75" Width="1.5" />
+    <InheritanceLine Type="Modele.Peuple" FixedFromPoint="true">
+      <Path>
+        <Point X="5.75" Y="5.312" />
+        <Point X="5.55" Y="5.312" />
+        <Point X="5.55" Y="6.096" />
+        <Point X="4.25" Y="6.096" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\PeupleNain.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.FabriquePeuple">
-    <Position X="2.5" Y="9.75" Width="1.75" />
+    <Position X="5" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\FabriquePeupleAbstraite.cs</FileName>
@@ -228,22 +252,22 @@
       <FileName>Carte\MonteurNormale.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Modele.FabriquePeupleNain">
-    <Position X="4.5" Y="7.75" Width="1.75" />
+  <Class Name="Modele.FabriquePeupleNain" Collapsed="true">
+    <Position X="2.25" Y="9.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\FabriquePeupleNain.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Modele.FabriquePeupleViking">
-    <Position X="2.5" Y="7.75" Width="1.75" />
+  <Class Name="Modele.FabriquePeupleViking" Collapsed="true">
+    <Position X="2.25" Y="8.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\FabriquePeupleViking.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Modele.FabriquePeupleGaulois">
-    <Position X="0.5" Y="7.75" Width="1.75" />
+  <Class Name="Modele.FabriquePeupleGaulois" Collapsed="true">
+    <Position X="2.25" Y="7.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Peuple\FabriquePeupleGaulois.cs</FileName>
@@ -252,7 +276,7 @@
   <Class Name="Modele.Carte" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACEAACAAEEghAACAA0AAAAEAZgECFGQAAAQCAAJIIE=</HashCode>
+      <HashCode>AACEAACAEEEghAACAA0AAJAEAZgECFGQAADQCCAJIIE=</HashCode>
       <FileName>Carte\Carte.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -260,7 +284,7 @@
   <Class Name="Modele.JoueurCOM">
     <Position X="10" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAABEAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAIAAAAAAAAAAAAAAAABEAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Joueurs\JoueurCOM.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -281,7 +305,7 @@
   <Class Name="Modele.Suggestion" Collapsed="true">
     <Position X="4.75" Y="15.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAgAAAIAAAAAAAAA=</HashCode>
       <FileName>Unites\Suggestion.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -317,8 +341,30 @@
   <Class Name="Modele.SuggMap">
     <Position X="1" Y="13.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Unites\SuggMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.PeupleElfe" Collapsed="true">
+    <Position X="2.75" Y="6.5" Width="1.5" />
+    <InheritanceLine Type="Modele.Peuple" FixedFromPoint="true">
+      <Path>
+        <Point X="5.75" Y="5.312" />
+        <Point X="5.55" Y="5.312" />
+        <Point X="5.55" Y="6.846" />
+        <Point X="4.25" Y="6.846" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\PeupleElfe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.FabriquePeupleElfe" Collapsed="true">
+    <Position X="2.25" Y="10.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Peuple\FabriquePeupleElfe.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="Modele.ICarte" Collapsed="true">
@@ -329,9 +375,9 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Modele.IPeuple" Collapsed="true">
-    <Position X="4.5" Y="5.5" Width="1.5" />
+    <Position X="0.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Interface\IPeuple.cs</FileName>
     </TypeIdentifier>
   </Interface>

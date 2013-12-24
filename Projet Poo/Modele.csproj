@@ -44,6 +44,7 @@
     <Compile Include="Carte\Aleatoire.cs" />
     <Compile Include="Carte\Carte.cs" />
     <Compile Include="Carte\Coordonnees.cs" />
+    <Compile Include="Peuple\FabriquePeupleElfe.cs" />
     <Compile Include="Interface\ICarte.cs" />
     <Compile Include="Carte\CarteClassique.cs" />
     <Compile Include="Carte\Case.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Carte\FabriqueCase.cs" />
     <Compile Include="Interface\IStrategySuggestion.cs" />
     <Compile Include="Joueurs\JoueurCOM.cs" />
+    <Compile Include="Peuple\PeupleElfe.cs" />
     <Compile Include="Peuple\FabriquePeupleAbstraite.cs" />
     <Compile Include="Peuple\FabriquePeupleGaulois.cs" />
     <Compile Include="Peuple\FabriquePeupleNain.cs" />

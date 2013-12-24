@@ -91,10 +91,6 @@ vector<Node*>* AStar::reconstruct_path(unordered_map<Node*, Node*> came_from, No
 
 vector<Node*>* AStar::neighbor_nodes(Node *current)
 {
-	int verif[3][5] =  {{2,1,2,1,2},	//VIKING
-						{3,0,1,2,2},	//GAULOIS
-						{1,0,2,2,3}};	//NAIN
-
 	vector<Node*>* res = new vector<Node*>();
 	Coordonnees coordCurrent = current->getCoord();
 

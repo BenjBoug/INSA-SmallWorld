@@ -9,6 +9,7 @@
 
 #include "NodeFactory.h"
 #include "PathNotFoundException.h"
+#include "Enum.h"
 #include <vector>
 #include <list>
 #include <unordered_map>

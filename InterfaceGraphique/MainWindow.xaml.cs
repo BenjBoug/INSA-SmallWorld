@@ -454,7 +454,6 @@ namespace InterfaceGraphique
         {
             if (partie != null)
             {
-
                 SaveFileDialog dlg = new SaveFileDialog();
                 dlg.FileName = "saveSmallWorld"; // Default file name
                 dlg.DefaultExt = ".sav"; // Default file extension
@@ -489,7 +488,7 @@ namespace InterfaceGraphique
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             openFileDialog1.FileName = null;
-            openFileDialog1.Filter = "Save SmallWorld (.sav)|*.sav"; // Filter files by extension
+            openFileDialog1.Filter = "Save SmallWorld (.sav)|*.sav";
 
             string openFileName;
 
@@ -514,7 +513,7 @@ namespace InterfaceGraphique
                     initUI();
                     startGame();
                 }
-                catch (Exception exp)
+                catch (Exception)
                 {
                     MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
                 }

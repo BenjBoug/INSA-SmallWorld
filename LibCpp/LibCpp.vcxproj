@@ -82,6 +82,7 @@
   <ItemGroup>
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Coordonnees.cpp" />
+    <ClCompile Include="Enum.cpp" />
     <ClCompile Include="MapAleatoire.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeFactory.cpp" />
