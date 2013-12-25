@@ -241,7 +241,6 @@ namespace InterfaceGraphique
             {
                 ScrollViewer scrollInfoUnite = new ScrollViewer();
                 scrollInfoUnite.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                scrollInfoUnite.Height = 400;
                 StackPanel panelScroll = new StackPanel();
                 foreach (Unite u in tmpLit)
                 {
@@ -251,6 +250,7 @@ namespace InterfaceGraphique
                     panelScroll.Children.Add(grp);
                 }
                 scrollInfoUnite.Content = panelScroll;
+                scrollInfoUnite.Height = 450;
                 controlDroit.Children.Add(scrollInfoUnite);
             }
         }

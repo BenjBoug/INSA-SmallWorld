@@ -38,11 +38,11 @@ namespace InterfaceGraphique
             InitializeComponent();
             this.unit = unit;
             selected = false;
-            grpUnit.Header = "Unite " + unit.Proprietaire.Peuple;
-            PV.Text += unit.PointsVie.ToString()+"/"+unit.PointsVieMax.ToString();
-            PA.Text += unit.PointsAttaque.ToString();
-            PDef.Text += unit.PointsDefense.ToString();
-            PDepl.Text += unit.PointsDepl.ToString();
+            grpUnit.Header = unit.ToString() + " " + unit.Proprietaire.Peuple;
+            PV.Text = unit.PointsVie.ToString()+"/"+unit.PointsVieMax.ToString();
+            PA.Text = unit.PointsAttaque.ToString();
+            PDef.Text = unit.PointsDefense.ToString();
+            PDepl.Text = unit.PointsDepl.ToString();
             grpUnit.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFromString(unit.Proprietaire.Couleur);
         }
 

@@ -23,5 +23,10 @@ namespace Modele
         {
             return (deplSupp++)%2;
         }
+
+        public override string ToString()
+        {
+            return "Unité blindée";
+        }
     }
 }

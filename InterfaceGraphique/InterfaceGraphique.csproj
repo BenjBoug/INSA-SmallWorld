@@ -188,34 +188,79 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\quitch\caseDesert.png" />
+    <None Include="Resources\campaign\caseDesert.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\quitch\caseEau.png" />
+    <None Include="Resources\campaign\caseEau.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\quitch\caseForet.png" />
+    <None Include="Resources\campaign\caseForet.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\quitch\caseMontagne.png" />
+    <None Include="Resources\campaign\caseMontagne.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\quitch\casePlaine.png" />
+    <None Include="Resources\campaign\casePlaine.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\classic\caseDesert.png" />
+    <None Include="Resources\default\caseDesert.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\classic\caseEau.png" />
+    <None Include="Resources\default\caseEau.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\classic\caseForet.png" />
+    <None Include="Resources\default\caseForet.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\classic\caseMontagne.png" />
+    <None Include="Resources\default\caseMontagne.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\classic\casePlaine.png" />
+    <None Include="Resources\default\casePlaine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\groovy\caseDesert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\groovy\caseEau.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\groovy\caseForet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\groovy\caseMontagne.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\groovy\casePlaine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropical\caseDesert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropical\caseEau.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropical\caseForet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropical\caseMontagne.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tropical\casePlaine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\botte4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bouclier13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\casque23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\epee14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heart.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

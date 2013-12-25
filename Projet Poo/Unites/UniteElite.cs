@@ -22,5 +22,10 @@ namespace Modele
         {
             return 2;
         }
+
+        public override string ToString()
+        {
+            return "Unité élite";
+        }
     }
 }

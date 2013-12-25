@@ -7,11 +7,23 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <GroupBox x:Name="grpUnit" Header="GroupBox" BorderThickness="2" Cursor="Hand" MouseDown="grpUnit_MouseDown" Margin="5">
-            <StackPanel>
-                <TextBlock x:Name="PV" TextWrapping="Wrap" Text="Points de vie :" Foreground="LightGreen"/>
-                <TextBlock x:Name="PA" TextWrapping="Wrap" Text="Points d'attaque : " Foreground="LightCoral"/>
-                <TextBlock x:Name="PDef" TextWrapping="Wrap" Text="Points de défense :" Foreground="LightBlue"/>
-                <TextBlock x:Name="PDepl" TextWrapping="Wrap" Text="Points de dépl. : " Foreground="LightGray"/>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="0,0,5,0">
+                    <Image Source="pack://siteoforigin:,,,/Resources/heart.png" Width="24" Height="24"/>
+                    <TextBlock x:Name="PV" TextWrapping="Wrap" Text="0/2" Foreground="LightGreen" VerticalAlignment="Center" FontSize="20"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,5,0">
+                    <Image Source="pack://siteoforigin:,,,/Resources/epee14.png" Width="24" Height="24"/>
+                    <TextBlock x:Name="PA" TextWrapping="Wrap" Text="0" Foreground="LightCoral" VerticalAlignment="Center" FontSize="20"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,5,0">
+                    <Image Source="pack://siteoforigin:,,,/Resources/bouclier13.png" Width="24" Height="24"/>
+                    <TextBlock x:Name="PDef" TextWrapping="Wrap" Text="0" Foreground="LightBlue" VerticalAlignment="Center" FontSize="20"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,5,0">
+                    <Image Source="pack://siteoforigin:,,,/Resources/botte4.png" Width="24" Height="24"/>
+                    <TextBlock x:Name="PDepl" TextWrapping="Wrap" Text="0" Foreground="LightGray" VerticalAlignment="Center" FontSize="20"/>
+                </StackPanel>
             </StackPanel>
         </GroupBox>
 

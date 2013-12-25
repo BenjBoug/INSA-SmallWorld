@@ -53,7 +53,7 @@
             </MenuItem>
         </Menu>
         <StackPanel Orientation="Horizontal">
-            <StackPanel x:Name="controlGauche" Width="200" Height="550">
+            <StackPanel x:Name="controlGauche" Width="220" Height="550">
                 <StackPanel.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFC5C5C5" Offset="0"/>
@@ -70,7 +70,7 @@
                     <Rectangle Style="{StaticResource selectionStyle}" Name="selectionRectangle" RadiusX="5" RadiusY="5" />
                 </Canvas>
             </ScrollViewer>
-            <StackPanel x:Name="controlDroit" Width="200" Height="550">
+            <StackPanel x:Name="controlDroit" Width="220" Height="550">
                 <StackPanel.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFC5C5C5" Offset="0"/>

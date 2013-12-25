@@ -157,6 +157,11 @@ namespace Modele
             set { strategySuggestion = value; }
         }
 
+        public override string ToString()
+        {
+            return "Unité classique";
+        }
+
 
     }
 }
