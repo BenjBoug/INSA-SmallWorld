@@ -17,16 +17,13 @@ namespace Modele
         /// <returns></returns>
         public override SuggMap getSuggestion(Carte carte, Unite unite)
         {
-
-            int x = unite.Coord.X;
-            int y = unite.Coord.Y;
-            WrapperSuggestion wrap = new WrapperSuggestion();
-
-            List<int> emplUnites = getUnitesToList(carte, unite);
-
-            int peuple = unite.Proprietaire.Peuple.toInt();
-
-            List<int> sugg = wrap.getSuggestion(carte.toList(), emplUnites, carte.Largeur, x, y, unite.PointsDepl, (int)peuple);
+            List<int> sugg = new WrapperSuggestion().getSuggestion(carte.toList(),                      //la carte
+                                                                   getUnitesToList(carte, unite),       //l'emplacement des unités ennemis
+                                                                   carte.Largeur,                       //la taille de la carte
+                                                                   unite.Coord.X,                       //coordonnees x de l'unité
+                                                                   unite.Coord.Y,                       //coordonnees y de l'unité
+                                                                   unite.PointsDepl,                    //le nombre de points de déplacement de l'unité
+                                                                   unite.Proprietaire.Peuple.toInt());  //le peuple de l'unité
 
             return listIntToSuggMap(carte, sugg);
         }

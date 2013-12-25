@@ -38,19 +38,23 @@ namespace Modele
                 {
                     if (u.PointsDepl > 0)
                     {
-                        SuggMap allowedMouv = u.StrategySuggestion.getSuggestion(partie.Carte, u);
-                        List<Coordonnees> coord = getMeilleursDeplacements(allowedMouv);
+                        SuggMap allowedMouv = u.StrategySuggestion.getSuggestion(partie.Carte, u); // on récupère les suggestions pour cette unité
+                        List<Coordonnees> coord = getMeilleursDeplacements(allowedMouv); // on récupère les meilleurs mouvement possible en fonction des suggestions
                         if (coord.Count > 0)
                         {
-                            int choix = rand.Next(coord.Count());
-                            carte.deplaceUnite(u, coord[choix], allowedMouv);
+                            int choix = rand.Next(coord.Count());//on choisi aléatoirement une coordonnees dans les meilleurs mouvements
+                            carte.deplaceUnite(u, coord[choix], allowedMouv); // et on déplace l'unité
                         }
                     }
                 }
             }
             finirTour();
         }
-
+        /// <summary>
+        /// Retourne la liste des meilleurs coordonnees en fonction de coefficient de suggestion
+        /// </summary>
+        /// <param name="allowedMouv"></param>
+        /// <returns></returns>
         private List<Coordonnees> getMeilleursDeplacements(SuggMap allowedMouv)
         {
             List<Coordonnees> coord = new List<Coordonnees>();

@@ -6,8 +6,7 @@ using System.Threading;
 
 namespace Modele
 {
-    [Serializable]
-    public class JoueurConcret : Joueur
+    public class JoueurConcret : Joueur, IDisposable
     {
         public JoueurConcret(FabriquePeuple fab, String color, String nom)
             : base(fab, color, nom)
@@ -21,8 +20,14 @@ namespace Modele
             sem = new Semaphore(0, 1);
         }
 
-        [NonSerialized]
+        ~JoueurConcret()
+        {
+            Dispose(false);
+        }
+
         private Semaphore sem;
+        private bool disposed = false;
+
         /// <summary>
         /// Pour un joueur concret, on bloque le Thread du jeu avec un sémaphore
         /// </summary>
@@ -39,5 +44,24 @@ namespace Modele
             sem.Release();
         }
 
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    sem.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
     }
 }

@@ -20,7 +20,11 @@ namespace Modele
             x = 0;
             y = 0;
         }
-
+        /// <summary>
+        /// Construit une coordonnnees avec les valeurs (x,y)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public Coordonnees(int x, int y)
         {
             this.x = x;

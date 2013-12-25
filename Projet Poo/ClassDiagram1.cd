@@ -217,9 +217,10 @@
   <Class Name="Modele.JoueurConcret">
     <Position X="10" Y="10.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAQAAEAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAACAAAAAAAAQAAEAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Joueurs\JoueurConcret.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Modele.MonteurCarte">
     <Position X="18.75" Y="0.5" Width="1.5" />
@@ -276,7 +277,7 @@
   <Class Name="Modele.Carte" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACEAACAEEEghAACAA0AAJAEAZgECFGQAADQCCAJIIE=</HashCode>
+      <HashCode>AACEAACAEEEghAACAA0AAIAEAZgECFGQAADQCCAJIIE=</HashCode>
       <FileName>Carte\Carte.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -291,7 +292,7 @@
   <Class Name="Modele.SuggAgressif" Collapsed="true">
     <Position X="3.5" Y="16.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIgAAAAAAAAAAgEEAQAAgBAAAAAAgBAAAAAAABAAAA=</HashCode>
+      <HashCode>AAIgAAAAAAAAAAgEEAQAAABAAAAAAgBAAAAAAABAAAA=</HashCode>
       <FileName>Unites\SuggAgressif.cs</FileName>
     </TypeIdentifier>
   </Class>

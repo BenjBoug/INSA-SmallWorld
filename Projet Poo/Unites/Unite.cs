@@ -6,7 +6,6 @@ using System.Xml.Serialization;
 
 namespace Modele
 {
-    [Serializable]
     [XmlInclude(typeof(UniteBlindee))]
     [XmlInclude(typeof(UniteElite))]
     public class Unite : IUnite
@@ -73,7 +72,6 @@ namespace Modele
             get { return pointsDepl; }
             set { pointsDepl = value; }
         }
-        [NonSerialized]
         private Joueur proprietaire;
 
         [XmlIgnore]
@@ -100,7 +98,6 @@ namespace Modele
             Random rand = new Random();
             int nbToursCombat = 3 + randCombat.Next((Math.Max(this.PointsVie, unitDef.PointsVie)) + 2);
             int n = 0;
-            //Console.WriteLine("combat nbTours "+nbToursCombat);
             while (nbToursCombat - n > 0 && this.estEnVie() && unitDef.estEnVie())
             {
                 double ratioVie = (double)this.PointsVie / (double)this.PointsVieMax;
@@ -123,15 +120,12 @@ namespace Modele
                     ratioChanceDef = ratioAttDef/2;
                 }
                 double ratioCombat = (double)((double)rand.Next(100) / 100);
-                //Console.WriteLine(ratioChanceDef+" "+ratioCombat+" "+ratioVie);
                 if (ratioCombat <= ratioChanceDef)
                 {
-                    // Console.WriteLine(unit.Proprietaire.Nom+" gagne tour " + (n+1));
                     unitDef.perdPV(1);
                 }
                 else
                 {
-                    //Console.WriteLine(unit.Proprietaire.Nom + " perd tour" + (n + 1));
                     this.perdPV(1);
                 }
                 n++;

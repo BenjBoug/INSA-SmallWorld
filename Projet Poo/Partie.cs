@@ -23,12 +23,12 @@ namespace Modele
             classement = new Stack<Joueur>();
         }
 
-        [NonSerialized]
         private Stack<Joueur> classement;
 
-
         private bool finpartie;
-
+        /// <summary>
+        /// Est vrai si la partie est fini (cad que le nombre de tours max a était atteind ou qu'il ne reste qu'un seul joueur vivant
+        /// </summary>
         public bool Finpartie
         {
             get { return finpartie; }
@@ -48,31 +48,26 @@ namespace Modele
             get { return nbTours; }
             set { nbTours = value; }
         }
-        private List<Joueur> listJoueurs;
 
+        private List<Joueur> listJoueurs;
         public List<Joueur> ListJoueurs
         {
             get { return listJoueurs; }
             set { listJoueurs = value; }
         }
-        private Carte carte;
 
+        private Carte carte;
         public Carte Carte
         {
             get { return carte; }
             set { carte = value; }
         }
         /// <summary>
-        /// Fini le tour
+        /// Fini le tour, et passe au suivant
         /// </summary>
         public void tourSuivant()
         {
             OnFinTours();
-            //Console.WriteLine("NbTours:" + nbTours);
-            if (nbTours == 20)
-            {
-                Console.WriteLine();
-            }
             if (getNbJoueursVivant() > 1 && nbTours<carte.NbToursMax)
             {
                 do
@@ -156,7 +151,7 @@ namespace Modele
             return res;
         }
         /// <summary>
-        /// Passe au joueur courant, si tout les joueurs ont joués, on incrémente le nombre de tours, et on reprend au début de la liste des joueurs.
+        /// Passe au joueur suivant, si tout les joueurs ont joués, on incrémente le nombre de tours, et on reprend au début de la liste des joueurs.
         /// </summary>
         public void joueurSuivant()
         {
@@ -190,12 +185,10 @@ namespace Modele
         /// </summary>
         public void associeJoueursUnite()
         {
-
             foreach (Unite u in Carte.Unites)
             {
                 u.Proprietaire = listJoueurs[u.IdProprietaire];
             }
-
         }
 
         public event FinTourEventHandler FinTours;

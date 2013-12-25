@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Modele;
 using System.Xml.Serialization;
 using System.IO;
-using System.ComponentModel;
 using System.Threading;
 using Microsoft.Win32;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
 
 namespace InterfaceGraphique
 {
@@ -28,11 +21,11 @@ namespace InterfaceGraphique
     /// </summary>
     public partial class MainWindow : Window
     {
-        Partie partie;
-        TileFactory tileFactory;
-        List<Unite> listUnitSelected;
-        SuggMap allowedMouv;
-        Suggestion sugg;
+        private Partie partie;
+        private TileFactory tileFactory;
+        private List<Unite> listUnitSelected;
+        private SuggMap allowedMouv;
+        private Suggestion sugg;
         private Semaphore _pool;
         private Semaphore _poolInit;
 
@@ -61,23 +54,23 @@ namespace InterfaceGraphique
         /// <summary>
         /// Actualise l'interace graphique dans le Thread de la fenêtre
         /// </summary>
-        private void updateUI()
+        private void rafraichirInterface()
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
                 allowedMouv = null;
                 listUnitSelected.Clear();
-                loadGrid();
-                loadSuggestion();
-                loadControlDroit();
-                refreshControlGauche();
+                afficheCarte();
+                afficherSuggestions();
+                chargerPanneauDroit();
+                actualisePanneauGauche();
                 _pool.Release();
             }));
         }
         /// <summary>
         /// Créer le thread et la boucle principale du jeu, et le démarre
         /// </summary>
-        private void startGame()
+        private void commencerJeu()
         {
             Task.Factory.StartNew(() =>
             {
@@ -86,24 +79,24 @@ namespace InterfaceGraphique
                 {
                     partie.joueurActuel().jouerTour(partie);
                     partie.tourSuivant();
-                    updateUI();
+                    rafraichirInterface();
                     System.Threading.Thread.Sleep(500);
                     _pool.WaitOne();
                 }
-                endGame();
+                finJeu();
             });
         }
         /// <summary>
         /// Affiche le gagnant
         /// </summary>
-        private void endGame()
+        private void finJeu()
         {
             MessageBox.Show(partie.getGagnant().Nom+" gagne la partie !");
         }
         /// <summary>
         /// Initialise l'interface graphique
         /// </summary>
-        private void initUI()
+        private void initialiseInterface()
         {
             Console.WriteLine("initUI ");
             canvasMap.Children.Clear();
@@ -111,9 +104,9 @@ namespace InterfaceGraphique
             canvasMap.Width = partie.Carte.Largeur * 50;
             canvasMap.Height = partie.Carte.Hauteur * 50;
 
-            loadGrid();
-            loadControlGauche();
-            loadControlDroit();
+            afficheCarte();
+            chargerPanneauGauche();
+            chargerPanneauDroit();
 
             foreach (UIElement ch in controlGauche.Children)
             {
@@ -127,7 +120,7 @@ namespace InterfaceGraphique
         /// </summary>
         /// <param name="monteurC"></param>
         /// <param name="joueurs"></param>
-        public void loadPartie(MonteurCarte monteurC, List<Joueur> joueurs)
+        public void chargerPartie(MonteurCarte monteurC, List<Joueur> joueurs)
         {
             
             Task.Factory.StartNew(() =>
@@ -138,17 +131,17 @@ namespace InterfaceGraphique
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    initUI();
+                    initialiseInterface();
                 }));
 
-                startGame();
+                commencerJeu();
             });
         }
 
         /// <summary>
         /// Actualise les éléments graphique sur le panel gauche de la fenêtre
         /// </summary>
-        private void refreshControlGauche()
+        private void actualisePanneauGauche()
         {
             labelJoueurActuel.Content = "C'est à " + partie.joueurActuel().Nom + " de jouer !";
             labelNbTour.Content = "Tour: " + partie.NbTours + "/" + partie.Carte.NbToursMax;
@@ -175,7 +168,7 @@ namespace InterfaceGraphique
         /// <summary>
         /// charge les éléments graphiques du panel gauche
         /// </summary>
-        private void loadControlGauche()
+        private void chargerPanneauGauche()
         {
             panelListeJoueur.Children.Clear();
             foreach (Joueur j in partie.ListJoueurs)
@@ -187,13 +180,13 @@ namespace InterfaceGraphique
                 panelListeJoueur.Children.Add(grp);
             }
 
-            refreshControlGauche();
+            actualisePanneauGauche();
         }
 
         /// <summary>
         /// charge les éléments graphique du panel droit
         /// </summary>
-        private void loadControlDroit()
+        private void chargerPanneauDroit()
         {
             controlDroit.Children.Clear();
 
@@ -265,7 +258,7 @@ namespace InterfaceGraphique
         /// <summary>
         /// Charge le canvas avec les éléments de la carte
         /// </summary>
-        private void loadGrid()
+        private void afficheCarte()
         {
             canvasMap.Children.Clear();
             canvasMap.Children.Add(selectionRectangle);
@@ -275,7 +268,7 @@ namespace InterfaceGraphique
                 {
                     var tile = partie.Carte.Cases[c][l];
                     var unite = partie.Carte.getUniteFromCoord(new Coordonnees(c, l));
-                    var rect = createRectangle(c, l, tile, unite);
+                    var rect = creerTile(c, l, tile, unite);
                     canvasMap.Children.Add(rect);
                 }
             }
@@ -283,7 +276,7 @@ namespace InterfaceGraphique
         /// <summary>
         /// Affiche les rectangles représentant les suggestions
         /// </summary>
-        private void loadSuggestion()
+        private void afficherSuggestions()
         {
             if (allowedMouv != null)
             {
@@ -291,7 +284,7 @@ namespace InterfaceGraphique
                 {
                     if (pair.Value.Sugg >= 1)
                     {
-                        var rect = createSuggestion(pair.Key.X, pair.Key.Y);
+                        var rect = creerRectSugg(pair.Key.X, pair.Key.Y);
                         rect.StrokeThickness = pair.Value.Sugg + 1;
                         canvasMap.Children.Add(rect);
                     }
@@ -306,7 +299,7 @@ namespace InterfaceGraphique
         /// <param name="tile">la case</param>
         /// <param name="listUnite">la liste d'unités présentent</param>
         /// <returns></returns>
-        private Tile createRectangle(int c, int l, ICase tile, List<Unite> listUnite)
+        private Tile creerTile(int c, int l, ICase tile, List<Unite> listUnite)
         {
             var rectangle = new Tile(tile, tileFactory, listUnite);
 
@@ -318,7 +311,7 @@ namespace InterfaceGraphique
             return rectangle;
         }
 
-        private Rectangle createSuggestion(int c, int l)
+        private Rectangle creerRectSugg(int c, int l)
         {
             var rectangle = new Rectangle();
             Canvas.SetLeft(rectangle, c * 50);
@@ -356,12 +349,12 @@ namespace InterfaceGraphique
             else
             {
                 allowedMouv = null;
-                loadSuggestion();
+                afficherSuggestions();
             }
 
 
-            loadGrid();
-            loadControlDroit();
+            afficheCarte();
+            chargerPanneauDroit();
         }
 
 
@@ -384,13 +377,12 @@ namespace InterfaceGraphique
                 tileFactory = new RectangleFactory();
             }
             if (partie != null && partie.Carte != null)
-                loadGrid();
+                afficheCarte();
             e.Handled = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             partie.joueurActuel().finirTour();
             (sender as Button).IsEnabled = false;
             e.Handled = true;
@@ -412,9 +404,9 @@ namespace InterfaceGraphique
                 listUnitSelected.Remove(grp.Unit); // on la retire de la liste
                 if (listUnitSelected.Count == 0) // si plus aucune unité n'est sélectionné
                 {
-                    loadGrid();
+                    afficheCarte();
                     allowedMouv = null; // on supprime l'affichage  des suggestions
-                    loadSuggestion();
+                    afficherSuggestions();
                 }
                 else
                 {
@@ -422,32 +414,41 @@ namespace InterfaceGraphique
                 }
             }
         }
-
+        /// <summary>
+        /// Charge les suggestions et les affiche
+        /// </summary>
         private void loadDataSuggestion()
         {
-            int column = (int)Canvas.GetLeft(selectionRectangle) / 50;
-            int row = (int)Canvas.GetTop(selectionRectangle) / 50;
             Task.Factory.StartNew(() =>
             {
-                Unite unit = null;
-                foreach (Unite u in listUnitSelected) // on cherche l'unité avec le moins de points de deplacements
-                {
-                    if (unit == null)
-                        unit = u;
-                    else
-                    {
-                        if (unit.PointsDepl > u.PointsDepl)
-                            unit = u;
-                    }
-                }
+                Unite unit = uniteAvecMoinsDepl();
                 allowedMouv = sugg.getSuggestion(partie.Carte, unit); // on charge les suggestions pour cette unités ( et qui servira pour toutes les unités select)
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    loadGrid();
-                    loadSuggestion();
+                    afficheCarte();
+                    afficherSuggestions();
                 }));
             });
+        }
+        /// <summary>
+        /// Retourne l'unité avec le moins de points de déplacement
+        /// </summary>
+        /// <returns></returns>
+        private Unite uniteAvecMoinsDepl()
+        {
+            Unite unit = null;
+            foreach (Unite u in listUnitSelected) // on cherche l'unité avec le moins de points de deplacements
+            {
+                if (unit == null)
+                    unit = u;
+                else
+                {
+                    if (unit.PointsDepl > u.PointsDepl)
+                        unit = u;
+                }
+            }
+            return unit;
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
@@ -510,8 +511,8 @@ namespace InterfaceGraphique
                     partie = (Partie)mySerializer.Deserialize(openFileDialog1.OpenFile());
 
                     partie.associeJoueursUnite();
-                    initUI();
-                    startGame();
+                    initialiseInterface();
+                    commencerJeu();
                 }
                 catch (Exception)
                 {
@@ -529,7 +530,7 @@ namespace InterfaceGraphique
             tileFactory = new ImageFactory();
 
             if (partie != null && partie.Carte != null)
-                loadGrid();
+                afficheCarte();
             e.Handled = true;
         }
 
@@ -538,7 +539,7 @@ namespace InterfaceGraphique
             tileFactory = new ImageFactory("groovy");
 
             if (partie != null && partie.Carte != null)
-                loadGrid();
+                afficheCarte();
             e.Handled = true;
         }
 
@@ -547,7 +548,7 @@ namespace InterfaceGraphique
             tileFactory = new ImageFactory("tropical");
 
             if (partie != null && partie.Carte != null)
-                loadGrid();
+                afficheCarte();
             e.Handled = true;
         }
 
@@ -556,7 +557,7 @@ namespace InterfaceGraphique
             tileFactory = new RectangleFactory();
 
             if (partie != null && partie.Carte != null)
-                loadGrid();
+                afficheCarte();
             e.Handled = true;
         }
 
@@ -565,7 +566,7 @@ namespace InterfaceGraphique
             tileFactory = new ImageFactory("campaign");
 
             if (partie != null && partie.Carte != null)
-                loadGrid();
+                afficheCarte();
             e.Handled = true;
         }
     }

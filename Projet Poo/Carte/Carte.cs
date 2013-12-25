@@ -435,32 +435,5 @@ namespace Modele
         {
             return c.X >= 0 && c.X < Largeur && c.Y >= 0 && c.Y < Hauteur;
         }
-
-        private enum Direction
-        {
-            OUEST, EST, SUD, NORD
-        }
-
-        private bool coordInBoundAfterMove(Coordonnees c, Direction dir)
-        {
-            Coordonnees tmp = c;
-            switch (dir)
-            {
-                case Direction.OUEST:
-                    tmp.X -= 1;
-                    break;
-                case Direction.EST:
-                    tmp.X += 1;
-                    break;
-                case Direction.SUD:
-                    tmp.Y += 1;
-                    break;
-                case Direction.NORD:
-                    tmp.Y -= 1;
-                    break;
-            }
-
-            return coordInBound(tmp);
-        }
     }
 }

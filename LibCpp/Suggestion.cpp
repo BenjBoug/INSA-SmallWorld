@@ -12,8 +12,8 @@ Suggestion::~Suggestion(void)
 
 
 vector<int*> Suggestion::suggestion(int **carte, int**unites, int taille,int xActuel,int yActuel, int ptDepl, int peupleJActuel)
- {
-
+{
+	 
 	int *** sugg = new int**[taille];
 	for (int i=0; i<taille; i++) 
 	{
@@ -25,7 +25,7 @@ vector<int*> Suggestion::suggestion(int **carte, int**unites, int taille,int xAc
 		} 
 	}
 	
-	sugg[xActuel][yActuel][0]=verif[peupleJActuel][carte[xActuel-1][yActuel]];
+	sugg[xActuel][yActuel][0]=verif[peupleJActuel][carte[xActuel][yActuel]];
 	calculDeplClassique(carte,unites,xActuel,yActuel,ptDepl,peupleJActuel,taille, sugg);
 	vector<int*> res;
 	int *data;

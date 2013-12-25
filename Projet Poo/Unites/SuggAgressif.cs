@@ -7,21 +7,13 @@ using LibCLR;
 
 namespace Modele
 {
-    [Serializable]
     public class SuggAgressif : Suggestion
     {
-        [NonSerialized]
         Carte carte;
-        [NonSerialized]
         Unite unite;
-        [NonSerialized]
         List<Node> closedset = new List<Node>();
-        [NonSerialized]
         List<Node> openset = new List<Node>();
-        [NonSerialized]
         Dictionary<Node, Node> came_from = new Dictionary<Node, Node>();
-        [NonSerialized]
-        WrapperAStar aStart = new WrapperAStar();
         /// <summary>
         /// Récupère les suggestions aggressive. Ces suggestions sont fait en sorte de déplacer
         /// l'unité vers une autre unité le plus proche avec l'algorithme A*
@@ -37,7 +29,6 @@ namespace Modele
             //on récupère les suggestions classique en fonction du terrain
             SuggMap res = base.getSuggestion(carte, unite);
 
-            Console.WriteLine(""+res[unite.Coord].Sugg);
             
             List<Coordonnees> listCoordAttaquableProche = new List<Coordonnees>();
             List<Coordonnees> listCoordAttaquable = new List<Coordonnees>();
@@ -95,7 +86,8 @@ namespace Modele
                     peuple = 1;
                 else if (p is PeupleGaulois)
                     peuple = 2;
-                
+
+                WrapperAStar aStart = new WrapperAStar();
                 List<Coordonnees> path = convertListInttoListCoord(aStart.pathFinding(carte.toList(),peuple,carte.Largeur,unite.Coord.X,unite.Coord.Y,plusProche.X,plusProche.Y));
                 
                 if (path != null && path.Count>0)
