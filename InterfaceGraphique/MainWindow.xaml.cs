@@ -48,15 +48,14 @@ namespace InterfaceGraphique
             selectionRectangle = new SelectedRect();
             selectionRectangle.Visibility = System.Windows.Visibility.Collapsed;
            
-            foreach (UIElement ch in controlGauche.Children)
-            {
-                ch.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            foreach (UIElement ch in controlGauche.Children)
+            {
+                ch.Visibility = Visibility.Collapsed;
+            }
         }
 
         /// <summary>
@@ -147,7 +146,7 @@ namespace InterfaceGraphique
         }
 
         /// <summary>
-        /// Actualise les éléments graphique sur le panel gauche de la fenêtre
+        /// Actualise les éléments graphique sur le panneau gauche de la fenêtre
         /// </summary>
         private void actualisePanneauGauche()
         {
@@ -173,6 +172,9 @@ namespace InterfaceGraphique
             }   
         }
 
+        /// <summary>
+        /// Actualise les éléments graphique sur le panneau droit de la fenêtre
+        /// </summary>
         private void actualisePanneauDroit()
         {
             panelScroll.Children.Clear();
@@ -194,7 +196,7 @@ namespace InterfaceGraphique
 
 
         /// <summary>
-        /// charge les éléments graphiques du panel gauche
+        /// charge les éléments graphiques du panneau gauche
         /// </summary>
         private void chargerPanneauGauche()
         {
@@ -212,7 +214,7 @@ namespace InterfaceGraphique
         }
 
         /// <summary>
-        /// charge les éléments graphique du panel droit
+        /// charge les éléments graphique du panneau droit
         /// </summary>
         private void chargerPanneauDroit()
         {
@@ -230,8 +232,9 @@ namespace InterfaceGraphique
             actualisePanneauDroit();
 
             scrollInfoUnite.Content = panelScroll;
-            scrollInfoUnite.Height = 450;
+            scrollInfoUnite.Height = 415;
             controlDroit.Children.Add(scrollInfoUnite);
+
         }
 
         /// <summary>
@@ -547,6 +550,20 @@ namespace InterfaceGraphique
             if (partie != null && partie.Carte != null)
                 afficheCarte();
             e.Handled = true;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }
