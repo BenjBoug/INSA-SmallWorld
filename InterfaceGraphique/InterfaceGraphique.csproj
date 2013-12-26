@@ -81,6 +81,9 @@
     <Compile Include="class\TileFactory\ImageFactory.cs" />
     <Compile Include="class\TileFactory\RectangleFactory.cs" />
     <Compile Include="class\TileFactory\TileFactory.cs" />
+    <Compile Include="EditeurCarte.xaml.cs">
+      <DependentUpon>EditeurCarte.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GroupeInfosCase.xaml.cs">
       <DependentUpon>GroupeInfosCase.xaml</DependentUpon>
     </Compile>
@@ -93,6 +96,10 @@
     <Compile Include="Tile.xaml.cs">
       <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
+    <Page Include="EditeurCarte.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GroupeInfosCase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
