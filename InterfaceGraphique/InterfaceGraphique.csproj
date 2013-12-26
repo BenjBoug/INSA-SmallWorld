@@ -81,12 +81,22 @@
     <Compile Include="class\TileFactory\ImageFactory.cs" />
     <Compile Include="class\TileFactory\RectangleFactory.cs" />
     <Compile Include="class\TileFactory\TileFactory.cs" />
+    <Compile Include="GroupeInfosCase.xaml.cs">
+      <DependentUpon>GroupeInfosCase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GroupeNouveauJoueur.xaml.cs">
       <DependentUpon>GroupeNouveauJoueur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectedRect.xaml.cs">
+      <DependentUpon>SelectedRect.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tile.xaml.cs">
       <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
+    <Page Include="GroupeInfosCase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GroupeJoueur.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -118,6 +128,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NouvellePartie.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectedRect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

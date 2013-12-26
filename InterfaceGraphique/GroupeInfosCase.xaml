@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="InterfaceGraphique.GroupeInfosCase"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <Grid>
+        <GroupBox Name="grpInfo" Header="Infos case" BorderThickness="1" Margin="5">
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Name="rect" Height="50" Width="50" VerticalAlignment="Center" Fill="Black" Margin="0,0,10,0"/>
+                <StackPanel Width="200">
+                    <TextBlock Name="typeCase" TextWrapping="Wrap" Text="Type : "/>
+                    <TextBlock Name="nbUnite" TextWrapping="Wrap" Text="Nb Unités : "/>
+                    <TextBlock Name="coordX" TextWrapping="Wrap" Text="Coord. x : "/>
+                    <TextBlock Name="coordY" TextWrapping="Wrap" Text="Coord. y : "/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

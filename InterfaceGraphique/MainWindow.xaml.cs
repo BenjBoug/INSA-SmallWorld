@@ -21,6 +21,9 @@ namespace InterfaceGraphique
     /// </summary>
     public partial class MainWindow : Window
     {
+        const int FPS = 500;
+        const int TAILLE = 50;
+
         private Partie partie;
         private TileFactory tileFactory;
         private List<Unite> listUnitSelected;
@@ -28,6 +31,9 @@ namespace InterfaceGraphique
         private Suggestion sugg;
         private Semaphore _pool;
         private Semaphore _poolInit;
+        private SelectedRect selectionRectangle;
+
+        private StackPanel panelScroll;
 
 
         public MainWindow()
@@ -39,6 +45,8 @@ namespace InterfaceGraphique
             tileFactory = new ImageFactory();
             _pool = new Semaphore(0, 1);
             _poolInit = new Semaphore(0, 1);
+            selectionRectangle = new SelectedRect();
+            selectionRectangle.Visibility = System.Windows.Visibility.Collapsed;
            
             foreach (UIElement ch in controlGauche.Children)
             {
@@ -62,7 +70,7 @@ namespace InterfaceGraphique
                 listUnitSelected.Clear();
                 afficheCarte();
                 afficherSuggestions();
-                chargerPanneauDroit();
+                actualisePanneauDroit();
                 actualisePanneauGauche();
                 _pool.Release();
             }));
@@ -80,7 +88,7 @@ namespace InterfaceGraphique
                     partie.joueurActuel().jouerTour(partie);
                     partie.tourSuivant();
                     rafraichirInterface();
-                    System.Threading.Thread.Sleep(500);
+                    System.Threading.Thread.Sleep(FPS);
                     _pool.WaitOne();
                 }
                 finJeu();
@@ -162,9 +170,29 @@ namespace InterfaceGraphique
                 {
                     grp.IsEnabled = false;
                 }
-            }
-                
+            }   
         }
+
+        private void actualisePanneauDroit()
+        {
+            panelScroll.Children.Clear();
+            if (selectionRectangle.Visibility == Visibility.Visible)
+            {
+                List<Unite> tmpLit = partie.Carte.getUniteFromCoord(selectionRectangle.Coord);
+                if (tmpLit.Count > 0)
+                {
+                    foreach (Unite u in tmpLit)
+                    {
+                        GroupeUnite grp = new GroupeUnite(u);
+                        if (partie.joueurActuel() == u.Proprietaire)
+                            grp.MouseDown += grpUnit_MouseDown;
+                        panelScroll.Children.Add(grp);
+                    }
+                }
+            }
+        }
+
+
         /// <summary>
         /// charge les éléments graphiques du panel gauche
         /// </summary>
@@ -190,69 +218,20 @@ namespace InterfaceGraphique
         {
             controlDroit.Children.Clear();
 
-            GroupBox grpInfo = new GroupBox();
-            grpInfo.Margin = new Thickness(5);
-            grpInfo.Header = "Infos case";
-            StackPanel panelGrp = new StackPanel();
-            panelGrp.Orientation = Orientation.Horizontal;
-            Rectangle rect = new Rectangle();
-            rect.Width = 50;
-            rect.Height = 50;
-            int column = 0, row = 0;
-
-            
-            if (selectionRectangle.Visibility==Visibility.Visible)
-            {
-                rect.Fill = tileFactory.getViewTile(selectionRectangle.Tag as ICase);
-                column = (int)Canvas.GetLeft(selectionRectangle) / 50;
-                row = (int)Canvas.GetTop(selectionRectangle) / 50;
-            }
-            else
-            {
-                rect.Fill = Brushes.Black;
-            }
-
-            StackPanel panelInfo = new StackPanel();
-            panelInfo.Margin = new Thickness(4);
-            TextBlock typeCase = new TextBlock();
-            typeCase.Text = "Type: ";
-
-            if (selectionRectangle.Visibility == Visibility.Visible)
-                typeCase.Text += "Type: " + (selectionRectangle.Tag as ICase).ToString();
-
-
-            List<Unite> tmp = partie.Carte.getUniteFromCoord(new Coordonnees(column, row));
-            TextBlock nbUnite = new TextBlock();
-            nbUnite.Text = "Nb Unités: ";
-            nbUnite.Text += tmp.Count();
-
-            panelGrp.Children.Add(rect);
-            panelInfo.Children.Add(typeCase);
-            panelInfo.Children.Add(nbUnite);
-
-            panelGrp.Children.Add(panelInfo);
-            grpInfo.Content = panelGrp;
+            GroupeInfosCase grpInfo = new GroupeInfosCase();
+            selectionRectangle.SelectChanged += grpInfo.actualiseData;
             controlDroit.Children.Add(grpInfo);
 
 
-            List<Unite> tmpLit = partie.Carte.getUniteFromCoord(new Coordonnees(column, row));
+            ScrollViewer scrollInfoUnite = new ScrollViewer();
+            scrollInfoUnite.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            panelScroll = new StackPanel();
 
-            if (tmpLit.Count>0 && selectionRectangle.Visibility == Visibility.Visible)
-            {
-                ScrollViewer scrollInfoUnite = new ScrollViewer();
-                scrollInfoUnite.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                StackPanel panelScroll = new StackPanel();
-                foreach (Unite u in tmpLit)
-                {
-                    GroupeUnite grp = new GroupeUnite(u);
-                    if (partie.joueurActuel()==u.Proprietaire)
-                        grp.MouseDown += grpUnit_MouseDown;
-                    panelScroll.Children.Add(grp);
-                }
-                scrollInfoUnite.Content = panelScroll;
-                scrollInfoUnite.Height = 450;
-                controlDroit.Children.Add(scrollInfoUnite);
-            }
+            actualisePanneauDroit();
+
+            scrollInfoUnite.Content = panelScroll;
+            scrollInfoUnite.Height = 450;
+            controlDroit.Children.Add(scrollInfoUnite);
         }
 
         /// <summary>
@@ -331,14 +310,14 @@ namespace InterfaceGraphique
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var rect = sender as Tile;
-            var tile = rect.TileType;
             int column = (int)Canvas.GetLeft(rect) / 50;
             int row = (int)Canvas.GetTop(rect) / 50;
             Canvas.SetLeft(selectionRectangle, Canvas.GetLeft(rect));
             Canvas.SetTop(selectionRectangle, Canvas.GetTop(rect));
             Canvas.SetZIndex(selectionRectangle, 999);
-            selectionRectangle.Visibility = System.Windows.Visibility.Visible;
-            selectionRectangle.Tag = tile;
+            selectionRectangle.Visibility = Visibility.Visible;
+            selectionRectangle.TileSelected = rect;
+            selectionRectangle.Coord = new Coordonnees(column, row);
 
 
             if (listUnitSelected.Count > 0 && allowedMouv.Count > 0)
@@ -354,7 +333,7 @@ namespace InterfaceGraphique
 
 
             afficheCarte();
-            chargerPanneauDroit();
+            actualisePanneauDroit();
         }
 
 

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Modele;
+using System.Windows.Media.Effects;
 
 namespace InterfaceGraphique
 {
@@ -35,12 +36,30 @@ namespace InterfaceGraphique
             get { return selected; }
             set { selected = value; }
         }
+
+        int nbUnite;
+
+        public int NbUnite
+        {
+            get { return nbUnite; }
+            set { nbUnite = value; }
+        }
+
+        private Grid aPanel;
+
+        public Brush Background
+        {
+            get { return aPanel.Background; }
+        }
+
+
         public Tile(ICase tile, TileFactory tileFactory, List<Unite> listUnite)
         {
             InitializeComponent();
             this.tile = tile;
+            this.nbUnite = listUnite.Count;
             VisualBrush myBrush = new VisualBrush();
-            Grid aPanel = new Grid();
+            aPanel = new Grid();
 
             aPanel.Background = tileFactory.getViewTile(tile);
 
@@ -49,43 +68,23 @@ namespace InterfaceGraphique
             if (listUnite != null && listUnite.Count > 0)
             {
                 backText.Text = listUnite.Count.ToString();
-                backText.Foreground = Brushes.Black;
+                backText.Foreground =  (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
             }
             else
                 backText.Text = " ";
             FontSizeConverter fSizeConverter = new FontSizeConverter();
             backText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
             backText.Margin = new Thickness(10);
-
             Grid.SetColumn(backText, 0);
             Grid.SetRow(backText, 0);
-
-            // Create some text.
-            TextBlock foreText = new TextBlock();
-            if (listUnite != null && listUnite.Count > 0)
-            {
-                foreText.Text = listUnite.Count.ToString();
-                foreText.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
-            }
-            else
-                foreText.Text = " ";
-            foreText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
-            foreText.Margin = new Thickness(10);
-
-            Grid.SetColumn(foreText, 0);
-            Grid.SetRow(backText, 0);
-
-
+            DropShadowEffect myDropShadowEffect  = new DropShadowEffect();
+            myDropShadowEffect.BlurRadius = 1;
+            myDropShadowEffect.Color = Color.FromRgb(0,0,0);
+            myDropShadowEffect.ShadowDepth = 2;
+            backText.Effect=myDropShadowEffect;
             aPanel.Children.Add(backText);
-            aPanel.Children.Add(foreText);
-
-
-
-
             myBrush.Visual = aPanel;
-
             rect.Fill = myBrush;
-            
         }
 
         private void rect_MouseEnter(object sender, MouseEventArgs e)
@@ -97,7 +96,6 @@ namespace InterfaceGraphique
         private void rect_MouseLeave(object sender, MouseEventArgs e)
         {
             rect.StrokeThickness = 0;
-           // rect.Stroke = color;
         }
     }
 }
