@@ -89,17 +89,6 @@ namespace Modele
                 nbUniteClassique = value;
             }
         }
-
-        public int NbUniteParPeuble
-        {
-            get { return nbUniteParPeuble; }
-            set
-            {
-                if (value < 0)
-                    throw new ArgumentException(); 
-                nbUniteParPeuble = value;
-            }
-        }
         /// <summary>
         /// Nombre de tours maximum par partie
         /// </summary>

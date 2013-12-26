@@ -1,7 +1,7 @@
 ﻿<Window x:Class="InterfaceGraphique.EditeurCarte"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Editeur de cartes" Height="300" Width="300">
+        Title="Editeur de cartes" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Vertical">
         <Menu>
             <MenuItem Header="_Fichier">
@@ -12,13 +12,25 @@
                 <MenuItem Header="_Enregistrer" Click="MenuItem_Click_2"/>
                 <MenuItem Header="_Enregistrer sous ..." Click="MenuItem_Click_3"/>
                 <Separator />
-                <MenuItem Header="_Quitter" />
+                <MenuItem Header="_Quitter" Click="MenuItem_Click_4"/>
+            </MenuItem>
+            <MenuItem Header="_Options">
+                <MenuItem x:Name="affTileCheckbox" Header="Afficher tiles" >
+                    <MenuItem x:Name="default" Header="Style par défaut" Click="default_Click"/>
+                    <MenuItem x:Name="groovy" Header="Style Groovy" Click="groovy_Click"/>
+                    <MenuItem x:Name="tropical" Header="Style Tropical" Click="tropical_Click"/>
+                    <MenuItem x:Name="campaign" Header="Style Campagne" Click="campaign_Click"/>
+                    <MenuItem x:Name="noStyle" Header="Pas de style" Click="noStyle_Click"/>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
                 
             </StackPanel>
+            <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </ScrollViewer>
         </StackPanel>
     </StackPanel>
 </Window>

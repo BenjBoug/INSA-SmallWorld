@@ -7,7 +7,17 @@ namespace Modele
 {
     public interface ICarte
     {
-        int NbUniteParPeuble
+        int NbUniteClassique
+        {
+            get;
+            set;
+        }
+        int NbUniteElite
+        {
+            get;
+            set;
+        }
+        int NbUniteBlindee
         {
             get;
             set;

@@ -21,7 +21,6 @@ namespace Modele
             Carte.Largeur = 5;
             Carte.Hauteur = 5;
             Carte.NbToursMax = 20;
-            Carte.NbUniteParPeuble = 5;
             Carte.NbUniteClassique = 5;
             Carte.NbUniteElite = 3;
             Carte.NbUniteBlindee = 1;

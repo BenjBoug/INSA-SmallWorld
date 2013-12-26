@@ -25,7 +25,7 @@
                 <Separator />
                 <MenuItem Header="_Editeur de cartes" Click="MenuItem_Click_4" />
                 <Separator />
-                <MenuItem Header="_Quitter" />
+                <MenuItem Header="_Quitter" Click="Button_Click_1"/>
             </MenuItem>
             <MenuItem Header="_Options">
                 <MenuItem x:Name="affTileCheckbox" Header="Afficher tiles" Click="affTileCheckbox_Click">
