@@ -9,7 +9,8 @@
     <StackPanel Orientation="Vertical" Width="1001" Height="700">
         <StackPanel Height="104" Orientation="Horizontal" Margin="0" VerticalAlignment="Bottom" Width="83" HorizontalAlignment="Right">
             <Button Content="-" Width="30" Height="20" Margin="0,0,5,10" Click="Button_Click_2" VerticalAlignment="Bottom"/>
-            <Button Content="X" Width="30" Height="20" Click="Button_Click_1" VerticalAlignment="Bottom" Margin="0,0,0,10" HorizontalAlignment="Right"/>
+            <Button Content="X" Width="30" Height="20" Click="Button_Click_1" VerticalAlignment="Bottom" Margin="0,0,0,10" HorizontalAlignment="Right">
+            </Button>
         </StackPanel>
         <Menu IsMainMenu="False" Height="22" Background="{x:Null}" BorderThickness="0" Margin="0,0,10,0" Width="950">
             <MenuItem Header="_Fichier">

@@ -22,46 +22,67 @@ namespace InterfaceGraphique
     /// </summary>
     public partial class GroupeNouveauJoueur : UserControl
     {
-        public GroupeNouveauJoueur()
+        
+        List<String> listCouleur = new List<string>();
+
+        public GroupeNouveauJoueur(int i)
         {
             InitializeComponent();
+
+            listCouleur.Add("Blue");
+            listCouleur.Add("Red");
+            listCouleur.Add("Green");
+            listCouleur.Add("Yellow");
+            listCouleur.Add("Brown");
+            listCouleur.Add("Navy");
+            listCouleur.Add("Olive");
+            listCouleur.Add("Pink");
+            listCouleur.Add("Salmon");
+            listCouleur.Add("Violet");
+
+            couleurJoueur.DataContext = listCouleur;
+
+            couleurJoueur.SelectedIndex = i;
+            peupleJoueur.SelectedIndex = i;
+
+            nomJoueur.Text = "Joueur " + (i+1);
         }
-
-        private Joueur joueur;
-
         public Joueur Joueur
         {
             get 
             {
-                joueur = getTypeJoueur(typeJoueur);
+                Joueur joueur;
+                joueur = getTypeJoueur();
                 joueur.Nom = nomJoueur.Text;
-                joueur.Peuple = getFabriquePeuple(peupleJoueur).creerPeuple();
-                joueur.Couleur = (couleurJoueur.SelectedItem as PropertyInfo).Name;
+                joueur.Peuple = getFabriquePeuple().creerPeuple();
+                joueur.Couleur = listCouleur[couleurJoueur.SelectedIndex];
                 
                 return joueur; 
             }
         }
 
-        private FabriquePeuple getFabriquePeuple(ComboBox combo)
+        private FabriquePeuple getFabriquePeuple()
         {
-            if (combo.SelectedIndex == 0)
+            if (peupleJoueur.SelectedIndex == 0)
                 return new FabriquePeupleGaulois();
-            else if (combo.SelectedIndex == 1)
+            else if (peupleJoueur.SelectedIndex == 1)
                 return new FabriquePeupleNain();
-            else if (combo.SelectedIndex == 2)
+            else if (peupleJoueur.SelectedIndex == 2)
                 return new FabriquePeupleViking();
+            else if (peupleJoueur.SelectedIndex == 3)
+                return new FabriquePeupleElfe();
             else
-                return new FabriquePeupleNain(); // throw exception en temps normal ...
+                return null; // throw exception en temps normal ...
         }
 
-        private Joueur getTypeJoueur(ComboBox combo)
+        private Joueur getTypeJoueur()
         {
-            if (combo.SelectedIndex == 0)
+            if (typeJoueur.SelectedIndex == 0)
                 return new JoueurConcret();
-            else if (combo.SelectedIndex == 1)
+            else if (typeJoueur.SelectedIndex == 1)
                 return new JoueurCOM();
             else
-                return new JoueurConcret(); // throw exception en temps normal ...
+                return null; // throw exception en temps normal ...
         }
     }
 }
