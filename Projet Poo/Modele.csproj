@@ -87,7 +87,7 @@
     <Compile Include="Unites\SuggAgressif.cs" />
     <Compile Include="Unites\SuggData.cs" />
     <Compile Include="Unites\Suggestion.cs" />
-    <Compile Include="Unites\SuggPacifiste.cs" />
+    <Compile Include="Unites\SuggDefensive.cs" />
     <Compile Include="Unites\SuggMap.cs" />
     <Compile Include="Unites\Unite.cs" />
     <Compile Include="Unites\UniteBlindee.cs" />

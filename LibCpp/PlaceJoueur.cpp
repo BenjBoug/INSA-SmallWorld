@@ -13,11 +13,6 @@ PlaceJoueur::~PlaceJoueur(void)
 
 int * PlaceJoueur::placeJoueur(int ** tabJoueurs, int ** carte, int taille, int peuple)
 {
-	/*
-	0 : viking
-	1 : nain
-	2 : gaulois
-	*/
 	srand (time(NULL));
 	int * coord = new int[2];
 	do

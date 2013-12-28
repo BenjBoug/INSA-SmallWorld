@@ -26,7 +26,7 @@ namespace Modele
             {
                 XmlSerializer mySerializer = new XmlSerializer(c.Cases.GetType());
                 StreamReader myWriter = new StreamReader(fileName);
-                c.Cases = (Case[][])mySerializer.Deserialize(myWriter);
+                c = (Carte)mySerializer.Deserialize(myWriter);
                 myWriter.Close();
             }
             catch (Exception)

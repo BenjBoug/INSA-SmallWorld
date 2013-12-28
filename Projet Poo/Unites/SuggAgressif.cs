@@ -48,61 +48,63 @@ namespace Modele
             }
             if (listCoordAttaquableProche.Count > 0) // si il y a des unités a proximité, on l'attaque
             {
-                Coordonnees coordAttable = null;
-                int min = int.MaxValue;
-                foreach (Coordonnees coord in listCoordAttaquableProche)
-                {
-                    List<Unite> tmp = carte.getUniteFromCoord(coord);
-                    if (tmp.Count < min)
-                    {
-                        coordAttable = coord;
-                        min = tmp.Count;
-                    }
-                }
-
-                res[coordAttable].Sugg = int.MaxValue;
+                attaqueUniteProche(carte, res, listCoordAttaquableProche);
             }
             else if (listCoordAttaquable.Count>0) // sinon on se déplace vers les plus proche
             {
                 Coordonnees plusProche = unite.Coord.getClosiestCoord(listCoordAttaquable);
-                /*
-                List<Node> path = pathFinding(new Node(unite.Coord), new Node(plusProche));
-                if (path != null && path.Count > 0)
-                {
-                    foreach (Node n in path)
-                    {
-                        if (res[n.Coord].Sugg != 0)
-                            res[n.Coord].Sugg = res[n.Coord].Depl + 10;
-                    }
-                }
-                */
-                
-                int peuple = -1;
-                IPeuple p = unite.Proprietaire.Peuple;
 
-                if (p is PeupleViking)
-                    peuple = 0;
-                else if (p is PeupleNain)
-                    peuple = 1;
-                else if (p is PeupleGaulois)
-                    peuple = 2;
-
-                WrapperAStar aStart = new WrapperAStar();
-                List<Coordonnees> path = convertListInttoListCoord(aStart.pathFinding(carte.toList(),peuple,carte.Largeur,unite.Coord.X,unite.Coord.Y,plusProche.X,plusProche.Y));
-                
-                if (path != null && path.Count>0)
-                {
-                    foreach (Coordonnees coord in path)
-                    {
-                        if (res[coord].Sugg != 0)
-                            res[coord].Sugg = res[coord].Depl + 10;
-                    }
-                }
-                  
-
+                pathFinding(carte, unite, res, plusProche);
             }
 
             return res;
+        }
+        /// <summary>
+        /// Place des coefficients de suggestions élevés sur les coordonnees de la liste listCoordAttaquableProche
+        /// </summary>
+        /// <param name="carte"></param>
+        /// <param name="res"></param>
+        /// <param name="listCoordAttaquableProche"></param>
+        private static void attaqueUniteProche(Carte carte, SuggMap res, List<Coordonnees> listCoordAttaquableProche)
+        {
+            Coordonnees coordAttable = null;
+            int min = int.MaxValue;
+            foreach (Coordonnees coord in listCoordAttaquableProche)
+            {
+                List<Unite> tmp = carte.getUniteFromCoord(coord);
+                if (tmp.Count < min)
+                {
+                    coordAttable = coord;
+                    min = tmp.Count;
+                }
+            }
+
+            res[coordAttable].Sugg = int.MaxValue;
+        }
+
+        private void pathFinding(Carte carte, Unite unite, SuggMap res, Coordonnees plusProche)
+        {
+            int peuple = -1;
+            IPeuple p = unite.Proprietaire.Peuple;
+
+            if (p is PeupleViking)
+                peuple = 0;
+            else if (p is PeupleNain)
+                peuple = 1;
+            else if (p is PeupleGaulois)
+                peuple = 2;
+
+            WrapperAStar aStart = new WrapperAStar();
+            List<Coordonnees> path = convertListInttoListCoord(aStart.pathFinding(carte.toList(), peuple, carte.Largeur, unite.Coord.X, unite.Coord.Y, plusProche.X, plusProche.Y));
+
+            if (path != null && path.Count > 0)
+            {
+                foreach (Coordonnees coord in path)
+                {
+                    if (res[coord].Sugg != 0)
+                        res[coord].Sugg = res[coord].Depl + 10;
+                }
+            }
         }
 
         private List<Coordonnees> convertListInttoListCoord(List<int> path)

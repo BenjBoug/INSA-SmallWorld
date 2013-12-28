@@ -8,7 +8,7 @@ namespace Modele
 {
     [XmlInclude(typeof(SuggAgressif))]
     [XmlInclude(typeof(Suggestion))]
-    [XmlInclude(typeof(SuggPacifiste))]
+    [XmlInclude(typeof(SuggDefensive))]
     public abstract class StrategySugg : IStrategySuggestion
     {
         public abstract SuggMap getSuggestion(Carte carte, Unite unite);

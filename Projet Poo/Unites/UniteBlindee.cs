@@ -16,7 +16,7 @@ namespace Modele
             pointsDepl = 1;
             pointsVie = 3;
             pointsVieMax = pointsVie;
-            strategySuggestion = new SuggPacifiste();
+            strategySuggestion = new SuggDefensive();
             deplSupp = 0;
         }
         public override int getDeplSuppl()
