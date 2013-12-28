@@ -35,8 +35,8 @@ namespace InterfaceGraphique
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             List<Joueur> joueurs = new List<Joueur>();
-            joueurs.Add(new JoueurConcret(new FabriquePeupleElfe(), "Blue", "COM1"));
-            joueurs.Add(new JoueurConcret(new FabriquePeupleViking(), "Red", "COM2"));
+            joueurs.Add(new JoueurConcret(new FabriquePeupleElfe(), "Blue", "J1"));
+            joueurs.Add(new JoueurCOM(new FabriquePeupleViking(), "Red", "COM2"));
             //joueurs.Add(new JoueurCOM(new FabriquePeupleGaulois(), "Black", "COM3"));
             //joueurs.Add(new JoueurCOM(new FabriquePeupleNain(), "Yellow", "COM4"));
 

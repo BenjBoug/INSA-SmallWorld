@@ -25,8 +25,35 @@
             </MenuItem>
         </Menu>
         <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Vertical">
-                
+            <StackPanel x:Name="controles" Orientation="Vertical">
+                <GroupBox Header="Paramètres de la carte" Height="Auto" Width="Auto" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="False">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Label Content="Largeur :" MinWidth="170" HorizontalContentAlignment="right"/>
+                            <ComboBox x:Name="comboLargeur" MinWidth="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Label Content="Hauteur :" MinWidth="170" HorizontalContentAlignment="right"/>
+                            <ComboBox x:Name="comboHauteur" MinWidth="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Label Content="Nombre de Tours :" MinWidth="170" HorizontalContentAlignment="right"/>
+                            <ComboBox x:Name="comboTours" MinWidth="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Label Content="Nombre d'unités classiques :" MinWidth="170" HorizontalContentAlignment="right"/>
+                            <ComboBox x:Name="comboUC" MinWidth="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Label Content="Nombre d'unités élites :" MinWidth="170" HorizontalContentAlignment="right"/>
+                            <ComboBox x:Name="comboUE" MinWidth="100"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Label Content="Nombre d'unités blindées :" MinWidth="170" HorizontalContentAlignment="right"/>
+                            <ComboBox x:Name="comboUB" MinWidth="100"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
             </StackPanel>
             <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
