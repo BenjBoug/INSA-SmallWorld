@@ -10,11 +10,12 @@
             <ComboBoxItem Content="Computer"/>
         </ComboBox>
         <TextBox x:Name="nomJoueur" Width="120" Text="Joueur 1" Margin="0,0,5,0"/>
-        <ComboBox x:Name="couleurJoueur" Width="50" Margin="0,0,5,0">
+        <ComboBox x:Name="couleurJoueur" Width="50" Margin="0,0,5,0" ItemsSource="{Binding}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+                        <Rectangle Fill="{Binding}" Width="16" Height="16" Margin="0,2,5,2" />
+                        <TextBlock Margin="5, 1" Text="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
@@ -23,6 +24,7 @@
             <ComboBoxItem Content="Gaulois" IsSelected="True"/>
             <ComboBoxItem Content="Nain"/>
             <ComboBoxItem Content="Viking"/>
+            <ComboBoxItem Content="Elfe"/>
         </ComboBox>
     </StackPanel>
 </UserControl>

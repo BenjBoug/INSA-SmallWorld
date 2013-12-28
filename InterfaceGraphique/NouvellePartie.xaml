@@ -6,25 +6,39 @@
         <GroupBox Header="Nouvelle partie" Height="Auto" Width="Auto" Grid.ColumnSpan="2" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="False">
             <StackPanel Height="Auto" Width="Auto">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                    <Label Content="Type de Carte:" MinWidth="150" HorizontalContentAlignment="right"/>
-                    <ComboBox x:Name="comboCarte" MinWidth="150">
+                    <Label Content="Chargement:" MinWidth="100" HorizontalContentAlignment="right"/>
+                    <ComboBox x:Name="comboChargement" MinWidth="200" SelectionChanged="comboChargement_SelectionChanged">
+                        <ComboBoxItem Content="Aléatoire" IsSelected="True"/>
+                        <ComboBoxItem Content="Fichier"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Name="panelTypeCarte" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5" Visibility="Visible">
+                    <Label Content="Type de Carte:" MinWidth="100" HorizontalContentAlignment="right"/>
+                    <ComboBox x:Name="comboCarte" MinWidth="200">
                         <ComboBoxItem Content="Démo 5x5" IsSelected="True"/>
                         <ComboBoxItem Content="Petite 10x10"/>
                         <ComboBoxItem Content="Normale 15x15"/>
                     </ComboBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                    <Label Content="Chargement:" MinWidth="150" HorizontalContentAlignment="right"/>
-                    <ComboBox x:Name="comboChargement" MinWidth="150" SelectionChanged="comboChargement_SelectionChanged">
-                        <ComboBoxItem Content="Aléatoire" IsSelected="True"/>
-                        <ComboBoxItem Content="Charger fichier"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,0,0,5" x:Name="panelChampsCarte">
+                    <Label Content="Fichier:" MinWidth="100" HorizontalContentAlignment="right"/>
+                    <TextBox Name="fileName" Width="168" Margin="0,0,5,0"></TextBox>
+                    <Button Width="26" Click="Button_Click_2">
+                        <StackPanel>
+                            <Image Source="pack://siteoforigin:,,,/Resources/loupe.png" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Name="panelNbJoueur" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5" Visibility="Visible">
+                    <Label Content="Nbr de joueur:" MinWidth="100" HorizontalContentAlignment="right"/>
+                    <ComboBox x:Name="comboNbJo" MinWidth="200" SelectionChanged="comboNbJo_SelectionChanged">
+                        <ComboBoxItem Content="2 joueurs" IsSelected="True"/>
+                        <ComboBoxItem Content="3 joueurs"/>
+                        <ComboBoxItem Content="4 joueurs"/>
                     </ComboBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="panelChampsCarte">
-                    <TextBox Name="fileName" Width="200" Margin="0,0,10,0"></TextBox>
-                    <Button Width="22"/>
-
-                </StackPanel>
+                
                 <GroupBox Header="Joueurs">
                     <StackPanel Orientation="Vertical" Name="panelJoueurs">
                     </StackPanel>

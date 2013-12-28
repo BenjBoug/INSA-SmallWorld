@@ -6,6 +6,8 @@ using System.Windows.Media;
 using Modele;
 using System.Reflection;
 using System.IO;
+using Microsoft.Win32;
+using System;
 
 
 namespace InterfaceGraphique
@@ -19,15 +21,10 @@ namespace InterfaceGraphique
         {
             InitializeComponent();
 
-            List<string> listCouleur = new List<string>();
-            listCouleur.Add("Red");
-            listCouleur.Add("Blue");
-            listCouleur.Add("Yellow");
-            listCouleur.Add("Black");
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
-                GroupeNouveauJoueur grp = new GroupeNouveauJoueur();
+                GroupeNouveauJoueur grp = new GroupeNouveauJoueur(i);
                 panelJoueurs.Children.Add(grp);
             }
         }
@@ -35,10 +32,10 @@ namespace InterfaceGraphique
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             List<Joueur> joueurs = new List<Joueur>();
-            joueurs.Add(new JoueurConcret(new FabriquePeupleElfe(), "Blue", "COM1"));
-            joueurs.Add(new JoueurConcret(new FabriquePeupleViking(), "Red", "COM2"));
-            //joueurs.Add(new JoueurCOM(new FabriquePeupleGaulois(), "Black", "COM3"));
-            //joueurs.Add(new JoueurCOM(new FabriquePeupleNain(), "Yellow", "COM4"));
+            foreach (GroupeNouveauJoueur grp in panelJoueurs.Children)
+            {
+                joueurs.Add(grp.Joueur);
+            }
 
             ICreationCarte strategyCreationCarte;
             try
@@ -61,18 +58,6 @@ namespace InterfaceGraphique
             e.Handled = true;
         }
 
-        private FabriquePeuple getFabriquePeuple(ComboBox combo)
-        {
-            if (combo.SelectedIndex == 0)
-               return  new FabriquePeupleGaulois();
-            else if (combo.SelectedIndex == 1)
-                return new FabriquePeupleNain();
-            else if (combo.SelectedIndex == 2)
-                return new FabriquePeupleViking();
-            else
-                return new FabriquePeupleNain(); // throw exception en temps normal ...
-        }
-
         private ICreationCarte getSrategyCreationCarte()
         {
             if (comboChargement.SelectedIndex == 0)
@@ -92,9 +77,76 @@ namespace InterfaceGraphique
             if (panelChampsCarte != null)
             {
                 if (comboChargement.SelectedIndex == 1)
+                {
                     panelChampsCarte.Visibility = Visibility.Visible;
+                    panelTypeCarte.Visibility = Visibility.Collapsed;
+                }
                 else
+                {
                     panelChampsCarte.Visibility = Visibility.Collapsed;
+                    panelTypeCarte.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void comboNbJo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (panelJoueurs != null)
+            {
+                if (comboNbJo.SelectedIndex == 0)
+                {
+                    if (panelJoueurs.Children.Count > 2)
+                    {
+                        for (int i = 2; i < panelJoueurs.Children.Count; i++)
+                        {
+                            panelJoueurs.Children.RemoveAt(i);
+                        }
+                    }
+                }
+                else if (comboNbJo.SelectedIndex == 1)
+                {
+                    if (panelJoueurs.Children.Count > 3)
+                    {
+                        for (int i = 3; i < panelJoueurs.Children.Count; i++)
+                        {
+                            panelJoueurs.Children.RemoveAt(i);
+                        }
+                    }
+                    else if (panelJoueurs.Children.Count < 3)
+                    {
+                        for (int i = panelJoueurs.Children.Count; i < 3; i++)
+                        {
+                            GroupeNouveauJoueur grp = new GroupeNouveauJoueur(i);
+                            panelJoueurs.Children.Add(grp);
+                        }
+                    }
+                }
+                else if (comboNbJo.SelectedIndex == 2)
+                {
+                    if (panelJoueurs.Children.Count < 4)
+                    {
+                        for (int i = panelJoueurs.Children.Count; i < 4; i++)
+                        {
+                            GroupeNouveauJoueur grp = new GroupeNouveauJoueur(i);
+                            panelJoueurs.Children.Add(grp);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            openFileDialog1.FileName = null;
+            openFileDialog1.Filter = "Carte SmallWorld (.card)|*.card";
+
+            Nullable<bool> res = openFileDialog1.ShowDialog();
+
+            if (res == true)
+            {
+                fileName.Text = openFileDialog1.FileName;
             }
         }
     }
