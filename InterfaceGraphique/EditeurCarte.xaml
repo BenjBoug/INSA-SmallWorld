@@ -30,28 +30,37 @@
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                             <Label Content="Largeur :" MinWidth="170" HorizontalContentAlignment="right"/>
-                            <ComboBox x:Name="comboLargeur" MinWidth="100"/>
+                            <ComboBox x:Name="comboLargeur" MinWidth="70"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                             <Label Content="Hauteur :" MinWidth="170" HorizontalContentAlignment="right"/>
-                            <ComboBox x:Name="comboHauteur" MinWidth="100"/>
+                            <ComboBox x:Name="comboHauteur" MinWidth="70"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                             <Label Content="Nombre de Tours :" MinWidth="170" HorizontalContentAlignment="right"/>
-                            <ComboBox x:Name="comboTours" MinWidth="100"/>
+                            <ComboBox x:Name="comboTours" MinWidth="70"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                             <Label Content="Nombre d'unités classiques :" MinWidth="170" HorizontalContentAlignment="right"/>
-                            <ComboBox x:Name="comboUC" MinWidth="100"/>
+                            <ComboBox x:Name="comboUC" MinWidth="70"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                             <Label Content="Nombre d'unités élites :" MinWidth="170" HorizontalContentAlignment="right"/>
-                            <ComboBox x:Name="comboUE" MinWidth="100"/>
+                            <ComboBox x:Name="comboUE" MinWidth="70"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                             <Label Content="Nombre d'unités blindées :" MinWidth="170" HorizontalContentAlignment="right"/>
-                            <ComboBox x:Name="comboUB" MinWidth="100"/>
+                            <ComboBox x:Name="comboUB" MinWidth="70"/>
                         </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Palette de terrains" Height="Auto" Width="Auto" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="False">
+                    <StackPanel Orientation="Vertical">
+                        <RadioButton x:Name="radio0" Checked="RadioButton_EnabledChanged">Plaine</RadioButton>
+                        <RadioButton x:Name="radio1" Checked="RadioButton_EnabledChanged">Eau</RadioButton>
+                        <RadioButton x:Name="radio2" Checked="RadioButton_EnabledChanged">Montagne</RadioButton>
+                        <RadioButton x:Name="radio3" Checked="RadioButton_EnabledChanged">Desert</RadioButton>
+                        <RadioButton x:Name="radio4" Checked="RadioButton_EnabledChanged">Foret</RadioButton>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

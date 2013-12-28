@@ -29,21 +29,20 @@ namespace InterfaceGraphique
         const int UNITES_MAX = 50;
 
         private TileFactory tileFactory;
-        private SelectedRect selectionRectangle;
         private Carte carte;
+        private int terrain;
 
         public EditeurCarte()
-        {
+        { 
             InitializeComponent();
             tileFactory = new ImageFactory();
-            selectionRectangle = new SelectedRect();
-            selectionRectangle.Visibility = System.Windows.Visibility.Collapsed;
-
+            terrain = 0;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             carte = new CarteClassique();
+            carte.Unites = new List<Unite>();
 
             for (int i = TAILLE_MIN; i <= TAILLE_MAX; i++)
             {
@@ -64,7 +63,7 @@ namespace InterfaceGraphique
             comboUC.SelectedIndex = 0;
             comboUE.SelectedIndex = 0;
             comboUB.SelectedIndex = 0;
-            paramCarte();
+            modifieCarte();
             comboLargeur.SelectionChanged += ComboBox_SelectionChanged;
             comboHauteur.SelectionChanged += ComboBox_SelectionChanged;
             //comboTours.SelectionChanged += ComboBox_SelectionChanged_1;
@@ -73,8 +72,15 @@ namespace InterfaceGraphique
             //comboUB.SelectionChanged += ComboBox_SelectionChanged_1;
         }
 
-        private void paramCarte()
-        {   
+        private void modifieCarte()
+        {
+            Carte cp_carte = new CarteClassique();
+            if (carte.Largeur > 0 && carte.Hauteur > 0)
+            {
+                cp_carte.Largeur = carte.Largeur;
+                cp_carte.Hauteur = carte.Hauteur;
+                cp_carte.Cases = carte.Cases;
+            }
             carte.Largeur = (int)comboLargeur.SelectedItem;
             carte.Hauteur = (int)comboHauteur.SelectedItem;
             /*carte.NbToursMax = (int)comboTours.SelectedItem;
@@ -91,8 +97,13 @@ namespace InterfaceGraphique
                     carte.setCase(i, j, carte.FabriqueCase.getCase(0));
                 }
             }
-            carte.Unites = new List<Unite>();
-
+            for (int i = 0; i < Math.Min(carte.Largeur,cp_carte.Largeur); i++)
+            {
+                for (int j = 0; j < Math.Min(carte.Hauteur, cp_carte.Hauteur); j++)
+                {
+                    carte.Cases[i][j] = cp_carte.Cases[i][j];
+                }
+            }
             canvasMap.Width = carte.Largeur * 50;
             canvasMap.Height = carte.Hauteur * 50;
             afficheCarte();
@@ -101,7 +112,6 @@ namespace InterfaceGraphique
         private void afficheCarte()
         {
             canvasMap.Children.Clear();
-            canvasMap.Children.Add(selectionRectangle);
             for (int l = 0; l < carte.Hauteur; l++)
             {
                 for (int c = 0; c < carte.Largeur; c++)
@@ -122,13 +132,31 @@ namespace InterfaceGraphique
             Canvas.SetTop(rectangle, l * 50);
             Canvas.SetZIndex(rectangle, 5);
 
-            //rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
+            rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
             return rectangle;
+        }
+
+        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var rect = sender as Tile;
+            int column = (int)Canvas.GetLeft(rect) / 50;
+            int row = (int)Canvas.GetTop(rect) / 50;
+            carte.setCase(column, row, carte.FabriqueCase.getCase(terrain));
+            afficheCarte();
+            e.Handled = true;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            paramCarte();
+            modifieCarte();
+            e.Handled = true;
+        }
+
+        private void RadioButton_EnabledChanged(object sender, RoutedEventArgs e)
+        {
+            RadioButton radio = sender as RadioButton;
+            terrain = radio.Name[5] - '0';
+            e.Handled = true;
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
