@@ -36,6 +36,7 @@ namespace Modele
                     if (casePlaine == null)
                         casePlaine = new CasePlaine();
                     return casePlaine;
+
                 case (int)Case.CaseInt.Eau:
                     if (caseEau == null)
                         caseEau = new CaseEau();

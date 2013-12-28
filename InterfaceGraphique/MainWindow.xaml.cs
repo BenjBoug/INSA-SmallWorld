@@ -507,6 +507,14 @@ namespace InterfaceGraphique
         {
         }
 
+        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        {
+           EditeurCarte fen = new EditeurCarte();
+            fen.Owner = this;
+            fen.ShowDialog();
+            e.Handled = true;
+        }
+
         private void default_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory();
