@@ -47,7 +47,7 @@ namespace Modele
             set { fabriqueCase = value; }
         }
 
-        private int largeur, hauteur, nbToursMax, nbUniteParPeuble;
+        private int largeur, hauteur, nbToursMax;
 
         private int nbUniteClassique, nbUniteElite, nbUniteBlindee;
         /// <summary>

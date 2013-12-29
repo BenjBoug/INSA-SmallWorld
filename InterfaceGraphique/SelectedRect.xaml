@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-        <Rectangle HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" RadiusX="5" RadiusY="5" StrokeThickness="3" Stroke="White" Fill="Transparent"/>
+        <Rectangle x:Name="selectRect" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" RadiusX="5" RadiusY="5" StrokeThickness="3" Stroke="White"/>
 
 </UserControl>

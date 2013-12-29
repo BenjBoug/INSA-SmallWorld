@@ -53,7 +53,7 @@ namespace InterfaceGraphique
         }
 
 
-        public Tile(ICase tile, TileFactory tileFactory, List<Unite> listUnite)
+        public Tile(ICase tile, TileFactory tileFactory, List<Unite> listUnite, SolidColorBrush playerBrush)
         {
             InitializeComponent();
             this.tile = tile;
@@ -65,6 +65,7 @@ namespace InterfaceGraphique
 
             // Create some text.
             TextBlock backText = new TextBlock();
+            Canvas.SetZIndex(backText, 3);
             if (listUnite != null && listUnite.Count > 0)
             {
                 backText.Text = listUnite.Count.ToString();
@@ -72,6 +73,8 @@ namespace InterfaceGraphique
             }
             else
                 backText.Text = " ";
+            if(backText.Text != " ")
+                backText.Background = Brushes.White;
             FontSizeConverter fSizeConverter = new FontSizeConverter();
             backText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
             backText.Margin = new Thickness(10);
@@ -85,17 +88,21 @@ namespace InterfaceGraphique
             aPanel.Children.Add(backText);
             myBrush.Visual = aPanel;
             rect.Fill = myBrush;
+            rect1.Stroke = playerBrush;
         }
 
         private void rect_MouseEnter(object sender, MouseEventArgs e)
         {
-            rect.StrokeThickness = 3;
-            rect.Stroke = Brushes.Yellow;
+            rect1.Opacity = 0.7;
+            //rect1.StrokeThickness= 3;
+            e.Handled = true;
         }
 
         private void rect_MouseLeave(object sender, MouseEventArgs e)
         {
-            rect.StrokeThickness = 0;
+            rect1.Opacity = 0;
+            //rect1.StrokeThickness = 0;
+            e.Handled = true;
         }
     }
 }

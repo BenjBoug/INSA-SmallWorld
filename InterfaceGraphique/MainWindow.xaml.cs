@@ -283,11 +283,11 @@ namespace InterfaceGraphique
         /// <returns></returns>
         private Tile creerTile(int c, int l, ICase tile, List<Unite> listUnite)
         {
-            var rectangle = new Tile(tile, tileFactory, listUnite);
+            var rectangle = new Tile(tile, tileFactory, listUnite, (SolidColorBrush)new BrushConverter().ConvertFromString(partie.joueurActuel().Couleur));
 
             Canvas.SetLeft(rectangle, c * 50);
             Canvas.SetTop(rectangle, l * 50);
-            Canvas.SetZIndex(rectangle,5);
+            Canvas.SetZIndex(rectangle,1);
 
             rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
             return rectangle;
@@ -298,18 +298,21 @@ namespace InterfaceGraphique
             var rectangle = new Rectangle();
             Canvas.SetLeft(rectangle, c * 50);
             Canvas.SetTop(rectangle, l * 50);
-            Canvas.SetZIndex(rectangle, 10);
+            Canvas.SetZIndex(rectangle, 2);
 
-            rectangle.Stroke = Brushes.Red;
+            rectangle.Stroke = Brushes.White;
             rectangle.StrokeThickness = 2;
-
+            rectangle.StrokeDashOffset = 4;
+            if (selectionRectangle.Coord == new Coordonnees(c, l))
+                rectangle.Opacity = 0;
             rectangle.Width = 50;
             rectangle.Height = 50;
-
+            rectangle.RadiusX = 3;
+            rectangle.RadiusY = 3;
 
             return rectangle;
         }
-        
+
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var rect = sender as Tile;
@@ -317,11 +320,11 @@ namespace InterfaceGraphique
             int row = (int)Canvas.GetTop(rect) / 50;
             Canvas.SetLeft(selectionRectangle, Canvas.GetLeft(rect));
             Canvas.SetTop(selectionRectangle, Canvas.GetTop(rect));
-            Canvas.SetZIndex(selectionRectangle, 999);
+            Canvas.SetZIndex(selectionRectangle, 3);
+            selectionRectangle.selectRect.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(partie.joueurActuel().Couleur);
             selectionRectangle.Visibility = Visibility.Visible;
             selectionRectangle.TileSelected = rect;
             selectionRectangle.Coord = new Coordonnees(column, row);
-
 
             if (listUnitSelected.Count > 0 && allowedMouv.Count > 0)
             {
@@ -367,6 +370,7 @@ namespace InterfaceGraphique
         {
             partie.joueurActuel().finirTour();
             (sender as Button).IsEnabled = false;
+            selectionRectangle.Visibility = Visibility.Collapsed;
             e.Handled = true;
         }
 

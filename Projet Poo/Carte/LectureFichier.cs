@@ -24,14 +24,14 @@ namespace Modele
         {
             try
             {
-                XmlSerializer mySerializer = new XmlSerializer(c.Cases.GetType());
+                XmlSerializer mySerializer = new XmlSerializer(typeof(CarteClassique));
                 StreamReader myWriter = new StreamReader(fileName);
                 c = (Carte)mySerializer.Deserialize(myWriter);
                 myWriter.Close();
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
         }

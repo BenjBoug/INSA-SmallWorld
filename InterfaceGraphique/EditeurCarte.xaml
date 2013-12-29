@@ -5,14 +5,12 @@
     <StackPanel Orientation="Vertical">
         <Menu>
             <MenuItem Header="_Fichier">
-                <MenuItem Header="_Nouvelle carte" Click="MenuItem_Click"/>
+                <MenuItem Header="_Nouvelle carte" Click="MenuItem_Click_Nouvelle"/>
                 <Separator />
-                <MenuItem Header="_Ouvrir ..." Click="MenuItem_Click_1"/>
+                <MenuItem Header="_Ouvrir ..." Click="MenuItem_Click_Ouvrir"/>
+                <MenuItem Header="_Enregistrer sous ..." Click="MenuItem_Click_Enregistrer"/>
                 <Separator />
-                <MenuItem Header="_Enregistrer" Click="MenuItem_Click_2"/>
-                <MenuItem Header="_Enregistrer sous ..." Click="MenuItem_Click_3"/>
-                <Separator />
-                <MenuItem Header="_Quitter" Click="MenuItem_Click_4"/>
+                <MenuItem Header="_Quitter" Click="MenuItem_Click_Quitter"/>
             </MenuItem>
             <MenuItem Header="_Options">
                 <MenuItem x:Name="affTileCheckbox" Header="Afficher tiles" >

@@ -46,7 +46,11 @@
                 <Button x:Name="boutonFinir" Content="Finir Tour !" Click="Button_Click" Width="100" Height="50"/>
             </StackPanel>
             <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Canvas.Effect>
+                        <DropShadowEffect BlurRadius="35" Color="#877b77" Opacity="0.8" ShadowDepth="0"/>
+                    </Canvas.Effect>
+                </Canvas>
             </ScrollViewer>
             <StackPanel x:Name="controlDroit" Width="214" Height="550" Margin="5,0,10,0"/>
         </StackPanel>

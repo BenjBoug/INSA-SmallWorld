@@ -37,13 +37,11 @@ namespace InterfaceGraphique
             InitializeComponent();
             tileFactory = new ImageFactory();
             terrain = 0;
+            initCombo();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            carte = new CarteClassique();
-            carte.Unites = new List<Unite>();
-
+        private void initCombo()
+        {   
             for (int i = TAILLE_MIN; i <= TAILLE_MAX; i++)
             {
                 comboLargeur.Items.Add(i);
@@ -57,19 +55,6 @@ namespace InterfaceGraphique
                 comboUE.Items.Add(i);
                 comboUB.Items.Add(i);
             }
-            comboLargeur.SelectedIndex = 0;
-            comboHauteur.SelectedIndex = 0;
-            comboTours.SelectedIndex = 0;
-            comboUC.SelectedIndex = 0;
-            comboUE.SelectedIndex = 0;
-            comboUB.SelectedIndex = 0;
-            modifieCarte();
-            comboLargeur.SelectionChanged += ComboBox_SelectionChanged;
-            comboHauteur.SelectionChanged += ComboBox_SelectionChanged;
-            //comboTours.SelectionChanged += ComboBox_SelectionChanged_1;
-            //comboUC.SelectionChanged += ComboBox_SelectionChanged_1;
-            //comboUE.SelectionChanged += ComboBox_SelectionChanged_1;
-            //comboUB.SelectionChanged += ComboBox_SelectionChanged_1;
         }
 
         private void modifieCarte()
@@ -83,10 +68,6 @@ namespace InterfaceGraphique
             }
             carte.Largeur = (int)comboLargeur.SelectedItem;
             carte.Hauteur = (int)comboHauteur.SelectedItem;
-            /*carte.NbToursMax = (int)comboTours.SelectedItem;
-            carte.NbUniteClassique = (int)comboUC.SelectedItem;
-            carte.NbUniteElite = (int)comboUE.SelectedItem;
-            carte.NbUniteBlindee = (int)comboUB.SelectedItem;*/
             carte.Cases = new Case[carte.Largeur][];
             for (int i = 0; i < carte.Largeur; i++)
                 carte.Cases[i] = new Case[carte.Hauteur];
@@ -126,7 +107,7 @@ namespace InterfaceGraphique
 
         private Tile creerTile(int c, int l, ICase tile, List<Unite> listUnite)
         {
-            var rectangle = new Tile(tile, tileFactory, listUnite);
+            var rectangle = new Tile(tile, tileFactory, listUnite, Brushes.White);
 
             Canvas.SetLeft(rectangle, c * 50);
             Canvas.SetTop(rectangle, l * 50);
@@ -146,9 +127,75 @@ namespace InterfaceGraphique
             e.Handled = true;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MenuItem_Click_Nouvelle(object sender, RoutedEventArgs e)
+        {
+            disableComboBox_SelectionChanged();
+
+            carte = new CarteClassique();
+            carte.Unites = new List<Unite>();
+
+            comboLargeur.SelectedIndex = 0;
+            comboHauteur.SelectedIndex = 0;
+            comboTours.SelectedIndex = 0;
+            comboUC.SelectedIndex = 0;
+            comboUE.SelectedIndex = 0;
+            comboUB.SelectedIndex = 0;
+
+            modifieCarte();            
+            carte.NbUniteClassique = (int)comboUC.SelectedItem;
+            carte.NbUniteElite = (int)comboUE.SelectedItem;
+            carte.NbUniteBlindee = (int)comboUB.SelectedItem;
+            
+            enableComboBox_SelectionChanged();     
+        }
+
+        private void disableComboBox_SelectionChanged()
+        {
+            comboLargeur.SelectionChanged -= ComboBox_SelectionChanged_Taille;
+            comboHauteur.SelectionChanged -= ComboBox_SelectionChanged_Taille;
+            comboTours.SelectionChanged -= ComboBox_SelectionChanged_Tours;
+            comboUC.SelectionChanged -= ComboBox_SelectionChanged_UC;
+            comboUE.SelectionChanged -= ComboBox_SelectionChanged_UE;
+            comboUB.SelectionChanged -= ComboBox_SelectionChanged_UB;
+        }
+
+        private void enableComboBox_SelectionChanged()
+        {
+            comboLargeur.SelectionChanged += ComboBox_SelectionChanged_Taille;
+            comboHauteur.SelectionChanged += ComboBox_SelectionChanged_Taille;
+            comboTours.SelectionChanged += ComboBox_SelectionChanged_Tours;
+            comboUC.SelectionChanged += ComboBox_SelectionChanged_UC;
+            comboUE.SelectionChanged += ComboBox_SelectionChanged_UE;
+            comboUB.SelectionChanged += ComboBox_SelectionChanged_UB;
+        }
+
+        private void ComboBox_SelectionChanged_Taille(object sender, SelectionChangedEventArgs e)
         {
             modifieCarte();
+            e.Handled = true;
+        }
+
+        public void ComboBox_SelectionChanged_Tours(object sender, SelectionChangedEventArgs e)
+        {
+            carte.NbToursMax = (int)comboTours.SelectedItem;
+            e.Handled = true;
+        }
+
+        public void ComboBox_SelectionChanged_UC(object sender, SelectionChangedEventArgs e)
+        {
+            carte.NbUniteClassique = (int)comboUC.SelectedItem;
+            e.Handled = true;
+        }
+
+        public void ComboBox_SelectionChanged_UE(object sender, SelectionChangedEventArgs e)
+        {
+            carte.NbUniteElite = (int)comboUE.SelectedItem;
+            e.Handled = true;
+        }
+
+        public void ComboBox_SelectionChanged_UB(object sender, SelectionChangedEventArgs e)
+        {
+            carte.NbUniteBlindee = (int)comboUB.SelectedItem;
             e.Handled = true;
         }
 
@@ -159,14 +206,81 @@ namespace InterfaceGraphique
             e.Handled = true;
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        { }
+        private void MenuItem_Click_Ouvrir(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            openFileDialog1.FileName = null;
+            openFileDialog1.Filter = "Carte SmallWorld (.card)|*.card";
 
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
-        { }
+            string openFileName;
 
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
-        { }
+            Nullable<bool> res = openFileDialog1.ShowDialog();
+
+            if (res == true)
+            {
+                openFileName = openFileDialog1.FileName;
+                try
+                {
+                    disableComboBox_SelectionChanged();
+
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(CarteClassique));
+                    carte = (Carte)mySerializer.Deserialize(openFileDialog1.OpenFile()); 
+
+                    comboLargeur.SelectedIndex = carte.Largeur - TAILLE_MIN;
+                    comboHauteur.SelectedIndex = carte.Hauteur - TAILLE_MIN;
+                    comboTours.SelectedIndex = carte.NbToursMax - TOURS_MIN;
+                    comboUC.SelectedIndex = carte.NbUniteClassique;
+                    comboUE.SelectedIndex = carte.NbUniteElite;
+                    comboUB.SelectedIndex = carte.NbUniteBlindee;
+
+                    canvasMap.Width = carte.Largeur * 50;
+                    canvasMap.Height = carte.Hauteur * 50;
+                    afficheCarte();
+
+                    enableComboBox_SelectionChanged();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la carte.");
+                }
+            }
+        }
+
+        private void MenuItem_Click_Enregistrer(object sender, RoutedEventArgs e)
+        {    
+            if (carte != null)
+            {
+                if (carte.NbUniteBlindee + carte.NbUniteElite + carte.NbUniteClassique >= UNITES_MIN)
+                {
+                    SaveFileDialog dlg = new SaveFileDialog();
+                    dlg.FileName = "carteSmallWorld"; // Default file name
+                    dlg.DefaultExt = ".card"; // Default file extension
+                    dlg.Filter = "Carte SmallWorld (.card)|*.card"; // Filter files by extension
+
+                    // Show save file dialog box
+                    Nullable<bool> result = dlg.ShowDialog();
+
+                    // Process save file dialog box results
+                    if (result == true)
+                    {
+                        // Save document
+                        string filename = dlg.FileName;
+                        XmlSerializer mySerializer = new XmlSerializer(carte.GetType());
+                        StreamWriter myWriter = new StreamWriter(filename);
+                        mySerializer.Serialize(myWriter, carte);
+                        myWriter.Close();
+                    }
+                }
+                else
+                MessageBox.Show("Le nombre minimal d'unités est de 5 (toutes unités confondues).");
+            }
+        }
+
+        private void MenuItem_Click_Quitter(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }  
 
         private void default_Click(object sender, RoutedEventArgs e)
         {
@@ -211,11 +325,6 @@ namespace InterfaceGraphique
             if (carte != null)
                 afficheCarte();
             e.Handled = true;
-        }
-
-        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }
