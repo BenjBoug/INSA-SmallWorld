@@ -47,6 +47,7 @@ vector<Node*>* AStar::pathFinding(Node *start, Node *goal)
 
 		openset.erase(remove(openset.begin(), openset.end(), current), openset.end());
         closedset.push_back(current);
+
 		vector<Node*>* neighbors = neighbor_nodes(current);
 		vector<Node*>::iterator it;
         for(it=neighbors->begin();it!=neighbors->end();it++)
@@ -95,19 +96,19 @@ vector<Node*>* AStar::neighbor_nodes(Node *current)
 	vector<Node*>* res = new vector<Node*>();
 	Coordonnees coordCurrent = current->getCoord();
 
-    if (coordCurrent.x() - 1 >= 0 && verif[peupleUnite][carte[(coordCurrent.x()-1) * largeur + coordCurrent.y()]]!=0)
+    if (coordCurrent.x() - 1 >= 0 && verif[peupleUnite][carte[(coordCurrent.x()-1) * hauteur + coordCurrent.y()]]!=0)
     {
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x() - 1, coordCurrent.y())));
     }
-    if (coordCurrent.x() + 1 < largeur && verif[peupleUnite][carte[(coordCurrent.x() + 1) * largeur + coordCurrent.y()]]!=0)
+    if (coordCurrent.x() + 1 < largeur && verif[peupleUnite][carte[(coordCurrent.x() + 1) * hauteur + coordCurrent.y()]]!=0)
     {
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x() + 1, coordCurrent.y())));
     }
-    if (coordCurrent.y() - 1 >= 0 && verif[peupleUnite][carte[coordCurrent.x() * largeur + (coordCurrent.y()-1)]]!=0)
+    if (coordCurrent.y() - 1 >= 0 && verif[peupleUnite][carte[coordCurrent.x() * hauteur + (coordCurrent.y()-1)]]!=0)
     {
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x(), coordCurrent.y()-1)));
     }
-    if (coordCurrent.y() + 1 < hauteur && verif[peupleUnite][carte[coordCurrent.x() * largeur + (coordCurrent.y()+1)]]!=0)
+    if (coordCurrent.y() + 1 < hauteur && verif[peupleUnite][carte[coordCurrent.x() * hauteur + (coordCurrent.y()+1)]]!=0)
     {
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x(), coordCurrent.y()+1)));
     }

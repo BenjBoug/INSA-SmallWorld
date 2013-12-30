@@ -18,5 +18,9 @@ public:
 	DLL ~PlaceJoueur(void);
 
 	DLL int * placeJoueur(int **,int**, int largeur, int hauteur,int peuple);
+
+private:
+	int compteJoueurs(int ** tabJoueurs, int largeur, int hauteur);
+	int * getCoordJoueur1(int ** tabJoueurs, int largeur, int hauteur);
 };
 

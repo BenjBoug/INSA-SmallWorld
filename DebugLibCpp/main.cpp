@@ -1,6 +1,6 @@
 #include <iostream> 
 #include <vector>
-#include "Suggestion.h"
+#include "PlaceJoueur.h"
 using namespace std;
 
 #define TAILLE 5
@@ -26,18 +26,11 @@ int main()
         }
     }
 
-	Suggestion* sugg = new Suggestion();
+	unites[0][0]=10;
 
-	vector<int*> res = sugg->suggestion(carte, unites, TAILLE,0,0, 4, 0);
+	PlaceJoueur j;
+	j.placeJoueur(unites,carte,TAILLE,TAILLE,0);
 
-	for(int i =0; i<TAILLE;i++)
-	{
-		for(int j =0; j<TAILLE;j++)
-		{
-			cout << res[i * TAILLE + j][0];
-		}
-		cout << endl;
-	}
 	system("pause");
     return 0;
 }
