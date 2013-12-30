@@ -45,6 +45,7 @@
     <Compile Include="Carte\Carte.cs" />
     <Compile Include="Carte\Coordonnees.cs" />
     <Compile Include="Carte\MonteurFichier.cs" />
+    <Compile Include="Carte\MonteurVide.cs" />
     <Compile Include="Peuple\FabriquePeupleElfe.cs" />
     <Compile Include="Interface\ICarte.cs" />
     <Compile Include="Carte\CarteClassique.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Unites\Unite.cs" />
     <Compile Include="Unites\UniteBlindee.cs" />
     <Compile Include="Unites\UniteElite.cs" />
+    <Compile Include="Carte\Vide.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

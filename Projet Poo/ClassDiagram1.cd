@@ -277,7 +277,7 @@
   <Class Name="Modele.Carte" Collapsed="true">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACEAACAEAEghAACAA0AAIAEAZgACFGQAADQCCAJIIE=</HashCode>
+      <HashCode>AACEAACAEAEghAACAA0AAIAEAZAACFGQAADQCCAJIIE=</HashCode>
       <FileName>Carte\Carte.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -375,10 +375,25 @@
       <FileName>Carte\MonteurFichier.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Modele.MonteurVide">
+    <Position X="24" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\MonteurVide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Modele.Vide">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Carte\Vide.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="Modele.ICarte" Collapsed="true">
     <Position X="10.75" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAEAhAAAAAkAAAAEAYgAAEAQAAAAAAAAAIE=</HashCode>
+      <HashCode>AAAEAAAAAAEAhAAAAAkAAAAEAYAAAEAQAAAAAAAAAIE=</HashCode>
       <FileName>Interface\ICarte.cs</FileName>
     </TypeIdentifier>
   </Interface>
