@@ -15,7 +15,6 @@ namespace Modele
             partie.NbTours = 0;
             initJoueurs(joueurs);
         }
-
         public override void initJoueurs(List<Joueur> joueurs)
         {
             foreach (Joueur j in joueurs)

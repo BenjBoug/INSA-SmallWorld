@@ -13,7 +13,7 @@ namespace Modele
         }
 
         protected ICreationCarte stragCreation;
-        private Carte carte;
+        protected Carte carte;
 
         public Carte Carte
         {
@@ -33,7 +33,7 @@ namespace Modele
                 Carte.Cases[i] = new Case[Carte.Hauteur];
 
             Carte.Unites = new List<Unite>();
-            Carte.chargerCarte(stragCreation);
+            stragCreation.chargerCarte(ref carte);
         }
 
     }

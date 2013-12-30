@@ -37,10 +37,10 @@ namespace InterfaceGraphique
                 joueurs.Add(grp.Joueur);
             }
 
-            ICreationCarte strategyCreationCarte;
+            MonteurCarte monteur;
             try
             {
-                strategyCreationCarte = getSrategyCreationCarte();
+                monteur = getMonteurCarte();
             }
             catch (FileNotFoundException)
             {
@@ -48,22 +48,30 @@ namespace InterfaceGraphique
                 return;
             }
 
-            if (comboCarte.SelectedIndex == 0)
-                ((MainWindow)Owner).chargerPartie(new MonteurDemo(strategyCreationCarte), joueurs);
-            else if (comboCarte.SelectedIndex == 1)
-                ((MainWindow)Owner).chargerPartie(new MonteurPetite(strategyCreationCarte), joueurs);
-            else if (comboCarte.SelectedIndex == 2)
-                ((MainWindow)Owner).chargerPartie(new MonteurNormale(strategyCreationCarte), joueurs);
-            this.Close();
+
+            ((MainWindow)Owner).chargerPartie(monteur, joueurs);
+
             e.Handled = true;
+            this.Close();
         }
 
-        private ICreationCarte getSrategyCreationCarte()
+        private MonteurCarte getMonteurCarte()
         {
             if (comboChargement.SelectedIndex == 0)
-                return new Aleatoire();
+            {
+                if (comboCarte.SelectedIndex == 0)
+                    return new MonteurDemo();
+                else if (comboCarte.SelectedIndex == 1)
+                    return new MonteurPetite();
+                else if (comboCarte.SelectedIndex == 2)
+                    return new MonteurNormale();
+                else
+                    return null;
+            }
             else
-                return new LectureFichier(fileName.Text);
+            {
+                return new MonteurFichier(fileName.Text);
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

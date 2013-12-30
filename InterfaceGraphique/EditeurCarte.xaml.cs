@@ -223,10 +223,12 @@ namespace InterfaceGraphique
                 try
                 {
                     disableComboBox_SelectionChanged();
-
-                    XmlSerializer mySerializer = new XmlSerializer(typeof(CarteClassique));
+                    carte = new CarteClassique();
+                    new LectureFichier(openFileName).chargerCarte(ref carte);
+                    /*
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(Carte));
                     carte = (Carte)mySerializer.Deserialize(openFileDialog1.OpenFile()); 
-
+                    */
                     comboLargeur.SelectedIndex = carte.Largeur - TAILLE_MIN;
                     comboHauteur.SelectedIndex = carte.Hauteur - TAILLE_MIN;
                     comboTours.SelectedIndex = carte.NbToursMax - TOURS_MIN;
@@ -254,7 +256,7 @@ namespace InterfaceGraphique
                 if (carte.NbUniteBlindee + carte.NbUniteElite + carte.NbUniteClassique >= UNITES_MIN)
                 {
                     SaveFileDialog dlg = new SaveFileDialog();
-                    dlg.FileName = "carteSmallWorld"; // Default file name
+                    dlg.FileName = "carteSmallWorld.card"; // Default file name
                     dlg.DefaultExt = ".card"; // Default file extension
                     dlg.Filter = "Carte SmallWorld (.card)|*.card"; // Filter files by extension
 

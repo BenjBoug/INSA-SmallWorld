@@ -50,7 +50,6 @@ namespace Modele
         
         void calculerPoints();
         void placeUnite(List<Unite> l);
-        void chargerCarte(ICreationCarte creationCarte);
         void setCase(int x, int y, Case _case);
         void actualiseDeplacement();
         void deplaceUnites(List<Unite> u, Coordonnees coord, SuggMap sugg);

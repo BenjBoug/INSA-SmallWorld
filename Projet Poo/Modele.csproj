@@ -44,6 +44,7 @@
     <Compile Include="Carte\Aleatoire.cs" />
     <Compile Include="Carte\Carte.cs" />
     <Compile Include="Carte\Coordonnees.cs" />
+    <Compile Include="Carte\MonteurFichier.cs" />
     <Compile Include="Peuple\FabriquePeupleElfe.cs" />
     <Compile Include="Interface\ICarte.cs" />
     <Compile Include="Carte\CarteClassique.cs" />

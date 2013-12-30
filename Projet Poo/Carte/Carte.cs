@@ -148,17 +148,7 @@ namespace Modele
         {
             WrapperPlaceJoueur wrap = new WrapperPlaceJoueur();
             List<int> emplUnites = getUnitesToListInt();
-            int peuple = -1;
-            IPeuple p = list[0].Proprietaire.Peuple;
-
-            if (p is PeupleViking)
-                peuple = 0;
-            else if (p is PeupleNain)
-                peuple = 1;
-            else if (p is PeupleGaulois)
-                peuple = 2;
-
-
+            int peuple = list[0].Proprietaire.Peuple.toInt();
             List<int> coord = wrap.getEmplacementJoueur(emplUnites, toList(), Largeur, peuple);
             foreach (Unite u in list)
             {
@@ -195,14 +185,7 @@ namespace Modele
             }
             return carteInt;
         }
-        /// <summary>
-        /// charge la carte
-        /// </summary>
-        /// <param name="creationCarte">la méthode a utiliser pour charger la carte</param>
-        public void chargerCarte(ICreationCarte creationCarte)
-        {
-            creationCarte.chargerCarte(this);
-        }
+
         /// <summary>
         /// Modifie la carte
         /// </summary>

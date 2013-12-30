@@ -11,7 +11,7 @@ namespace Modele
         /// Charge la carte de façon aléatoire
         /// </summary>
         /// <param name="c">la carte a chargé</param>
-        public void chargerCarte(Carte c)
+        public void chargerCarte(ref Carte c)
         {
             WrapperMapAleatoire alea = new WrapperMapAleatoire();
             List<int> data = alea.generer(c.Largeur,5);

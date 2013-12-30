@@ -20,19 +20,21 @@ namespace Modele
 
         private string fileName;
 
-        public void chargerCarte(Carte c)
+        public void chargerCarte(ref Carte c)
         {
+            StreamReader myWriter = null;
             try
             {
-                XmlSerializer mySerializer = new XmlSerializer(typeof(CarteClassique));
-                StreamReader myWriter = new StreamReader(fileName);
+                XmlSerializer mySerializer = new XmlSerializer(c.GetType());
+                myWriter = new StreamReader(fileName);
                 c = (Carte)mySerializer.Deserialize(myWriter);
                 myWriter.Close();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
+                myWriter.Close();
 
-                throw;
             }
         }
     }

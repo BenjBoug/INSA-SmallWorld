@@ -7,8 +7,8 @@ namespace Modele
 {
     public class MonteurPetite : MonteurCarte
     {
-        public MonteurPetite(ICreationCarte crea)
-            : base(crea)
+        public MonteurPetite()
+            : base(new Aleatoire())
         {
 
         }
