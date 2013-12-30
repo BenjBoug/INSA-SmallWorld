@@ -9,7 +9,6 @@ namespace Modele
     /// <summary>
     /// Représente une coordonnées en 2D. 
     /// </summary>
-    [Serializable]
     public class Coordonnees
     {
         /// <summary>
@@ -103,6 +102,11 @@ namespace Modele
             hash = (hash * 7) + x.GetHashCode();
             hash = (hash * 7) + y.GetHashCode();
             return hash;
+        }
+
+        public override string ToString()
+        {
+            return "Coord("+x+","+y+")";
         }
     }
 }

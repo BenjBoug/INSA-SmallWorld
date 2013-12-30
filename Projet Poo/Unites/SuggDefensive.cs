@@ -17,12 +17,26 @@ namespace Modele
 
             foreach (var pair in res)
             {
-                int minDist = int.MaxValue;
-                Coordonnees coordCase = pair.Key;
-                foreach (Unite u in carte.Unites.Where(z => z.IdProprietaire != unite.IdProprietaire))
+                if (pair.Value.Sugg != 0)
                 {
-
+                    double minDist = double.MaxValue;
+                    Coordonnees coordCase = pair.Key;
+                    Coordonnees coord=null;
+                    foreach (Unite u in carte.Unites.Where(z => z.IdProprietaire != unite.IdProprietaire))
+                    {
+                        if (coordCase.distance(u.Coord) < minDist)
+                        {
+                            minDist = coordCase.distance(u.Coord);
+                            coord = u.Coord;
+                        }
+                    }
+                    meilleursCases.Add(coordCase);
                 }
+            }
+
+            foreach (Coordonnees c in meilleursCases)
+            {
+                Console.WriteLine(c);
             }
 
 

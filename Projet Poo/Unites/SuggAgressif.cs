@@ -102,7 +102,7 @@ namespace Modele
                 foreach (Coordonnees coord in path)
                 {
                     if (res[coord].Sugg != 0)
-                        res[coord].Sugg = res[coord].Depl + 10;
+                        res[coord].Sugg = (unite.PointsDepl-res[coord].Depl) + 10;
                 }
             }
         }

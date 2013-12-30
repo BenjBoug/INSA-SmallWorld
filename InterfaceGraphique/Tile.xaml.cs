@@ -69,12 +69,9 @@ namespace InterfaceGraphique
             if (listUnite != null && listUnite.Count > 0)
             {
                 backText.Text = listUnite.Count.ToString();
-                backText.Foreground =  (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
-            }
-            else
-                backText.Text = " ";
-            if(backText.Text != " ")
+                backText.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
                 backText.Background = Brushes.White;
+            }
             FontSizeConverter fSizeConverter = new FontSizeConverter();
             backText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");
             backText.Margin = new Thickness(10);
