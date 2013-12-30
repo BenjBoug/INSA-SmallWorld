@@ -10,7 +10,7 @@ namespace LibCLR {
 	public:
 		WrapperSuggestion(void);
 		~WrapperSuggestion(void);
-		List<int> ^ getSuggestion(List<int>^ carte,List<int>^ unites,int taille,int x,int y,int ptDepl,int peupleJActuel);
+		List<int> ^ getSuggestion(List<int>^ carte,List<int>^ unites, int largeur, int hauteur,int x,int y,int ptDepl,int peupleJActuel);
 
 	private:
 		Suggestion* sugg;

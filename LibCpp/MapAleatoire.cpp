@@ -11,11 +11,11 @@ MapAleatoire::~MapAleatoire(void)
 {
 }
 
-vector<int> MapAleatoire::generer(int taille,int nbTerrain)
+vector<int> MapAleatoire::generer(int largeur, int hauteur,int nbTerrain)
 {
 	vector<int> map;
 
-	int max = (taille*taille)/nbTerrain;
+	int max = (largeur*hauteur)/nbTerrain;
 	int tile;
 	int* tilesNb = new int[nbTerrain];
 	for (int i=0;i<nbTerrain;i++)
@@ -23,9 +23,9 @@ vector<int> MapAleatoire::generer(int taille,int nbTerrain)
 		tilesNb[i]=0;
 	}
 
-	for (int i=0;i<taille;i++)
+	for (int i=0;i<largeur;i++)
 	{
-		for (int j=0;j<taille;j++)
+		for (int j=0;j<hauteur;j++)
 		{
 			do
 				tile = rand()%nbTerrain;

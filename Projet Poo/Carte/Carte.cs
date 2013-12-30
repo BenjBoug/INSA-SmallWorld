@@ -149,7 +149,7 @@ namespace Modele
             WrapperPlaceJoueur wrap = new WrapperPlaceJoueur();
             List<int> emplUnites = getUnitesToListInt();
             int peuple = list[0].Proprietaire.Peuple.toInt();
-            List<int> coord = wrap.getEmplacementJoueur(emplUnites, toList(), Largeur, peuple);
+            List<int> coord = wrap.getEmplacementJoueur(emplUnites, toList(), Largeur,Hauteur, peuple);
             foreach (Unite u in list)
             {
                 u.Coord = new Coordonnees(coord[0], coord[1]);

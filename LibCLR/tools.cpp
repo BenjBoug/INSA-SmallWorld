@@ -1,11 +1,11 @@
 #include "Stdafx.h"
 
-List<int>^ tabToList(int ** tab, int taille)
+List<int>^ tabToList(int ** tab, int largeur, int hauteur)
 {
 	List<int>^ res = gcnew List<int>();
-	for (int i=0;i<taille;i++)
+	for (int i=0;i<largeur;i++)
 	{
-		for (int j=0;j<taille;j++)
+		for (int j=0;j<hauteur;j++)
 		{
 			res->Add(tab[i][j]);
 		}
@@ -13,19 +13,19 @@ List<int>^ tabToList(int ** tab, int taille)
 	return res;
 }
 
-List<int>^ tabToList(int *** tab, int taille)
+List<int>^ tabToList(int *** tab, int largeur, int hauteur)
 {
 	List<int>^ res = gcnew List<int>();
-	for (int i=0;i<taille;i++)
+	for (int i=0;i<largeur;i++)
 	{
-		for (int j=0;j<taille;j++)
+		for (int j=0;j<hauteur;j++)
 		{
 			res->Add(tab[i][j][0]);
 		}
 	}
-	for (int i=0;i<taille;i++)
+	for (int i=0;i<largeur;i++)
 	{
-		for (int j=0;j<taille;j++)
+		for (int j=0;j<hauteur;j++)
 		{
 			res->Add(tab[i][j][1]);
 		}
@@ -33,16 +33,16 @@ List<int>^ tabToList(int *** tab, int taille)
 	return res;
 }
 
-int ** listToTab(List<int>^tab,int taille)
+int ** listToTab(List<int>^tab, int largeur, int hauteur)
 {
-	int ** res = new int*[taille];
+	int ** res = new int*[largeur];
 
-	for (int i=0;i<taille;i++)
+	for (int i=0;i<largeur;i++)
 	{
-		res[i] = new int[taille];
-		for (int j=0;j<taille;j++)
+		res[i] = new int[hauteur];
+		for (int j=0;j<hauteur;j++)
 		{
-			res[i][j] = tab[i*taille + j];
+			res[i][j] = tab[i*hauteur + j];
 		}
 	}
 	return res;

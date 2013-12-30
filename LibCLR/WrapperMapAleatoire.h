@@ -13,7 +13,7 @@ namespace LibCLR {
 			WrapperMapAleatoire();
 			~WrapperMapAleatoire();
 
-			List<int>^ generer(int taille, int nbTerrain);
+			List<int>^ generer(int largeur, int hauteur, int nbTerrain);
 	protected:
 		!WrapperMapAleatoire() {delete mapAlea;}
 		};

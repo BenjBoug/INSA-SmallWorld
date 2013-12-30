@@ -18,7 +18,7 @@ public:
 	DLL Suggestion(void);
 	DLL ~Suggestion(void);
 
-	DLL vector<int*> suggestion(int **carte, int**unites, int taille,int xActuel,int yAcuel, int ptDepl, int peupleJActuel);
-	void calculDeplClassique(int **carte, int**unites, int x, int y, int depl, int peuple, int taille, int *** sugg);
+	DLL vector<int*> suggestion(int **carte, int**unites, int largeur, int hauteur,int xActuel,int yAcuel, int ptDepl, int peupleJActuel);
+	void calculDeplClassique(int **carte, int**unites, int x, int y, int depl, int peuple, int largeur, int hauteur, int *** sugg);
 };
 

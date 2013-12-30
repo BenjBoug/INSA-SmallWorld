@@ -11,7 +11,7 @@ namespace TestUnitaire
         public void TestMonteurDemo()
         {
             Carte c;
-            MonteurCarte monteur = new MonteurDemo(new Aleatoire());
+            MonteurCarte monteur = new MonteurDemo();
             monteur.creerCarte();
             c = monteur.Carte;
             Assert.IsNotNull(c);
@@ -21,7 +21,7 @@ namespace TestUnitaire
         public void TestMonteurPetite()
         {
             Carte c;
-            MonteurCarte monteur = new MonteurPetite(new Aleatoire());
+            MonteurCarte monteur = new MonteurPetite();
             monteur.creerCarte();
             c = monteur.Carte;
             Assert.IsNotNull(c);
@@ -31,7 +31,7 @@ namespace TestUnitaire
         public void TestMonteurNormale()
         {
             Carte c;
-            MonteurCarte monteur = new MonteurNormale(new Aleatoire());
+            MonteurCarte monteur = new MonteurNormale();
             monteur.creerCarte();
             c = monteur.Carte;
             Assert.IsNotNull(c);
@@ -58,7 +58,7 @@ namespace TestUnitaire
         private Carte creerCarteRapide()
         {
             Carte c;
-            MonteurCarte monteur = new MonteurDemo(new Aleatoire());
+            MonteurCarte monteur = new MonteurDemo();
             monteur.creerCarte();
             c = monteur.Carte;
 

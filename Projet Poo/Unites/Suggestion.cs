@@ -19,7 +19,8 @@ namespace Modele
         {
             List<int> sugg = new WrapperSuggestion().getSuggestion(carte.toList(),                      //la carte
                                                                    getUnitesToList(carte, unite),       //l'emplacement des unités ennemis
-                                                                   carte.Largeur,                       //la taille de la carte
+                                                                   carte.Largeur,
+                                                                   carte.Hauteur,
                                                                    unite.Coord.X,                       //coordonnees x de l'unité
                                                                    unite.Coord.Y,                       //coordonnees y de l'unité
                                                                    unite.PointsDepl,                    //le nombre de points de déplacement de l'unité
@@ -36,7 +37,7 @@ namespace Modele
                 for (int j = 0; j < carte.Hauteur; j++)
                 {
                     SuggData data = new SuggData();
-                    data.Sugg = sugg[i * carte.Largeur + j];
+                    data.Sugg = sugg[i * carte.Hauteur + j];
                     res[new Coordonnees(i, j)] = data;
                 }
             }
@@ -45,7 +46,7 @@ namespace Modele
             {
                 for (int j = 0; j < carte.Hauteur; j++)
                 {
-                    res[new Coordonnees(i, j)].Depl = sugg[carte.Largeur * carte.Hauteur + (i * carte.Largeur + j)];
+                    res[new Coordonnees(i, j)].Depl = sugg[carte.Largeur * carte.Hauteur + (i * carte.Hauteur + j)];
                 }
             }
 

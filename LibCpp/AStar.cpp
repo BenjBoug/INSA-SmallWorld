@@ -10,13 +10,14 @@ AStar::~AStar(void)
 {
 }
 
-vector<Node*>* AStar::pathFinding(vector<int> carte, int peupleUnite, int taille, Coordonnees &start, Coordonnees &goal)
+vector<Node*>* AStar::pathFinding(vector<int> carte, int peupleUnite, int largeur, int hauteur, Coordonnees &start, Coordonnees &goal)
 {
 	factory.clear();
 	this->carte.clear();
 	this->carte = carte;
 	this->peupleUnite = peupleUnite;
-	this->taille=taille;
+	this->largeur=largeur;
+	this->hauteur=hauteur;
 	try
 	{
 		return pathFinding(factory.getNode(start),factory.getNode(goal));
@@ -94,19 +95,19 @@ vector<Node*>* AStar::neighbor_nodes(Node *current)
 	vector<Node*>* res = new vector<Node*>();
 	Coordonnees coordCurrent = current->getCoord();
 
-    if (coordCurrent.x() - 1 >= 0 && verif[peupleUnite][carte[(coordCurrent.x()-1) * taille + coordCurrent.y()]]!=0)
+    if (coordCurrent.x() - 1 >= 0 && verif[peupleUnite][carte[(coordCurrent.x()-1) * largeur + coordCurrent.y()]]!=0)
     {
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x() - 1, coordCurrent.y())));
     }
-    if (coordCurrent.x() + 1 < taille && verif[peupleUnite][carte[(coordCurrent.x() + 1) * taille + coordCurrent.y()]]!=0)
+    if (coordCurrent.x() + 1 < largeur && verif[peupleUnite][carte[(coordCurrent.x() + 1) * largeur + coordCurrent.y()]]!=0)
     {
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x() + 1, coordCurrent.y())));
     }
-    if (coordCurrent.y() - 1 >= 0 && verif[peupleUnite][carte[coordCurrent.x() * taille + (coordCurrent.y()-1)]]!=0)
+    if (coordCurrent.y() - 1 >= 0 && verif[peupleUnite][carte[coordCurrent.x() * largeur + (coordCurrent.y()-1)]]!=0)
     {
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x(), coordCurrent.y()-1)));
     }
-    if (coordCurrent.y() + 1 < taille && verif[peupleUnite][carte[coordCurrent.x() * taille + (coordCurrent.y()+1)]]!=0)
+    if (coordCurrent.y() + 1 < hauteur && verif[peupleUnite][carte[coordCurrent.x() * largeur + (coordCurrent.y()+1)]]!=0)
     {
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x(), coordCurrent.y()+1)));
     }

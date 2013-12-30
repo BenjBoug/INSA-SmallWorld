@@ -24,7 +24,7 @@ public:
 	DLL AStar(void);
 	DLL ~AStar(void);
 	
-	DLL vector<Node*>* pathFinding(vector<int> carte, int peupleUnite, int taille, Coordonnees &start, Coordonnees &goal);
+	DLL vector<Node*>* pathFinding(vector<int> carte, int peupleUnite, int largeur, int hauteur, Coordonnees &start, Coordonnees &goal);
 
 	vector<Node*>* pathFinding(Node *start, Node *goal);
 	
@@ -34,7 +34,7 @@ private:
 
 	vector<int> carte;
 	int peupleUnite;
-	int taille;
+	int largeur, hauteur;
 
     list<Node*> closedset;
     list<Node*> openset;

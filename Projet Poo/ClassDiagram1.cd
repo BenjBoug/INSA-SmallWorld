@@ -7,7 +7,7 @@
     <Position X="16.086" Y="0.856" Height="0.75" Width="1.146" />
   </Comment>
   <Comment CommentText="poids/mouche">
-    <Position X="10.233" Y="5.219" Height="0.75" Width="1.122" />
+    <Position X="6.139" Y="3.615" Height="0.75" Width="1.122" />
   </Comment>
   <Comment CommentText="monteur&#xD;&#xA;">
     <Position X="19.025" Y="4.05" Height="0.75" Width="1.7" />
@@ -164,7 +164,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.Aleatoire">
-    <Position X="12.75" Y="2.25" Width="1.5" />
+    <Position X="13" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Carte\Aleatoire.cs</FileName>
@@ -376,14 +376,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.MonteurVide">
-    <Position X="24" Y="1" Width="1.5" />
+    <Position X="24.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Carte\MonteurVide.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Modele.Vide">
-    <Position X="11" Y="2.5" Width="1.5" />
+    <Position X="11.5" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Carte\Vide.cs</FileName>

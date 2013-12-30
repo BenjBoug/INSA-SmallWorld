@@ -95,7 +95,7 @@ namespace Modele
                 peuple = 2;
 
             WrapperAStar aStart = new WrapperAStar();
-            List<Coordonnees> path = convertListInttoListCoord(aStart.pathFinding(carte.toList(), peuple, carte.Largeur, unite.Coord.X, unite.Coord.Y, plusProche.X, plusProche.Y));
+            List<Coordonnees> path = convertListInttoListCoord(aStart.pathFinding(carte.toList(), peuple, carte.Largeur, carte.Hauteur, unite.Coord.X, unite.Coord.Y, plusProche.X, plusProche.Y));
 
             if (path != null && path.Count > 0)
             {

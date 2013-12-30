@@ -17,6 +17,6 @@ public:
 	DLL PlaceJoueur(void);
 	DLL ~PlaceJoueur(void);
 
-	DLL int * placeJoueur(int **,int**, int taille,int peuple);
+	DLL int * placeJoueur(int **,int**, int largeur, int hauteur,int peuple);
 };
 

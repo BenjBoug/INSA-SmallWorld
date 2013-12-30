@@ -19,7 +19,7 @@ public:
 	DLL MapAleatoire(void);
 	DLL ~MapAleatoire(void);
 
-	DLL vector<int> generer(int taille,int nbTerrain);
+	DLL vector<int> generer(int largeur, int hauteur,int nbTerrain);
 private:
 };
 

@@ -15,6 +15,6 @@ WrapperMapAleatoire::~WrapperMapAleatoire()
 {
 	delete mapAlea;
 }
-List<int>^ WrapperMapAleatoire::generer(int taille, int nbTerrain) {
-	return vectorToList(mapAlea->generer(taille,nbTerrain));
+List<int>^ WrapperMapAleatoire::generer(int largeur, int hauteur, int nbTerrain) {
+	return vectorToList(mapAlea->generer(largeur,hauteur,nbTerrain));
 }

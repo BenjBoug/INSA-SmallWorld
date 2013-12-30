@@ -12,9 +12,9 @@ WrapperAStar::~WrapperAStar(void)
 	delete aStar;
 }
 
-List<int>^ WrapperAStar::pathFinding(List<int>^ carte, int peupleUnite, int taille, int startX, int startY, int goalX, int goalY)
+List<int>^ WrapperAStar::pathFinding(List<int>^ carte, int peupleUnite, int largeur, int hauteur, int startX, int startY, int goalX, int goalY)
 {
-	vector<Node*>* path = aStar->pathFinding(listToVector(carte),peupleUnite,taille,Coordonnees(startX,startY),Coordonnees(goalX,goalY));
+	vector<Node*>* path = aStar->pathFinding(listToVector(carte),peupleUnite,largeur,hauteur,Coordonnees(startX,startY),Coordonnees(goalX,goalY));
 
 	List<int> ^ res = gcnew List<int>();
 	vector<Node*>::iterator it;

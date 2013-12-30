@@ -13,7 +13,7 @@ namespace LibCLR {
 		WrapperAStar(void);
 		~WrapperAStar(void);
 
-		List<int>^ pathFinding(List<int>^ carte, int peupleUnite, int taille, int startX, int startY, int goalX, int goalY);
+		List<int>^ pathFinding(List<int>^ carte, int peupleUnite, int largeur, int hauteur, int startX, int startY, int goalX, int goalY);
 
 	private:
 		AStar * aStar;

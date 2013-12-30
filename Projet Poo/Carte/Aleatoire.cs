@@ -14,7 +14,7 @@ namespace Modele
         public void chargerCarte(ref Carte c)
         {
             WrapperMapAleatoire alea = new WrapperMapAleatoire();
-            List<int> data = alea.generer(c.Largeur,5);
+            List<int> data = alea.generer(c.Largeur, c.Hauteur,5);
             for (int i = 0; i < c.Largeur; i++)
             {
                 for (int j = 0; j < c.Hauteur; j++)
