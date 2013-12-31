@@ -12,6 +12,7 @@ namespace Modele
         {
 
         }
+
         public override void creerCarte()
         {
             Carte = new CarteClassique();

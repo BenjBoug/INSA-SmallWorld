@@ -20,9 +20,7 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Ouvrir..." Click="MenuItem_Click_2" />
-                <Separator />
-                <MenuItem Header="_Sauvegarder" Click="MenuItem_Click_1" />
-                <MenuItem Header="_Sauvegarder sous..." Click="MenuItem_Click_3" />
+                <MenuItem x:Name="menuItemSave" Header="_Sauvegarder sous..." Click="MenuItem_Click_1" />
                 <Separator />
                 <MenuItem Header="_Editeur de cartes" Click="MenuItem_Click_4" />
                 <Separator />

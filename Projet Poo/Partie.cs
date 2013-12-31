@@ -18,6 +18,7 @@ namespace Modele
         public Partie()
         {
             indiceJoueurActuel = 0;
+            nbTours = 1;
             listJoueurs = new List<Joueur>();
             finpartie = false;
             classement = new Stack<Joueur>();
@@ -63,21 +64,34 @@ namespace Modele
             set { carte = value; }
         }
         /// <summary>
+        /// Vérifie si le joueur actuel est le dernier à jouer
+        /// </summary>
+        public bool dernierAJouer()
+        {
+            for (int i = IndiceJoueurActuel + 1; i < ListJoueurs.Count; i++)
+                if(carte.getNombreUniteRestante(ListJoueurs[i]) != 0)
+                    return false;
+            return true;
+        }
+        /// <summary>
         /// Fini le tour, et passe au suivant
         /// </summary>
         public void tourSuivant()
         {
             OnFinTours();
-            if (getNbJoueursVivant() > 1 && nbTours<carte.NbToursMax)
-            {
-                do
-                    joueurSuivant();
-                while (carte.getNombreUniteRestante(joueurActuel()) == 0);
-            }
-            else
+            if (getNbJoueursVivants() == 1 || (NbTours == carte.NbToursMax && dernierAJouer()))
             {
                 Finpartie = true;
             }
+            else
+            {
+                do
+                {
+                    joueurSuivant();
+                }
+                while (carte.getNombreUniteRestante(joueurActuel()) == 0);
+            }
+            
             makeClassement();
         }
         /// <summary>
@@ -139,7 +153,7 @@ namespace Modele
         /// Retourne le nombre de joueur encore vivant
         /// </summary>
         /// <returns></returns>
-        private int getNbJoueursVivant()
+        private int getNbJoueursVivants()
         {
             int res=0;
             foreach (Joueur j in listJoueurs)

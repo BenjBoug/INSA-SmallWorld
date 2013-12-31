@@ -29,7 +29,8 @@ namespace InterfaceGraphique
         const int UNITES_MAX = 50;
 
         private TileFactory tileFactory;
-        private Carte carte;
+       // private Carte carte;
+        private MonteurCarte monteur;
         private int terrain;
 
         public EditeurCarte()
@@ -37,10 +38,10 @@ namespace InterfaceGraphique
             InitializeComponent();
             tileFactory = new ImageFactory();
             terrain = 0;
-            initCombo();
+            remplirCombo();
         }
 
-        private void initCombo()
+        private void remplirCombo()
         {   
             for (int i = TAILLE_MIN; i <= TAILLE_MAX; i++)
             {
@@ -57,48 +58,25 @@ namespace InterfaceGraphique
             }
         }
 
-        private void modifieCarte()
+        private void initCombo() 
         {
-            Carte cp_carte = new CarteClassique();
-            if (carte.Largeur > 0 && carte.Hauteur > 0)
-            {
-                cp_carte.Largeur = carte.Largeur;
-                cp_carte.Hauteur = carte.Hauteur;
-                cp_carte.Cases = carte.Cases;
-            }
-            carte.Largeur = (int)comboLargeur.SelectedItem;
-            carte.Hauteur = (int)comboHauteur.SelectedItem;
-            carte.Cases = new Case[carte.Largeur][];
-            for (int i = 0; i < carte.Largeur; i++)
-                carte.Cases[i] = new Case[carte.Hauteur];
-            for (int i = 0; i < carte.Largeur; i++)
-            {
-                for (int j = 0; j < carte.Hauteur; j++)
-                {
-                    carte.setCase(i, j, carte.FabriqueCase.getCase(0));
-                }
-            }
-            for (int i = 0; i < Math.Min(carte.Largeur,cp_carte.Largeur); i++)
-            {
-                for (int j = 0; j < Math.Min(carte.Hauteur, cp_carte.Hauteur); j++)
-                {
-                    carte.Cases[i][j] = cp_carte.Cases[i][j];
-                }
-            }
-            canvasMap.Width = carte.Largeur * 50;
-            canvasMap.Height = carte.Hauteur * 50;
-            afficheCarte();
+            comboLargeur.SelectedIndex = monteur.Carte.Largeur - TAILLE_MIN;
+            comboHauteur.SelectedIndex = monteur.Carte.Hauteur - TAILLE_MIN;
+            comboTours.SelectedIndex = monteur.Carte.NbToursMax - TOURS_MIN;
+            comboUC.SelectedIndex = monteur.Carte.NbUniteClassique;
+            comboUE.SelectedIndex = monteur.Carte.NbUniteElite;
+            comboUB.SelectedIndex = monteur.Carte.NbUniteBlindee;
         }
 
         private void afficheCarte()
         {
             canvasMap.Children.Clear();
-            for (int l = 0; l < carte.Hauteur; l++)
+            for (int l = 0; l < monteur.Carte.Hauteur; l++)
             {
-                for (int c = 0; c < carte.Largeur; c++)
+                for (int c = 0; c < monteur.Carte.Largeur; c++)
                 {
-                    var tile = carte.Cases[c][l];
-                    var unite = carte.getUniteFromCoord(new Coordonnees(c, l));
+                    var tile = monteur.Carte.Cases[c][l];
+                    var unite = monteur.Carte.getUniteFromCoord(new Coordonnees(c, l));
                     var rect = creerTile(c, l, tile, unite);
                     canvasMap.Children.Add(rect);
                 }
@@ -122,7 +100,7 @@ namespace InterfaceGraphique
             var rect = sender as Tile;
             int column = (int)Canvas.GetLeft(rect) / 50;
             int row = (int)Canvas.GetTop(rect) / 50;
-            carte.setCase(column, row, carte.FabriqueCase.getCase(terrain));
+            monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
             afficheCarte();
             e.Handled = true;
         }
@@ -131,22 +109,16 @@ namespace InterfaceGraphique
         {
             disableComboBox_SelectionChanged();
 
-            carte = new CarteClassique();
-            carte.Unites = new List<Unite>();
+            monteur = new MonteurVide();
+            monteur.creerCarte();
 
-            comboLargeur.SelectedIndex = 0;
-            comboHauteur.SelectedIndex = 0;
-            comboTours.SelectedIndex = 0;
-            comboUC.SelectedIndex = 0;
-            comboUE.SelectedIndex = 0;
-            comboUB.SelectedIndex = 0;
+            initCombo();
 
-            modifieCarte();            
-            carte.NbUniteClassique = (int)comboUC.SelectedItem;
-            carte.NbUniteElite = (int)comboUE.SelectedItem;
-            carte.NbUniteBlindee = (int)comboUB.SelectedItem;
-            
-            enableComboBox_SelectionChanged();     
+            enableComboBox_SelectionChanged(); 
+
+            canvasMap.Width = monteur.Carte.Largeur * 50;
+            canvasMap.Height = monteur.Carte.Hauteur * 50;
+            afficheCarte();
         }
 
         private void disableComboBox_SelectionChanged()
@@ -171,31 +143,60 @@ namespace InterfaceGraphique
 
         private void ComboBox_SelectionChanged_Taille(object sender, SelectionChangedEventArgs e)
         {
-            modifieCarte();
+            Carte cp_carte = new CarteClassique();
+            if (monteur.Carte.Largeur > 0 && monteur.Carte.Hauteur > 0)
+            {
+                cp_carte.Largeur = monteur.Carte.Largeur;
+                cp_carte.Hauteur = monteur.Carte.Hauteur;
+                cp_carte.Cases = monteur.Carte.Cases;
+            }
+            monteur.Carte.Largeur = (int)comboLargeur.SelectedItem;
+            monteur.Carte.Hauteur = (int)comboHauteur.SelectedItem;
+            monteur.Carte.Cases = new Case[monteur.Carte.Largeur][];
+            for (int i = 0; i < monteur.Carte.Largeur; i++)
+                monteur.Carte.Cases[i] = new Case[monteur.Carte.Hauteur];
+            for (int i = 0; i < monteur.Carte.Largeur; i++)
+            {
+                for (int j = 0; j < monteur.Carte.Hauteur; j++)
+                {
+                    monteur.Carte.setCase(i, j, monteur.Carte.FabriqueCase.getCase(0));
+                }
+            }
+            for (int i = 0; i < Math.Min(monteur.Carte.Largeur, cp_carte.Largeur); i++)
+            {
+                for (int j = 0; j < Math.Min(monteur.Carte.Hauteur, cp_carte.Hauteur); j++)
+                {
+                    monteur.Carte.Cases[i][j] = cp_carte.Cases[i][j];
+                }
+            }
+            canvasMap.Width = monteur.Carte.Largeur * 50;
+            canvasMap.Height = monteur.Carte.Hauteur * 50;
+            afficheCarte();
+
             e.Handled = true;
         }
 
         public void ComboBox_SelectionChanged_Tours(object sender, SelectionChangedEventArgs e)
         {
-            carte.NbToursMax = (int)comboTours.SelectedItem;
+            monteur.Carte.NbToursMax = (int)comboTours.SelectedItem;
             e.Handled = true;
         }
 
         public void ComboBox_SelectionChanged_UC(object sender, SelectionChangedEventArgs e)
         {
-            carte.NbUniteClassique = (int)comboUC.SelectedItem;
+            monteur.Carte.NbUniteClassique = (int)comboUC.SelectedItem;
             e.Handled = true;
         }
 
         public void ComboBox_SelectionChanged_UE(object sender, SelectionChangedEventArgs e)
         {
-            carte.NbUniteElite = (int)comboUE.SelectedItem;
+            monteur.Carte.NbUniteElite = (int)comboUE.SelectedItem;
             e.Handled = true;
         }
 
         public void ComboBox_SelectionChanged_UB(object sender, SelectionChangedEventArgs e)
         {
-            carte.NbUniteBlindee = (int)comboUB.SelectedItem;
+            monteur.Carte.NbUniteBlindee = (int)comboUB.SelectedItem;
             e.Handled = true;
         }
 
@@ -208,36 +209,26 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Ouvrir(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-            openFileDialog1.FileName = null;
-            openFileDialog1.Filter = "Carte SmallWorld (.card)|*.card";
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            openFileDialog.FileName = null;
+            openFileDialog.Filter = "Carte SmallWorld (.card)|*.card";
 
-            string openFileName;
-
-            Nullable<bool> res = openFileDialog1.ShowDialog();
+            Nullable<bool> res = openFileDialog.ShowDialog();
 
             if (res == true)
             {
-                openFileName = openFileDialog1.FileName;
                 try
                 {
                     disableComboBox_SelectionChanged();
-                    carte = new CarteClassique();
-                    new LectureFichier(openFileName).chargerCarte(ref carte);
-                    /*
-                    XmlSerializer mySerializer = new XmlSerializer(typeof(Carte));
-                    carte = (Carte)mySerializer.Deserialize(openFileDialog1.OpenFile()); 
-                    */
-                    comboLargeur.SelectedIndex = carte.Largeur - TAILLE_MIN;
-                    comboHauteur.SelectedIndex = carte.Hauteur - TAILLE_MIN;
-                    comboTours.SelectedIndex = carte.NbToursMax - TOURS_MIN;
-                    comboUC.SelectedIndex = carte.NbUniteClassique;
-                    comboUE.SelectedIndex = carte.NbUniteElite;
-                    comboUB.SelectedIndex = carte.NbUniteBlindee;
 
-                    canvasMap.Width = carte.Largeur * 50;
-                    canvasMap.Height = carte.Hauteur * 50;
+                    monteur = new MonteurFichier(openFileDialog.FileName);
+                    monteur.creerCarte();
+
+                    initCombo();
+
+                    canvasMap.Width = monteur.Carte.Largeur * 50;
+                    canvasMap.Height = monteur.Carte.Hauteur * 50;
                     afficheCarte();
 
                     enableComboBox_SelectionChanged();
@@ -250,10 +241,10 @@ namespace InterfaceGraphique
         }
 
         private void MenuItem_Click_Enregistrer(object sender, RoutedEventArgs e)
-        {    
-            if (carte != null)
+        {
+            if (monteur.Carte != null)
             {
-                if (carte.NbUniteBlindee + carte.NbUniteElite + carte.NbUniteClassique >= UNITES_MIN)
+                if (monteur.Carte.NbUniteBlindee + monteur.Carte.NbUniteElite + monteur.Carte.NbUniteClassique >= UNITES_MIN)
                 {
                     SaveFileDialog dlg = new SaveFileDialog();
                     dlg.FileName = "carteSmallWorld.card"; // Default file name
@@ -268,9 +259,9 @@ namespace InterfaceGraphique
                     {
                         // Save document
                         string filename = dlg.FileName;
-                        XmlSerializer mySerializer = new XmlSerializer(carte.GetType());
+                        XmlSerializer mySerializer = new XmlSerializer(monteur.Carte.GetType());
                         StreamWriter myWriter = new StreamWriter(filename);
-                        mySerializer.Serialize(myWriter, carte);
+                        mySerializer.Serialize(myWriter, monteur.Carte);
                         myWriter.Close();
                     }
                 }
@@ -288,7 +279,7 @@ namespace InterfaceGraphique
         {
             tileFactory = new ImageFactory();
 
-            if (carte != null)
+            if (monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
@@ -297,7 +288,7 @@ namespace InterfaceGraphique
         {
             tileFactory = new ImageFactory("groovy");
 
-            if (carte != null)
+            if (monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
@@ -306,7 +297,7 @@ namespace InterfaceGraphique
         {
             tileFactory = new ImageFactory("tropical");
 
-            if (carte != null)
+            if (monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
@@ -315,7 +306,7 @@ namespace InterfaceGraphique
         {
             tileFactory = new RectangleFactory();
 
-            if (carte != null)
+            if (monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
@@ -324,7 +315,7 @@ namespace InterfaceGraphique
         {
             tileFactory = new ImageFactory("campaign");
 
-            if (carte != null)
+            if (monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
