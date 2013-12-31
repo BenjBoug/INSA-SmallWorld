@@ -33,6 +33,8 @@ namespace InterfaceGraphique
         private MonteurCarte monteur;
         private int terrain;
 
+        private bool release=true;
+
         public EditeurCarte()
         { 
             InitializeComponent();
@@ -92,7 +94,22 @@ namespace InterfaceGraphique
             Canvas.SetZIndex(rectangle, 5);
 
             rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
+            rectangle.MouseMove += new MouseEventHandler(Rectangle_MouseMove);
+            rectangle.MouseLeftButtonUp += new MouseButtonEventHandler(Rectangle_MouseUp);
             return rectangle;
+        }
+
+        private void Rectangle_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!release)
+            {
+                var rect = sender as Tile;
+                int column = (int)Canvas.GetLeft(rect) / 50;
+                int row = (int)Canvas.GetTop(rect) / 50;
+                monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
+                afficheCarte();
+            }
+            e.Handled = true;
         }
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
@@ -102,6 +119,18 @@ namespace InterfaceGraphique
             int row = (int)Canvas.GetTop(rect) / 50;
             monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
             afficheCarte();
+            release = false;
+            e.Handled = true;
+        }
+
+        private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var rect = sender as Tile;
+            int column = (int)Canvas.GetLeft(rect) / 50;
+            int row = (int)Canvas.GetTop(rect) / 50;
+            monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
+            afficheCarte();
+            release = true;
             e.Handled = true;
         }
 
