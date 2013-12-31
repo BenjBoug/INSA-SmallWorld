@@ -7,7 +7,9 @@
 #endif
 #include <iostream>
 #include <ctime>
+#include <vector>
 #include "Enum.h"
+#include "AStar.h"
 
 using namespace std;
 
@@ -22,5 +24,7 @@ public:
 private:
 	int compteJoueurs(int ** tabJoueurs, int largeur, int hauteur);
 	int * getCoordJoueur1(int ** tabJoueurs, int largeur, int hauteur);
+
+	vector<int> tabToVecor(int ** tab, int largeur, int hauteur);
 };
 

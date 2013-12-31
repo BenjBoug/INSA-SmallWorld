@@ -71,7 +71,7 @@ vector<Node*>* AStar::pathFinding(Node *start, Node *goal)
 
 		delete neighbors;
     }
-	throw PathNotFoundException();
+    return reconstruct_path(came_from, current);
 }
 
 vector<Node*>* AStar::reconstruct_path(unordered_map<Node*, Node*> came_from, Node *current)

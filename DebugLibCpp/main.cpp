@@ -26,10 +26,15 @@ int main()
         }
     }
 
-	unites[0][0]=10;
+	unites[2][4]=10;
+	carte[4][3]=1;
+	carte[3][3]=1;
+	carte[3][4]=1;
 
 	PlaceJoueur j;
-	j.placeJoueur(unites,carte,TAILLE,TAILLE,0);
+	int * coord = j.placeJoueur(unites,carte,TAILLE,TAILLE,1);
+
+	cout << coord[0] << " " << coord[1];
 
 	system("pause");
     return 0;
