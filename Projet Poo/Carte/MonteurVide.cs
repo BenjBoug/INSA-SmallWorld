@@ -17,6 +17,10 @@ namespace Modele
             carte = new CarteClassique();
             carte.Largeur = 5;
             carte.Hauteur = 5;
+            Carte.NbToursMax = 5;
+            Carte.NbUniteClassique = 0;
+            Carte.NbUniteElite = 0;
+            Carte.NbUniteBlindee = 0;
             creerStructureCarte();
         }
     }

@@ -12,7 +12,6 @@ namespace Modele
         {
             partie = new Partie1v1();
             partie.Carte = creerCarte(monteurCarte);
-            partie.NbTours = 0;
             initJoueurs(joueurs);
         }
         public override void initJoueurs(List<Joueur> joueurs)

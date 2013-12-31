@@ -98,7 +98,7 @@ namespace InterfaceGraphique
         /// </summary>
         private void finJeu()
         {
-            MessageBox.Show(partie.getGagnant().Nom+" gagne la partie !");
+            MessageBox.Show(partie.getGagnant().Nom+" gagne la partie !");  
         }
         /// <summary>
         /// Initialise l'interface graphique
