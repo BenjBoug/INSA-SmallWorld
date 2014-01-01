@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Modele
 {
-    public class MonteurPartie1v1 : MonteurPartie
+    public class MonteurPartieLocale : MonteurPartie
     {
 
         public override void creerPartie(MonteurCarte monteurCarte, List<Joueur> joueurs)
         {
-            partie = new Partie1v1();
+            partie = new PartieLocale();
             partie.Carte = creerCarte(monteurCarte);
             initJoueurs(joueurs);
         }

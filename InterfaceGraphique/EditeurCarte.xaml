@@ -59,16 +59,26 @@
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="Palette de terrains" Height="Auto" Width="Auto" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="False">
-                    <StackPanel Orientation="Vertical">
-                        <RadioButton x:Name="radio0" Checked="RadioButton_EnabledChanged">Plaine</RadioButton>
-                        <RadioButton x:Name="radio1" Checked="RadioButton_EnabledChanged">Eau</RadioButton>
-                        <RadioButton x:Name="radio2" Checked="RadioButton_EnabledChanged">Montagne</RadioButton>
-                        <RadioButton x:Name="radio3" Checked="RadioButton_EnabledChanged">Desert</RadioButton>
-                        <RadioButton x:Name="radio4" Checked="RadioButton_EnabledChanged">Foret</RadioButton>
+                    <StackPanel x:Name="palette" Orientation="Vertical">
+                        <RadioButton x:Name="radioPlaine" Checked="RadioButton_EnabledChanged" IsChecked="True">
+                            <Rectangle Name="outilPlaine" Height="50" Width="50" Fill="Black" Margin="0,5,0,5"/>
+                        </RadioButton>
+                        <RadioButton x:Name="radioEau" Checked="RadioButton_EnabledChanged">
+                            <Rectangle Name="outilEau" Height="50" Width="50" Fill="Black" Margin="0,5,0,5"/>
+                        </RadioButton>
+                        <RadioButton x:Name="radioMontagne" Checked="RadioButton_EnabledChanged">
+                            <Rectangle Name="outilMontagne" Height="50" Width="50" Fill="Black" Margin="0,5,0,5"/>
+                        </RadioButton>
+                        <RadioButton x:Name="radioDesert" Checked="RadioButton_EnabledChanged">
+                            <Rectangle Name="outilDesert" Height="50" Width="50" Fill="Black" Margin="0,5,0,5"/>
+                        </RadioButton>
+                        <RadioButton x:Name="radioForet" Checked="RadioButton_EnabledChanged">
+                            <Rectangle Name="outilForet" Height="50" Width="50" Fill="Black" Margin="0,5,0,5"/>
+                        </RadioButton>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
-            <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="scrollMap" Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </ScrollViewer>
         </StackPanel>

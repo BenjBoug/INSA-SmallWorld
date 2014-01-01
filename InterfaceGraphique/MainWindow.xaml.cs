@@ -33,9 +33,6 @@ namespace InterfaceGraphique
         private Semaphore _poolInit;
         private SelectedRect selectionRectangle;
 
-        private StackPanel panelScroll;
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -46,8 +43,7 @@ namespace InterfaceGraphique
             _pool = new Semaphore(0, 1);
             _poolInit = new Semaphore(0, 1);
             selectionRectangle = new SelectedRect();
-            selectionRectangle.Visibility = System.Windows.Visibility.Collapsed;
-           
+            selectionRectangle.Visibility = Visibility.Collapsed;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -74,6 +70,7 @@ namespace InterfaceGraphique
                 _pool.Release();
             }));
         }
+
         /// <summary>
         /// Créer le thread et la boucle principale du jeu, et le démarre
         /// </summary>
@@ -93,6 +90,7 @@ namespace InterfaceGraphique
                 finJeu();
             });
         }
+
         /// <summary>
         /// Affiche le gagnant
         /// </summary>
@@ -100,6 +98,7 @@ namespace InterfaceGraphique
         {
             MessageBox.Show(partie.getGagnant().Nom+" gagne la partie !");  
         }
+
         /// <summary>
         /// Initialise l'interface graphique
         /// </summary>
@@ -111,9 +110,11 @@ namespace InterfaceGraphique
             canvasMap.Width = partie.Carte.Largeur * 50;
             canvasMap.Height = partie.Carte.Hauteur * 50;
 
+            selectionRectangle.Visibility = Visibility.Collapsed;
+
             afficheCarte();
-            chargerPanneauGauche();
-            chargerPanneauDroit();
+            actualisePanneauDroit();
+            chargerPanneauGauche();            
 
             foreach (UIElement ch in controlGauche.Children)
             {
@@ -122,6 +123,7 @@ namespace InterfaceGraphique
 
             _poolInit.Release();
         }
+
         /// <summary>
         /// Créer la partie, initialise l'interface graphique et démarre la partie
         /// </summary>
@@ -132,7 +134,7 @@ namespace InterfaceGraphique
             
             Task.Factory.StartNew(() =>
             {
-                MonteurPartie1v1 monteurPartie = new MonteurPartie1v1();
+                MonteurPartieLocale monteurPartie = new MonteurPartieLocale();
                 monteurPartie.creerPartie(monteurC, joueurs);
                 partie = monteurPartie.Partie;
 
@@ -180,8 +182,11 @@ namespace InterfaceGraphique
             panelScroll.Children.Clear();
             if (selectionRectangle.Visibility == Visibility.Visible)
             {
+                actualiseData();
+                grpInfo.Visibility = Visibility.Visible;
+
                 List<Unite> tmpLit = partie.Carte.getUniteFromCoord(selectionRectangle.Coord);
-                if (tmpLit.Count > 0)
+                if (tmpLit.Count > 0 && tmpLit[0].IdProprietaire == partie.IndiceJoueurActuel)
                 {
                     foreach (Unite u in tmpLit)
                     {
@@ -192,8 +197,9 @@ namespace InterfaceGraphique
                     }
                 }
             }
+            else
+                grpInfo.Visibility = Visibility.Collapsed;
         }
-
 
         /// <summary>
         /// charge les éléments graphiques du panneau gauche
@@ -214,30 +220,6 @@ namespace InterfaceGraphique
         }
 
         /// <summary>
-        /// charge les éléments graphique du panneau droit
-        /// </summary>
-        private void chargerPanneauDroit()
-        {
-            controlDroit.Children.Clear();
-
-            GroupeInfosCase grpInfo = new GroupeInfosCase();
-            selectionRectangle.SelectChanged += grpInfo.actualiseData;
-            controlDroit.Children.Add(grpInfo);
-
-
-            ScrollViewer scrollInfoUnite = new ScrollViewer();
-            scrollInfoUnite.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            panelScroll = new StackPanel();
-
-            actualisePanneauDroit();
-
-            scrollInfoUnite.Content = panelScroll;
-            scrollInfoUnite.Height = 415;
-            controlDroit.Children.Add(scrollInfoUnite);
-
-        }
-
-        /// <summary>
         /// Charge le canvas avec les éléments de la carte
         /// </summary>
         private void afficheCarte()
@@ -255,6 +237,7 @@ namespace InterfaceGraphique
                 }
             }
         }
+
         /// <summary>
         /// Affiche les rectangles représentant les suggestions
         /// </summary>
@@ -273,6 +256,7 @@ namespace InterfaceGraphique
                 }
             }
         }
+
         /// <summary>
         /// Construit une case pour le canvas, et affiche l nombre d'unités présente sur la case
         /// </summary>
@@ -342,6 +326,18 @@ namespace InterfaceGraphique
             actualisePanneauDroit();
         }
 
+        private void actualiseData()
+        {
+            if (selectionRectangle.TileSelected != null)
+            {
+                rect.Fill = new Tile(selectionRectangle.TileSelected.TileType, tileFactory, new List<Unite>(), Brushes.White).Background;
+                int column = (int)Canvas.GetLeft(selectionRectangle) / 50;
+                int row = (int)Canvas.GetTop(selectionRectangle) / 50;
+                typeCase.Text = "Type : " + (selectionRectangle.TileSelected.TileType).ToString();
+                nbUnite.Text = "Nb Unités: " + partie.Carte.getUniteFromCoord(selectionRectangle.Coord).Count;
+                coord.Text = "Coordonnées : ( " + (column+1).ToString() + " ; " + (row+1).ToString() + " )";
+            }
+       }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -371,6 +367,7 @@ namespace InterfaceGraphique
             partie.joueurActuel().finirTour();
             (sender as Button).IsEnabled = false;
             selectionRectangle.Visibility = Visibility.Collapsed;
+            actualiseData();
             e.Handled = true;
         }
 
@@ -400,6 +397,7 @@ namespace InterfaceGraphique
                 }
             }
         }
+
         /// <summary>
         /// Charge les suggestions et les affiche
         /// </summary>
@@ -417,6 +415,7 @@ namespace InterfaceGraphique
                 }));
             });
         }
+
         /// <summary>
         /// Retourne l'unité avec le moins de points de déplacement
         /// </summary>
@@ -437,7 +436,7 @@ namespace InterfaceGraphique
             return unit;
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_Sauvegarder(object sender, RoutedEventArgs e)
         {
             if (partie != null)
             {
@@ -470,7 +469,7 @@ namespace InterfaceGraphique
             }
         }
 
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_Ouvrir(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
@@ -492,8 +491,8 @@ namespace InterfaceGraphique
                     partie = (Partie)formatter.Deserialize(stream);
                     stream.Close();
                     */
-                    
-                    XmlSerializer mySerializer = new XmlSerializer(typeof(Partie1v1));
+
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(PartieLocale));
                     partie = (Partie)mySerializer.Deserialize(openFileDialog1.OpenFile());
 
                     partie.associeJoueursUnite();
@@ -507,11 +506,7 @@ namespace InterfaceGraphique
             }
         }
 
-        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void MenuItem_Click_4(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_Editeur(object sender, RoutedEventArgs e)
         {
            EditeurCarte fen = new EditeurCarte();
             fen.Owner = this;
@@ -522,57 +517,63 @@ namespace InterfaceGraphique
         private void default_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory();
-
+            
             if (partie != null && partie.Carte != null)
                 afficheCarte();
+            actualiseData();
             e.Handled = true;
         }
 
         private void groovy_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("groovy");
-
+            
             if (partie != null && partie.Carte != null)
                 afficheCarte();
+            actualiseData();
             e.Handled = true;
         }
 
         private void tropical_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("tropical");
-
+            
             if (partie != null && partie.Carte != null)
                 afficheCarte();
+            actualiseData();
             e.Handled = true;
         }
 
         private void noStyle_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new RectangleFactory();
-
+            
             if (partie != null && partie.Carte != null)
                 afficheCarte();
+            actualiseData();
             e.Handled = true;
         }
 
         private void campaign_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("campaign");
-
+            
             if (partie != null && partie.Carte != null)
                 afficheCarte();
+            actualiseData();
             e.Handled = true;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_Quitter(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Button_Click_Reduire(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         }
+
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();

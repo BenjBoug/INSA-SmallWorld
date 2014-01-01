@@ -12,7 +12,7 @@ namespace Modele
     public delegate void FinTourEventHandler(object sender, EventArgs e);
 
     [Serializable]
-    [XmlInclude(typeof(Partie1v1))]
+    [XmlInclude(typeof(PartieLocale))]
     public abstract class Partie : IPartie
     {
         public Partie()

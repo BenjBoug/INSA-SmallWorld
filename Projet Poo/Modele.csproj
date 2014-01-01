@@ -73,10 +73,10 @@
     <Compile Include="Carte\MonteurDemo.cs" />
     <Compile Include="Carte\MonteurNormale.cs" />
     <Compile Include="MonteurPartie.cs" />
-    <Compile Include="MonteurPartie1v1.cs" />
+    <Compile Include="MonteurPartieLocale.cs" />
     <Compile Include="Carte\MonteurPetite.cs" />
     <Compile Include="Interface\IPartie.cs" />
-    <Compile Include="Partie1v1.cs" />
+    <Compile Include="PartieLocale.cs" />
     <Compile Include="Partie.cs" />
     <Compile Include="Interface\IPeuple.cs" />
     <Compile Include="Peuple\Peuple.cs" />

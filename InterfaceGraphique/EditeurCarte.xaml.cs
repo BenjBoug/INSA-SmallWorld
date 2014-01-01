@@ -29,7 +29,6 @@ namespace InterfaceGraphique
         const int UNITES_MAX = 50;
 
         private TileFactory tileFactory;
-       // private Carte carte;
         private MonteurCarte monteur;
         private int terrain;
 
@@ -41,6 +40,16 @@ namespace InterfaceGraphique
             tileFactory = new ImageFactory();
             terrain = 0;
             remplirCombo();
+            affichePalette();
+        }
+
+        private void affichePalette()
+        {
+            outilPlaine.Fill = new Tile(new CasePlaine(), tileFactory, new List<Unite>(), Brushes.White).Background;
+            outilEau.Fill = new Tile(new CaseEau(), tileFactory, new List<Unite>(), Brushes.White).Background;
+            outilMontagne.Fill = new Tile(new CaseMontagne(), tileFactory, new List<Unite>(), Brushes.White).Background;
+            outilDesert.Fill = new Tile(new CaseDesert(), tileFactory, new List<Unite>(), Brushes.White).Background;
+            outilForet.Fill = new Tile(new CaseForet(), tileFactory, new List<Unite>(), Brushes.White).Background;
         }
 
         private void remplirCombo()
@@ -95,7 +104,9 @@ namespace InterfaceGraphique
 
             rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(Rectangle_MouseDown);
             rectangle.MouseMove += new MouseEventHandler(Rectangle_MouseMove);
-            rectangle.MouseLeftButtonUp += new MouseButtonEventHandler(Rectangle_MouseUp);
+            rectangle.MouseLeftButtonUp += new MouseButtonEventHandler(Map_MouseUp);
+            scrollMap.MouseLeave += new MouseEventHandler(ScrollMap_MouseLeave);
+            scrollMap.MouseLeftButtonUp += new MouseButtonEventHandler(Map_MouseUp);
             return rectangle;
         }
 
@@ -123,13 +134,14 @@ namespace InterfaceGraphique
             e.Handled = true;
         }
 
-        private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Map_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            var rect = sender as Tile;
-            int column = (int)Canvas.GetLeft(rect) / 50;
-            int row = (int)Canvas.GetTop(rect) / 50;
-            monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
-            afficheCarte();
+            release = true;
+            e.Handled = true;
+        }
+
+        private void ScrollMap_MouseLeave(object sender, MouseEventArgs e)
+        {
             release = true;
             e.Handled = true;
         }
@@ -172,36 +184,38 @@ namespace InterfaceGraphique
 
         private void ComboBox_SelectionChanged_Taille(object sender, SelectionChangedEventArgs e)
         {
-            Carte cp_carte = new CarteClassique();
-            if (monteur.Carte.Largeur > 0 && monteur.Carte.Hauteur > 0)
+            if (monteur != null && monteur.Carte != null) 
             {
-                cp_carte.Largeur = monteur.Carte.Largeur;
-                cp_carte.Hauteur = monteur.Carte.Hauteur;
-                cp_carte.Cases = monteur.Carte.Cases;
-            }
-            monteur.Carte.Largeur = (int)comboLargeur.SelectedItem;
-            monteur.Carte.Hauteur = (int)comboHauteur.SelectedItem;
-            monteur.Carte.Cases = new Case[monteur.Carte.Largeur][];
-            for (int i = 0; i < monteur.Carte.Largeur; i++)
-                monteur.Carte.Cases[i] = new Case[monteur.Carte.Hauteur];
-            for (int i = 0; i < monteur.Carte.Largeur; i++)
-            {
-                for (int j = 0; j < monteur.Carte.Hauteur; j++)
+                Carte cp_carte = new CarteClassique();
+                if (monteur.Carte.Largeur > 0 && monteur.Carte.Hauteur > 0)
                 {
-                    monteur.Carte.setCase(i, j, monteur.Carte.FabriqueCase.getCase(0));
+                    cp_carte.Largeur = monteur.Carte.Largeur;
+                    cp_carte.Hauteur = monteur.Carte.Hauteur;
+                    cp_carte.Cases = monteur.Carte.Cases;
                 }
-            }
-            for (int i = 0; i < Math.Min(monteur.Carte.Largeur, cp_carte.Largeur); i++)
-            {
-                for (int j = 0; j < Math.Min(monteur.Carte.Hauteur, cp_carte.Hauteur); j++)
+                monteur.Carte.Largeur = (int)comboLargeur.SelectedItem;
+                monteur.Carte.Hauteur = (int)comboHauteur.SelectedItem;
+                monteur.Carte.Cases = new Case[monteur.Carte.Largeur][];
+                for (int i = 0; i < monteur.Carte.Largeur; i++)
+                    monteur.Carte.Cases[i] = new Case[monteur.Carte.Hauteur];
+                for (int i = 0; i < monteur.Carte.Largeur; i++)
                 {
-                    monteur.Carte.Cases[i][j] = cp_carte.Cases[i][j];
+                    for (int j = 0; j < monteur.Carte.Hauteur; j++)
+                    {
+                        monteur.Carte.setCase(i, j, monteur.Carte.FabriqueCase.getCase(0));
+                    }
                 }
+                for (int i = 0; i < Math.Min(monteur.Carte.Largeur, cp_carte.Largeur); i++)
+                {
+                    for (int j = 0; j < Math.Min(monteur.Carte.Hauteur, cp_carte.Hauteur); j++)
+                    {
+                        monteur.Carte.Cases[i][j] = cp_carte.Cases[i][j];
+                    }
+                }
+                canvasMap.Width = monteur.Carte.Largeur * 50;
+                canvasMap.Height = monteur.Carte.Hauteur * 50;
+                afficheCarte();
             }
-            canvasMap.Width = monteur.Carte.Largeur * 50;
-            canvasMap.Height = monteur.Carte.Hauteur * 50;
-            afficheCarte();
-
             e.Handled = true;
         }
 
@@ -232,7 +246,16 @@ namespace InterfaceGraphique
         private void RadioButton_EnabledChanged(object sender, RoutedEventArgs e)
         {
             RadioButton radio = sender as RadioButton;
-            terrain = radio.Name[5] - '0';
+            if (radio.Name.EndsWith("Eau"))
+                terrain = 1;
+            else if (radio.Name.EndsWith("Montagne"))
+                terrain = 2;
+            else if (radio.Name.EndsWith("Desert"))
+                terrain = 3;
+            else if (radio.Name.EndsWith("Foret"))
+                terrain = 4;
+            else
+                terrain = 0;
             e.Handled = true;
         }
 
@@ -307,8 +330,8 @@ namespace InterfaceGraphique
         private void default_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory();
-
-            if (monteur.Carte != null)
+            affichePalette();
+            if (monteur != null && monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
@@ -316,8 +339,8 @@ namespace InterfaceGraphique
         private void groovy_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("groovy");
-
-            if (monteur.Carte != null)
+            affichePalette();
+            if (monteur != null && monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
@@ -325,8 +348,8 @@ namespace InterfaceGraphique
         private void tropical_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("tropical");
-
-            if (monteur.Carte != null)
+            affichePalette();
+            if (monteur != null && monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
@@ -334,8 +357,8 @@ namespace InterfaceGraphique
         private void noStyle_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new RectangleFactory();
-
-            if (monteur.Carte != null)
+            affichePalette();
+            if (monteur != null && monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }
@@ -343,8 +366,8 @@ namespace InterfaceGraphique
         private void campaign_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("campaign");
-
-            if (monteur.Carte != null)
+            affichePalette();
+            if (monteur != null && monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
         }

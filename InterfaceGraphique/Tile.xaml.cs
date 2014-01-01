@@ -68,9 +68,9 @@ namespace InterfaceGraphique
             Canvas.SetZIndex(backText, 3);
             if (listUnite != null && listUnite.Count > 0)
             {
-                backText.Text = listUnite.Count.ToString();
-                backText.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
-                backText.Background = Brushes.White;
+                backText.Text = " " + listUnite.Count.ToString() + " ";
+                backText.Background = (SolidColorBrush)new BrushConverter().ConvertFromString(listUnite[0].Proprietaire.Couleur);
+                backText.Foreground = Brushes.White;
             }
             FontSizeConverter fSizeConverter = new FontSizeConverter();
             backText.FontSize = (double)fSizeConverter.ConvertFromString("10pt");

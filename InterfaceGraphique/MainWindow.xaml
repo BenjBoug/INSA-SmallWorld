@@ -8,26 +8,26 @@
     </Window.Background>
     <StackPanel Orientation="Vertical" Width="1001" Height="700">
         <StackPanel Height="104" Orientation="Horizontal" Margin="0" VerticalAlignment="Bottom" Width="83" HorizontalAlignment="Right">
-            <Button Content="-" Width="30" Height="20" Margin="0,0,5,10" Click="Button_Click_2" VerticalAlignment="Bottom"/>
-            <Button Content="X" Width="30" Height="20" Click="Button_Click_1" VerticalAlignment="Bottom" Margin="0,0,0,10" HorizontalAlignment="Right">
+            <Button Content="-" Width="30" Height="20" Margin="0,0,5,10" Click="Button_Click_Reduire" VerticalAlignment="Bottom"/>
+            <Button Content="X" Width="30" Height="20" Click="Button_Click_Quitter" VerticalAlignment="Bottom" Margin="0,0,0,10" HorizontalAlignment="Right">
             </Button>
         </StackPanel>
         <Menu IsMainMenu="False" Height="22" Background="{x:Null}" BorderThickness="0" Margin="0,0,10,0" Width="950">
             <MenuItem Header="_Fichier">
                 <MenuItem Header="_Nouveau">
-                    <MenuItem Header="_Partie local..." Click="MenuItem_Click"/>
+                    <MenuItem Header="_Partie locale..." Click="MenuItem_Click"/>
                     <MenuItem Header="_Partie en ligne..." IsEnabled="False"/>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="_Ouvrir..." Click="MenuItem_Click_2" />
-                <MenuItem x:Name="menuItemSave" Header="_Sauvegarder sous..." Click="MenuItem_Click_1" />
+                <MenuItem Header="_Ouvrir..." Click="MenuItem_Click_Ouvrir" />
+                <MenuItem x:Name="menuItemSave" Header="_Sauvegarder sous..." Click="MenuItem_Click_Sauvegarder" />
                 <Separator />
-                <MenuItem Header="_Editeur de cartes" Click="MenuItem_Click_4" />
+                <MenuItem Header="_Editeur de cartes" Click="MenuItem_Click_Editeur" />
                 <Separator />
-                <MenuItem Header="_Quitter" Click="Button_Click_1"/>
+                <MenuItem Header="_Quitter" Click="Button_Click_Quitter"/>
             </MenuItem>
             <MenuItem Header="_Options">
-                <MenuItem x:Name="affTileCheckbox" Header="Afficher tiles" Click="affTileCheckbox_Click">
+                <MenuItem x:Name="affTileCheckbox" Header="Affichage">
                     <MenuItem x:Name="default" Header="Style par défaut" Click="default_Click"/>
                     <MenuItem x:Name="groovy" Header="Style Groovy" Click="groovy_Click"/>
                     <MenuItem x:Name="tropical" Header="Style Tropical" Click="tropical_Click"/>
@@ -50,7 +50,21 @@
                     </Canvas.Effect>
                 </Canvas>
             </ScrollViewer>
-            <StackPanel x:Name="controlDroit" Width="214" Height="550" Margin="5,0,10,0"/>
+            <StackPanel x:Name="controlDroit" Width="214" Height="550" Margin="5,0,10,0">
+                <GroupBox Name="grpInfo" Header="Infos case" BorderThickness="1" Margin="5" Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Name="rect" Height="50" Width="50" VerticalAlignment="Center" Fill="Black" Margin="0,0,10,0"/>
+                        <StackPanel Width="200">
+                            <TextBlock Name="typeCase" TextWrapping="Wrap" Text="Type : "/>
+                            <TextBlock Name="nbUnite" TextWrapping="Wrap" Text="Nb Unités : "/>
+                            <TextBlock Name="coord" TextWrapping="Wrap" Text="Coordonnées : "/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <ScrollViewer x:Name="scrollInfoUnite" VerticalScrollBarVisibility="Auto" Height = "415">
+                    <StackPanel x:Name="panelScroll" Orientation="Vertical"/>
+                </ScrollViewer>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </Window>
