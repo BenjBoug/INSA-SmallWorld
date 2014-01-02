@@ -11,7 +11,7 @@ namespace Modele
     {
         public override string ToString()
         {
-            return "Foret";
+            return "Forêt";
         }
         public override int bonusPoints(Peuple p)
         {

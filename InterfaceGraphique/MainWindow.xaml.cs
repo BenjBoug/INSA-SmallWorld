@@ -333,8 +333,8 @@ namespace InterfaceGraphique
                 rect.Fill = new Tile(selectionRectangle.TileSelected.TileType, tileFactory, new List<Unite>(), Brushes.White).Background;
                 int column = (int)Canvas.GetLeft(selectionRectangle) / 50;
                 int row = (int)Canvas.GetTop(selectionRectangle) / 50;
-                typeCase.Text = "Type : " + (selectionRectangle.TileSelected.TileType).ToString();
-                nbUnite.Text = "Nb Unités: " + partie.Carte.getUniteFromCoord(selectionRectangle.Coord).Count;
+                typeCase.Text = "Terrain : " + (selectionRectangle.TileSelected.TileType).ToString();
+                nbUnite.Text = "Unités sur la case : " + partie.Carte.getUniteFromCoord(selectionRectangle.Coord).Count;
                 coord.Text = "Coordonnées : ( " + (column+1).ToString() + " ; " + (row+1).ToString() + " )";
             }
        }

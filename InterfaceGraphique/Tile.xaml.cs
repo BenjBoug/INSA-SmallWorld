@@ -91,14 +91,12 @@ namespace InterfaceGraphique
         private void rect_MouseEnter(object sender, MouseEventArgs e)
         {
             rect1.Opacity = 0.7;
-            //rect1.StrokeThickness= 3;
             e.Handled = true;
         }
 
         private void rect_MouseLeave(object sender, MouseEventArgs e)
         {
             rect1.Opacity = 0;
-            //rect1.StrokeThickness = 0;
             e.Handled = true;
         }
     }

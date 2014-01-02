@@ -26,7 +26,7 @@ namespace InterfaceGraphique
         const int TOURS_MIN = 5;
         const int TOURS_MAX = 50;
         const int UNITES_MIN = 5;
-        const int UNITES_MAX = 50;
+        const int UNITES_MAX = 100;
 
         private TileFactory tileFactory;
         private MonteurCarte monteur;
@@ -71,12 +71,48 @@ namespace InterfaceGraphique
 
         private void initCombo() 
         {
-            comboLargeur.SelectedIndex = monteur.Carte.Largeur - TAILLE_MIN;
-            comboHauteur.SelectedIndex = monteur.Carte.Hauteur - TAILLE_MIN;
-            comboTours.SelectedIndex = monteur.Carte.NbToursMax - TOURS_MIN;
-            comboUC.SelectedIndex = monteur.Carte.NbUniteClassique;
-            comboUE.SelectedIndex = monteur.Carte.NbUniteElite;
-            comboUB.SelectedIndex = monteur.Carte.NbUniteBlindee;
+            if (monteur.Carte.Largeur >= TAILLE_MIN && monteur.Carte.Largeur <= TAILLE_MAX)
+                comboLargeur.SelectedIndex = monteur.Carte.Largeur - TAILLE_MIN;
+            else
+            {
+                comboLargeur.SelectedIndex = 0;
+                monteur.Carte.Largeur = TAILLE_MIN;
+            }
+            if (monteur.Carte.Hauteur >= TAILLE_MIN && monteur.Carte.Hauteur <= TAILLE_MAX)
+                comboHauteur.SelectedIndex = monteur.Carte.Hauteur - TAILLE_MIN;
+            else
+            {
+                comboHauteur.SelectedIndex = 0;
+                monteur.Carte.Hauteur = TAILLE_MIN;
+            }
+            if (monteur.Carte.NbToursMax >= TOURS_MIN && monteur.Carte.NbToursMax <= TOURS_MAX)
+                comboTours.SelectedIndex = monteur.Carte.NbToursMax - TOURS_MIN;
+            else
+            {
+                comboTours.SelectedIndex = 0;
+                monteur.Carte.NbToursMax = TOURS_MIN;
+            }
+            if (monteur.Carte.NbUniteClassique >= 0 && monteur.Carte.NbUniteClassique <= UNITES_MAX)
+                comboUC.SelectedIndex = monteur.Carte.NbUniteClassique;
+            else
+            {
+                comboUC.SelectedIndex = 0;
+                monteur.Carte.NbUniteClassique = 0;
+            }
+            if (monteur.Carte.NbUniteElite >= 0 && monteur.Carte.NbUniteElite <= UNITES_MAX)
+                comboUE.SelectedIndex = monteur.Carte.NbUniteElite;
+            else
+            {
+                comboUE.SelectedIndex = 0;
+                monteur.Carte.NbUniteElite = 0;
+            }
+            if (monteur.Carte.NbUniteBlindee >= 0 && monteur.Carte.NbUniteBlindee <= UNITES_MAX)
+                comboUB.SelectedIndex = monteur.Carte.NbUniteBlindee;
+            else
+            {
+                comboUB.SelectedIndex = 0;
+                monteur.Carte.NbUniteBlindee = 0;
+            }
         }
 
         private void afficheCarte()
@@ -296,7 +332,7 @@ namespace InterfaceGraphique
         {
             if (monteur.Carte != null)
             {
-                if (monteur.Carte.NbUniteBlindee + monteur.Carte.NbUniteElite + monteur.Carte.NbUniteClassique >= UNITES_MIN)
+                if (monteur.Carte.NbUniteBlindee + monteur.Carte.NbUniteElite + monteur.Carte.NbUniteClassique >= UNITES_MIN && monteur.Carte.NbUniteBlindee + monteur.Carte.NbUniteElite + monteur.Carte.NbUniteClassique <= UNITES_MAX)
                 {
                     SaveFileDialog dlg = new SaveFileDialog();
                     dlg.FileName = "carteSmallWorld.card"; // Default file name
@@ -318,7 +354,7 @@ namespace InterfaceGraphique
                     }
                 }
                 else
-                MessageBox.Show("Le nombre minimal d'unités est de 5 (toutes unités confondues).");
+                MessageBox.Show("Le nombre d'unités doit être compris entre "+ UNITES_MIN +" et "+ UNITES_MAX+" (toutes unités confondues).");
             }
         }
 
