@@ -33,11 +33,20 @@ namespace InterfaceGraphique
         {
             get { return selected; }
         }
+        private bool selectable;
+
+        public bool Selectable
+        {
+            set { selectable = value; }
+            get { return selected; }
+        }
+
         public GroupeUnite(Unite unit)
         {
             InitializeComponent();
             this.unit = unit;
             selected = false;
+            selectable = false;
             grpUnit.Header = unit.ToString() + " " + unit.Proprietaire.Peuple;
             PV.Text = unit.PointsVie.ToString()+"/"+unit.PointsVieMax.ToString();
             PA.Text = unit.PointsAttaque.ToString();
@@ -49,7 +58,7 @@ namespace InterfaceGraphique
         private void grpUnit_MouseDown(object sender, MouseButtonEventArgs e)
         {
             selected = !Selected;
-            if (Selected && unit.PointsDepl>0)
+            if (Selected && unit.PointsDepl>0 && selectable)
                 grpUnit.Background = Brushes.White;
             else
                 grpUnit.Background = null;
