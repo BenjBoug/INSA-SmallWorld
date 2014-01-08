@@ -29,7 +29,7 @@
                     <GradientStop Color="#2F547E" Offset="1"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
-            <StackPanel x:Name="controles" Orientation="Vertical" Width="264">
+            <StackPanel x:Name="controles" Orientation="Vertical" Width="264" IsEnabled="False">
                 <GroupBox Header="Paramètres de la carte" Height="Auto" Width="Auto" Margin="5" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="False">
                     <GroupBox.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">

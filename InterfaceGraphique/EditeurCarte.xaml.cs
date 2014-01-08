@@ -196,6 +196,8 @@ namespace InterfaceGraphique
             canvasMap.Width = monteur.Carte.Largeur * 50;
             canvasMap.Height = monteur.Carte.Hauteur * 50;
             afficheCarte();
+
+            controles.IsEnabled = true;
         }
 
         private void disableComboBox_SelectionChanged()
