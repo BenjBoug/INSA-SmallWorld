@@ -343,7 +343,7 @@ namespace InterfaceGraphique
             }
        }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_Nouvelle(object sender, RoutedEventArgs e)
         {
             NouvellePartie fen = new NouvellePartie();
             fen.Owner = this;
