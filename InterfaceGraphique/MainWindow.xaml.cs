@@ -186,13 +186,17 @@ namespace InterfaceGraphique
                 grpInfo.Visibility = Visibility.Visible;
 
                 List<Unite> tmpLit = partie.Carte.getUniteFromCoord(selectionRectangle.Coord);
-                if (tmpLit.Count > 0 && tmpLit[0].IdProprietaire == partie.IndiceJoueurActuel)
+                if (tmpLit.Count > 0 /*&& tmpLit[0].IdProprietaire == partie.IndiceJoueurActuel*/)
                 {
                     foreach (Unite u in tmpLit)
                     {
                         GroupeUnite grp = new GroupeUnite(u);
                         if (partie.joueurActuel() == u.Proprietaire)
+                        {
                             grp.MouseDown += grpUnit_MouseDown;
+                            grp.Selectable = true;
+                            grp.Cursor = Cursors.Hand;
+                        }
                         panelScroll.Children.Add(grp);
                     }
                 }

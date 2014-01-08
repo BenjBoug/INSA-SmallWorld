@@ -13,7 +13,7 @@
                 <MenuItem Header="_Quitter" Click="MenuItem_Click_Quitter"/>
             </MenuItem>
             <MenuItem Header="_Options">
-                <MenuItem x:Name="affTileCheckbox" Header="Afficher tiles" >
+                <MenuItem x:Name="affTileCheckbox" Header="Affichage" >
                     <MenuItem x:Name="default" Header="Style par défaut" Click="default_Click"/>
                     <MenuItem x:Name="groovy" Header="Style Groovy" Click="groovy_Click"/>
                     <MenuItem x:Name="tropical" Header="Style Tropical" Click="tropical_Click"/>

@@ -6,9 +6,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="GroupBox" x:Name="grpJoueur" Margin="5">
+        <GroupBox Header="GroupBox" x:Name="grpJoueur" Margin="5" BorderThickness="2">
             <StackPanel>
-                <TextBlock x:Name="couleur" TextWrapping="Wrap" Text="Couleur : "/>
                 <TextBlock x:Name="peuple" TextWrapping="Wrap" Text="Peuple : "/>
                 <TextBlock x:Name="nbpoints" TextWrapping="Wrap" Text="Points : "/>
                 <TextBlock x:Name="nbUnites"  TextWrapping="Wrap" Text="Unités réstantes :"/>

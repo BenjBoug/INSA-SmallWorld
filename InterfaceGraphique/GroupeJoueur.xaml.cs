@@ -33,7 +33,7 @@ namespace InterfaceGraphique
             this.joueur = joueur;
             InitializeComponent();
             grpJoueur.Header = joueur.Nom;
-            couleur.Text += joueur.Couleur;
+            grpJoueur.BorderBrush = (SolidColorBrush)new BrushConverter().ConvertFromString(joueur.Couleur);
             peuple.Text += joueur.Peuple;
             nbpoints.Text += joueur.Points;
             joueur.PointChange += refreshPointLabel;
