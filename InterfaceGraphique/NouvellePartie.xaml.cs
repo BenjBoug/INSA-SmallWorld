@@ -105,9 +105,10 @@ namespace InterfaceGraphique
                 {
                     if (panelJoueurs.Children.Count > 2)
                     {
-                        for (int i = 2; i < panelJoueurs.Children.Count; i++)
+                        int cmp = panelJoueurs.Children.Count;
+                        for (int i = 2; i < cmp; i++)
                         {
-                            panelJoueurs.Children.RemoveAt(i);
+                            panelJoueurs.Children.RemoveAt(2);
                         }
                     }
                 }
