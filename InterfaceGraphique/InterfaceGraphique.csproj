@@ -282,6 +282,13 @@
   <ItemGroup>
     <None Include="Resources\loupe.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\fermer.png" />
+    <Resource Include="Resources\reduire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\map.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>copy "$(SolutionDir)$(ConfigurationName)\LibCpp.dll" "$(TargetDir)"

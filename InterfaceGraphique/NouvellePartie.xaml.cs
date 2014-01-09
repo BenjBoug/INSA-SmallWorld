@@ -50,6 +50,9 @@ namespace InterfaceGraphique
 
 
             ((MainWindow)Owner).chargerPartie(monteur, joueurs);
+            ((MainWindow)Owner).Saved = false;
+            ((MainWindow)Owner).NeverSaved = true;
+            ((MainWindow)Owner).Filename = "saveSmallWorld";
 
             e.Handled = true;
             this.Close();
