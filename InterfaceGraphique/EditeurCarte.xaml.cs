@@ -31,14 +31,20 @@ namespace InterfaceGraphique
         private TileFactory tileFactory;
         private MonteurCarte monteur;
         private int terrain;
-
-        private bool release=true;
+        private string filename;
+        private bool saved;
+        private bool neverSaved;
+        private bool release;
 
         public EditeurCarte()
         { 
             InitializeComponent();
             tileFactory = new ImageFactory();
             terrain = 0;
+            release = true;
+            saved = true;
+            neverSaved = true;
+            filename = "carteSmallWorld.card";
             remplirCombo();
             affichePalette();
         }
@@ -167,6 +173,7 @@ namespace InterfaceGraphique
             monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
             afficheCarte();
             release = false;
+            saved = false;
             e.Handled = true;
         }
 
@@ -198,6 +205,8 @@ namespace InterfaceGraphique
             afficheCarte();
 
             controles.IsEnabled = true;
+            saved = false;
+            neverSaved = true;
         }
 
         private void disableComboBox_SelectionChanged()
@@ -254,30 +263,35 @@ namespace InterfaceGraphique
                 canvasMap.Height = monteur.Carte.Hauteur * 50;
                 afficheCarte();
             }
+            saved = false;
             e.Handled = true;
         }
 
         public void ComboBox_SelectionChanged_Tours(object sender, SelectionChangedEventArgs e)
         {
             monteur.Carte.NbToursMax = (int)comboTours.SelectedItem;
+            saved = false;
             e.Handled = true;
         }
 
         public void ComboBox_SelectionChanged_UC(object sender, SelectionChangedEventArgs e)
         {
             monteur.Carte.NbUniteClassique = (int)comboUC.SelectedItem;
+            saved = false;
             e.Handled = true;
         }
 
         public void ComboBox_SelectionChanged_UE(object sender, SelectionChangedEventArgs e)
         {
             monteur.Carte.NbUniteElite = (int)comboUE.SelectedItem;
+            saved = false;
             e.Handled = true;
         }
 
         public void ComboBox_SelectionChanged_UB(object sender, SelectionChangedEventArgs e)
         {
             monteur.Carte.NbUniteBlindee = (int)comboUB.SelectedItem;
+            saved = false;
             e.Handled = true;
         }
 
@@ -307,9 +321,10 @@ namespace InterfaceGraphique
             Nullable<bool> res = openFileDialog.ShowDialog();
 
             if (res == true)
-            {
+            {   
                 try
                 {
+                    filename = openFileDialog.FileName;
                     disableComboBox_SelectionChanged();
 
                     monteur = new MonteurFichier(openFileDialog.FileName);
@@ -322,6 +337,9 @@ namespace InterfaceGraphique
                     afficheCarte();
 
                     enableComboBox_SelectionChanged();
+                    controles.IsEnabled = true;
+                    saved = true;
+                    neverSaved = false;
                 }
                 catch (Exception)
                 {
@@ -330,14 +348,24 @@ namespace InterfaceGraphique
             }
         }
 
+        private void MenuItem_Click_EnregistrerSous(object sender, RoutedEventArgs e)
+        {
+            enregistrerSous();
+        }
+
         private void MenuItem_Click_Enregistrer(object sender, RoutedEventArgs e)
+        {
+            enregistrer();
+        }
+
+        private bool enregistrerSous()
         {
             if (monteur.Carte != null)
             {
                 if (monteur.Carte.NbUniteBlindee + monteur.Carte.NbUniteElite + monteur.Carte.NbUniteClassique >= UNITES_MIN && monteur.Carte.NbUniteBlindee + monteur.Carte.NbUniteElite + monteur.Carte.NbUniteClassique <= UNITES_MAX)
                 {
                     SaveFileDialog dlg = new SaveFileDialog();
-                    dlg.FileName = "carteSmallWorld.card"; // Default file name
+                    dlg.FileName = filename; // Default file name
                     dlg.DefaultExt = ".card"; // Default file extension
                     dlg.Filter = "Carte SmallWorld (.card)|*.card"; // Filter files by extension
 
@@ -348,26 +376,83 @@ namespace InterfaceGraphique
                     if (result == true)
                     {
                         // Save document
-                        string filename = dlg.FileName;
+                        filename = dlg.FileName;
                         XmlSerializer mySerializer = new XmlSerializer(monteur.Carte.GetType());
                         StreamWriter myWriter = new StreamWriter(filename);
                         mySerializer.Serialize(myWriter, monteur.Carte);
                         myWriter.Close();
+                        saved = true;
+                        neverSaved = false;
+                        return true;
                     }
                 }
                 else
-                MessageBox.Show("Le nombre d'unités doit être compris entre "+ UNITES_MIN +" et "+ UNITES_MAX+" (toutes unités confondues).");
+                {
+                    MessageBox.Show("Le nombre d'unités doit être compris entre " + UNITES_MIN + " et " + UNITES_MAX + " (toutes unités confondues).");
+                }
+            }
+            return false;
+        }
+
+        private bool enregistrer()
+        {
+            if (monteur.Carte.NbUniteBlindee + monteur.Carte.NbUniteElite + monteur.Carte.NbUniteClassique >= UNITES_MIN && monteur.Carte.NbUniteBlindee + monteur.Carte.NbUniteElite + monteur.Carte.NbUniteClassique <= UNITES_MAX)
+            {
+                if (neverSaved)
+                    return enregistrerSous();
+                else
+                {
+                    XmlSerializer mySerializer = new XmlSerializer(monteur.Carte.GetType());
+                    StreamWriter myWriter = new StreamWriter(filename);
+                    mySerializer.Serialize(myWriter, monteur.Carte);
+                    myWriter.Close();
+                    saved = true;
+                    return true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Le nombre d'unités doit être compris entre " + UNITES_MIN + " et " + UNITES_MAX + " (toutes unités confondues).");
+                return false;
             }
         }
 
         private void MenuItem_Click_Quitter(object sender, RoutedEventArgs e)
         {
-            this.Close();
-        }  
+            if (saved)
+                Close();
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Voulez-vous enregistrer avant de quitter ?", "Carte non enregistrée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        if (enregistrer())
+                            Close();
+                        break;
+                    case MessageBoxResult.No:
+                        Close();
+                        break;
+                    case MessageBoxResult.Cancel:
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /*private void EditeurCarte_Closing(object sender, FormClosingEventArgs e)
+        {
+            MessageBox.Show("Closing called");
+            e.Cancel = true;
+        }*/
 
         private void default_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory();
+            groovy.IsChecked = false;
+            tropical.IsChecked = false;
+            noStyle.IsChecked = false;
+            campaign.IsChecked = false;
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -377,6 +462,10 @@ namespace InterfaceGraphique
         private void groovy_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("groovy");
+            defaultStyle.IsChecked = false;
+            tropical.IsChecked = false;
+            noStyle.IsChecked = false;
+            campaign.IsChecked = false;
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -386,6 +475,10 @@ namespace InterfaceGraphique
         private void tropical_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("tropical");
+            defaultStyle.IsChecked = false;
+            groovy.IsChecked = false;
+            noStyle.IsChecked = false;
+            campaign.IsChecked = false;
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -395,6 +488,10 @@ namespace InterfaceGraphique
         private void noStyle_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new RectangleFactory();
+            defaultStyle.IsChecked = false;
+            groovy.IsChecked = false;
+            tropical.IsChecked = false;
+            campaign.IsChecked = false;
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -404,10 +501,24 @@ namespace InterfaceGraphique
         private void campaign_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("campaign");
+            defaultStyle.IsChecked = false;
+            groovy.IsChecked = false;
+            tropical.IsChecked = false;
+            noStyle.IsChecked = false;
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
             e.Handled = true;
+        }
+
+        private void Button_Click_Reduire(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
     }
 }

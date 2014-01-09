@@ -6,54 +6,59 @@
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/Resources/interface.png"/>
     </Window.Background>
+    <Window.CommandBindings>
+        <CommandBinding Command="New" Executed="MenuItem_Click_Nouvelle"/>
+        <CommandBinding Command="Open" Executed="MenuItem_Click_Ouvrir"/>
+        <CommandBinding Command="Save" Executed="MenuItem_Click_Sauvegarder"/>
+        <CommandBinding Command="SaveAs" Executed="MenuItem_Click_SauvegarderSous"/>
+        <CommandBinding Command="Close" Executed="MenuItem_Click_Quitter"/>
+    </Window.CommandBindings>
     <StackPanel Orientation="Vertical" Width="1001" Height="700">
         <StackPanel Height="104" Orientation="Horizontal" Margin="0" VerticalAlignment="Bottom" Width="83" HorizontalAlignment="Right">
             <Button Width="30" Height="26" Margin="0,0,5,5" Click="Button_Click_Reduire" VerticalAlignment="Bottom" Background="Transparent">
                 <Image Source="pack://siteoforigin:,,,/Resources/reduire.png" Height="16" Width="16"/>
             </Button>
-            <Button Width="30" Height="26" Click="Button_Click_Quitter" VerticalAlignment="Bottom" Margin="0,0,0,5" HorizontalAlignment="Right" Background="Transparent">
+            <Button Width="30" Height="26" Click="MenuItem_Click_Quitter" VerticalAlignment="Bottom" Margin="0,0,0,5" HorizontalAlignment="Right" Background="Transparent">
                 <Image Source="pack://siteoforigin:,,,/Resources/fermer.png" Height="16" Width="16"/>
             </Button>
         </StackPanel>
         <Menu IsMainMenu="False" Height="22" Background="{x:Null}" BorderThickness="0" Margin="0,0,10,0" Width="950">
             <MenuItem Header="_Fichier">
-                <MenuItem Header="_Nouvelle partie" Click="MenuItem_Click_Nouvelle"/>
+                <MenuItem Header="_Nouvelle partie" Command="New"/>
+                <MenuItem Header="_Ouvrir..." Command="Open"/>
                 <Separator />
-                <MenuItem Header="_Ouvrir..." Click="MenuItem_Click_Ouvrir" />
-                <MenuItem x:Name="menuItemSave" Header="_Sauvegarder sous..." Click="MenuItem_Click_Sauvegarder" />
+                <MenuItem Header="_Sauvegarder" Command="Save"/>
+                <MenuItem Header="_Sauvegarder sous..." Command="SaveAs"/>
                 <Separator />
                 <MenuItem Header="_Editeur de cartes" Click="MenuItem_Click_Editeur" />
                 <Separator />
-                <MenuItem Header="_Quitter" Click="Button_Click_Quitter"/>
+                <MenuItem Header="_Quitter" Command="Close"/>
             </MenuItem>
             <MenuItem Header="_Options">
                 <MenuItem x:Name="affTileCheckbox" Header="Affichage">
-                    <MenuItem x:Name="default" Header="Style par défaut" Click="default_Click"/>
-                    <MenuItem x:Name="groovy" Header="Style Groovy" Click="groovy_Click"/>
-                    <MenuItem x:Name="tropical" Header="Style Tropical" Click="tropical_Click"/>
-                    <MenuItem x:Name="campaign" Header="Style Campagne" Click="campaign_Click"/>
-                    <MenuItem x:Name="noStyle" Header="Pas de style" Click="noStyle_Click"/>
+                    <MenuItem x:Name="defaultStyle" Header="Style par défaut" Click="default_Click" IsCheckable="True" IsChecked="True"/>
+                    <MenuItem x:Name="groovy" Header="Style Groovy" Click="groovy_Click" IsCheckable="True"/>
+                    <MenuItem x:Name="tropical" Header="Style Tropical" Click="tropical_Click" IsCheckable="True"/>
+                    <MenuItem x:Name="campaign" Header="Style Campagne" Click="campaign_Click" IsCheckable="True"/>
+                    <MenuItem x:Name="noStyle" Header="Pas de style" Click="noStyle_Click" IsCheckable="True"/>
                 </MenuItem>
             </MenuItem>
         </Menu>
         <StackPanel Orientation="Horizontal">
-            <StackPanel x:Name="controlGauche" Width="214" Height="550" Margin="10,0,0,0">
+            <StackPanel x:Name="controlGauche" Width="214" Height="550" Margin="10,0,3,0">
                 <Label x:Name="labelJoueurActuel" Content="C'est à ... de jouer !"/>
                 <Label x:Name="labelNbTour" Content="Tour : x/xx"/>
                 <StackPanel x:Name="panelListeJoueur"/>
-                <Button x:Name="boutonFinir" Content="Finir tour" Click="Button_Click" Width="100" Height="50" Background="Transparent" Margin="50" FontWeight="Bold" FontSize="14"/>
+                <Button x:Name="boutonFinir" Content="Finir tour" Click="Button_Click" Width="100" Height="50" Background="Transparent" Foreground="White" Margin="50" FontWeight="Bold" FontSize="14"/>
             </StackPanel>
             <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Canvas.Background>
-                        <ImageBrush/>
-                    </Canvas.Background>
                     <Canvas.Effect>
                         <DropShadowEffect BlurRadius="35" Color="#877b77" Opacity="0.8" ShadowDepth="0"/>
                     </Canvas.Effect>
                 </Canvas>
             </ScrollViewer>
-            <StackPanel x:Name="controlDroit" Width="214" Height="550" Margin="5,0,10,0">
+            <StackPanel x:Name="controlDroit" Width="214" Height="550" Margin="0,0,10,0">
                 <GroupBox Name="grpInfo" Header="Infos case" BorderThickness="1" Margin="5" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Name="rect" Height="50" Width="50" VerticalAlignment="Center" Fill="Black" Margin="0,0,10,0"/>

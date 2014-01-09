@@ -32,6 +32,23 @@ namespace InterfaceGraphique
         private Semaphore _pool;
         private Semaphore _poolInit;
         private SelectedRect selectionRectangle;
+        private string filename;
+        public string Filename
+        {
+            set { filename = value; }
+        }
+        private bool saved;
+        
+        public bool Saved 
+        {
+            set { saved = value; }
+        }
+        private bool neverSaved;
+        
+        public bool NeverSaved
+        {
+            set { neverSaved = value; }
+        }
 
         public MainWindow()
         {
@@ -44,6 +61,9 @@ namespace InterfaceGraphique
             _poolInit = new Semaphore(0, 1);
             selectionRectangle = new SelectedRect();
             selectionRectangle.Visibility = Visibility.Collapsed;
+            filename = "saveSmallWorld";
+            saved = true;
+            neverSaved = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -59,7 +79,7 @@ namespace InterfaceGraphique
         /// </summary>
         private void rafraichirInterface()
         {
-            this.Dispatcher.BeginInvoke(new Action(() =>
+            Dispatcher.BeginInvoke(new Action(() =>
             {
                 allowedMouv = null;
                 listUnitSelected.Clear();
@@ -138,11 +158,11 @@ namespace InterfaceGraphique
                 monteurPartie.creerPartie(monteurC, joueurs);
                 partie = monteurPartie.Partie;
 
-                this.Dispatcher.BeginInvoke(new Action(() =>
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
                     initialiseInterface();
                 }));
-
+                
                 commencerJeu();
             });
         }
@@ -318,6 +338,7 @@ namespace InterfaceGraphique
             {
                 partie.Carte.deplaceUnites(listUnitSelected, new Coordonnees(column, row), allowedMouv);
                 listUnitSelected.Clear();
+                saved = false;
             }
             else
             {
@@ -372,6 +393,7 @@ namespace InterfaceGraphique
             (sender as Button).IsEnabled = false;
             selectionRectangle.Visibility = Visibility.Collapsed;
             actualiseData();
+            saved = false;
             e.Handled = true;
         }
 
@@ -440,12 +462,22 @@ namespace InterfaceGraphique
             return unit;
         }
 
+        private void MenuItem_Click_SauvegarderSous(object sender, RoutedEventArgs e)
+        {
+            sauvegarderSous();
+        }
+
         private void MenuItem_Click_Sauvegarder(object sender, RoutedEventArgs e)
+        {
+            sauvegarder();
+        }
+
+        private bool sauvegarderSous()
         {
             if (partie != null)
             {
                 SaveFileDialog dlg = new SaveFileDialog();
-                dlg.FileName = "saveSmallWorld"; // Default file name
+                dlg.FileName = filename; // Default file name
                 dlg.DefaultExt = ".sav"; // Default file extension
                 dlg.Filter = "Save SmallWorld (.sav)|*.sav"; // Filter files by extension
 
@@ -456,7 +488,7 @@ namespace InterfaceGraphique
                 if (result == true)
                 {
                     // Save document
-                    string filename = dlg.FileName;
+                    filename = dlg.FileName;
 
                     /*
                     IFormatter formatter = new BinaryFormatter();
@@ -464,12 +496,31 @@ namespace InterfaceGraphique
                     formatter.Serialize(stream, partie);
                     stream.Close();
                     */
-                    
+
                     XmlSerializer mySerializer = new XmlSerializer(partie.GetType());
                     StreamWriter myWriter = new StreamWriter(filename);
                     mySerializer.Serialize(myWriter, partie);
                     myWriter.Close();
+                    saved = true;
+                    neverSaved = false;
+                    return true;
                 }
+            }
+            return false;
+        }
+
+        private bool sauvegarder()
+        {
+            if (neverSaved)
+                return sauvegarderSous();
+            else
+            {
+                XmlSerializer mySerializer = new XmlSerializer(partie.GetType());
+                StreamWriter myWriter = new StreamWriter(filename);
+                mySerializer.Serialize(myWriter, partie);
+                myWriter.Close();
+                saved = true;
+                return true;
             }
         }
 
@@ -480,15 +531,14 @@ namespace InterfaceGraphique
             openFileDialog1.FileName = null;
             openFileDialog1.Filter = "Save SmallWorld (.sav)|*.sav";
 
-            string openFileName;
-
             Nullable<bool> res = openFileDialog1.ShowDialog();
 
             if (res == true)
             {
-                openFileName = openFileDialog1.FileName;
                 try
                 {
+                    filename = openFileDialog1.FileName;
+
                     /*
                     IFormatter formatter = new BinaryFormatter();
                     Stream stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -500,6 +550,8 @@ namespace InterfaceGraphique
                     partie = (Partie)mySerializer.Deserialize(openFileDialog1.OpenFile());
 
                     partie.associeJoueursUnite();
+                    saved = true;
+                    neverSaved = false;
                     initialiseInterface();
                     commencerJeu();
                 }
@@ -521,6 +573,10 @@ namespace InterfaceGraphique
         private void default_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory();
+            groovy.IsChecked = false;
+            tropical.IsChecked = false;
+            noStyle.IsChecked = false;
+            campaign.IsChecked = false;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -531,6 +587,10 @@ namespace InterfaceGraphique
         private void groovy_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("groovy");
+            defaultStyle.IsChecked = false;
+            tropical.IsChecked = false;
+            noStyle.IsChecked = false;
+            campaign.IsChecked = false;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -541,6 +601,10 @@ namespace InterfaceGraphique
         private void tropical_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("tropical");
+            defaultStyle.IsChecked = false;
+            groovy.IsChecked = false;
+            noStyle.IsChecked = false;
+            campaign.IsChecked = false;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -551,6 +615,10 @@ namespace InterfaceGraphique
         private void noStyle_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new RectangleFactory();
+            defaultStyle.IsChecked = false;
+            groovy.IsChecked = false;
+            tropical.IsChecked = false;
+            campaign.IsChecked = false;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -561,6 +629,10 @@ namespace InterfaceGraphique
         private void campaign_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("campaign");
+            defaultStyle.IsChecked = false;
+            groovy.IsChecked = false;
+            tropical.IsChecked = false;
+            noStyle.IsChecked = false;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -568,14 +640,32 @@ namespace InterfaceGraphique
             e.Handled = true;
         }
 
-        private void Button_Click_Quitter(object sender, RoutedEventArgs e)
+        private void MenuItem_Click_Quitter(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (saved)
+                Close();
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Voulez-vous sauvegarder avant de quitter ?", "Partie non sauvegardée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        if(sauvegarder())
+                            Close();
+                        break;
+                    case MessageBoxResult.No:
+                        Close();
+                        break;
+                    case MessageBoxResult.Cancel:
+                    default:
+                        break;
+                }
+            }
         }
 
         private void Button_Click_Reduire(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
