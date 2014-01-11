@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using Modele;
+
+namespace InterfaceGraphique
+{
+    /// <summary>
+    /// Logique d'interaction pour JoueurClassement.xaml
+    /// </summary>
+    public partial class JoueurClassement : UserControl
+    {
+        public JoueurClassement(Joueur j, int rang)
+        {
+            InitializeComponent();
+            nom.Text = j.Nom;
+            nbPoint.Text = j.Points.ToString() + "pts";
+            string packUri = null;
+            switch (rang)
+            {
+                case 1 :
+                    packUri = "../../Resources/Trophy-gold.png";
+                    img.Width = 100;
+                    img.Height = 100;
+                    nbPoint.FontSize = 28;
+                    nom.FontSize = 28;
+                    break;
+                case 2:
+                    packUri = "../../Resources/Trophy-silver.png";
+                    img.Width = 75;
+                    img.Height = 75;
+                    nbPoint.FontSize = 22;
+                    nom.FontSize = 22;
+                    break;
+                case 3:
+                    packUri = "../../Resources/Trophy-bronze.png";
+                    img.Width = 50;
+                    img.Height = 50;
+                    nbPoint.FontSize = 18;
+                    nom.FontSize = 18;
+                    break;
+                case 4:
+                    packUri = "../../Resources/chocolate.png";
+                    img.Width = 35;
+                    img.Height = 35;
+                    nbPoint.FontSize = 12;
+                    nom.FontSize = 12;
+                    break;
+
+            }
+            img.Source = new ImageSourceConverter().ConvertFromString(packUri) as ImageSource;
+        }
+    }
+}

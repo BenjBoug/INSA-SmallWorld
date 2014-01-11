@@ -112,11 +112,19 @@ namespace InterfaceGraphique
         }
 
         /// <summary>
-        /// Affiche le gagnant
+        /// Affiche le classement dans une fenêtre
         /// </summary>
         private void finJeu()
         {
-            MessageBox.Show(partie.getGagnant().Nom+" gagne la partie !");  
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                boutonFinir.IsEnabled = false;
+                selectionRectangle.IsEnabled = false;
+                selectionRectangle.Visibility = Visibility.Collapsed;
+                Classement fen = new Classement(partie.Classement.ToList());
+                fen.Owner = this;
+                fen.ShowDialog();
+            }));
         }
 
         /// <summary>
@@ -323,6 +331,8 @@ namespace InterfaceGraphique
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (!partie.Finpartie)
+            {
             var rect = sender as Tile;
             int column = (int)Canvas.GetLeft(rect) / 50;
             int row = (int)Canvas.GetTop(rect) / 50;
@@ -350,6 +360,7 @@ namespace InterfaceGraphique
             afficheCarte();
             actualisePanneauDroit();
         }
+        }
 
         private void actualiseData()
         {
@@ -370,7 +381,7 @@ namespace InterfaceGraphique
             fen.Owner = this;
 
             if (saved || partie == null)
-                fen.ShowDialog();
+            fen.ShowDialog();
             else
             {
                 MessageBoxResult result = MessageBox.Show("Voulez-vous sauvegarder cette partie avant d'en créer une nouvelle ?", "Partie non sauvegardée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
@@ -580,29 +591,29 @@ namespace InterfaceGraphique
         }
 
         private void ouvrir(string filepath)
-        {
-            try
             {
+                try
+                {
                 filename = filepath;
 
                 Stream file = File.OpenRead(filepath);
 
-                XmlSerializer mySerializer = new XmlSerializer(typeof(PartieLocale));
+                    XmlSerializer mySerializer = new XmlSerializer(typeof(PartieLocale));
                 partie = (Partie)mySerializer.Deserialize(file);
 
-                partie.associeJoueursUnite();
-                saved = true;
-                neverSaved = false;
+                    partie.associeJoueursUnite();
+                    saved = true;
+                    neverSaved = false;
                 sauvegarderMenuItem.IsEnabled = true;
                 sauvegarderSousMenuItem.IsEnabled = true;
-                initialiseInterface();
-                commencerJeu();
+                    initialiseInterface();
+                    commencerJeu();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
+                }
             }
-            catch (Exception)
-            {
-                MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
-            }
-        }
 
         private void Save_Drop(object sender, DragEventArgs e)
         {
@@ -711,7 +722,7 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Quitter(object sender, RoutedEventArgs e)
         {
-            if (saved || partie == null)
+            if (saved || partie == null || partie.Finpartie)
                 Close();
             else
             {
