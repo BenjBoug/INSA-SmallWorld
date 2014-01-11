@@ -118,6 +118,9 @@ namespace InterfaceGraphique
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
+                boutonFinir.IsEnabled = false;
+                selectionRectangle.IsEnabled = false;
+                selectionRectangle.Visibility = Visibility.Collapsed;
                 Classement fen = new Classement(partie.Classement.ToList());
                 fen.Owner = this;
                 fen.ShowDialog();
@@ -328,32 +331,35 @@ namespace InterfaceGraphique
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var rect = sender as Tile;
-            int column = (int)Canvas.GetLeft(rect) / 50;
-            int row = (int)Canvas.GetTop(rect) / 50;
-            Canvas.SetLeft(selectionRectangle, Canvas.GetLeft(rect));
-            Canvas.SetTop(selectionRectangle, Canvas.GetTop(rect));
-            Canvas.SetZIndex(selectionRectangle, 3);
-            selectionRectangle.selectRect.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(partie.joueurActuel().Couleur);
-            selectionRectangle.Visibility = Visibility.Visible;
-            selectionRectangle.TileSelected = rect;
-            selectionRectangle.Coord = new Coordonnees(column, row);
-
-            if (listUnitSelected.Count > 0 && allowedMouv.Count > 0)
+            if (!partie.Finpartie)
             {
-                partie.Carte.deplaceUnites(listUnitSelected, new Coordonnees(column, row), allowedMouv);
-                listUnitSelected.Clear();
-                saved = false;
-            }
-            else
-            {
-                allowedMouv = null;
-                afficherSuggestions();
-            }
+                var rect = sender as Tile;
+                int column = (int)Canvas.GetLeft(rect) / 50;
+                int row = (int)Canvas.GetTop(rect) / 50;
+                Canvas.SetLeft(selectionRectangle, Canvas.GetLeft(rect));
+                Canvas.SetTop(selectionRectangle, Canvas.GetTop(rect));
+                Canvas.SetZIndex(selectionRectangle, 3);
+                selectionRectangle.selectRect.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(partie.joueurActuel().Couleur);
+                selectionRectangle.Visibility = Visibility.Visible;
+                selectionRectangle.TileSelected = rect;
+                selectionRectangle.Coord = new Coordonnees(column, row);
+
+                if (listUnitSelected.Count > 0 && allowedMouv.Count > 0)
+                {
+                    partie.Carte.deplaceUnites(listUnitSelected, new Coordonnees(column, row), allowedMouv);
+                    listUnitSelected.Clear();
+                    saved = false;
+                }
+                else
+                {
+                    allowedMouv = null;
+                    afficherSuggestions();
+                }
 
 
-            afficheCarte();
-            actualisePanneauDroit();
+                afficheCarte();
+                actualisePanneauDroit();
+            }
         }
 
         private void actualiseData()
