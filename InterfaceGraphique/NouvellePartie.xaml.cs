@@ -52,6 +52,8 @@ namespace InterfaceGraphique
             ((MainWindow)Owner).chargerPartie(monteur, joueurs);
             ((MainWindow)Owner).Saved = false;
             ((MainWindow)Owner).NeverSaved = true;
+            ((MainWindow)Owner).sauvegarderMenuItem.IsEnabled = true;
+            ((MainWindow)Owner).sauvegarderSousMenuItem.IsEnabled = true;
             ((MainWindow)Owner).Filename = "saveSmallWorld";
 
             e.Handled = true;

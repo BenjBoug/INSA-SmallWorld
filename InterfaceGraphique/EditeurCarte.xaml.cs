@@ -191,6 +191,30 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Nouvelle(object sender, RoutedEventArgs e)
         {
+            if (saved || monteur == null || monteur.Carte == null)
+                nouvelleCarte();
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Voulez-vous enregistrer cette carte avant d'en créer une nouvelle ?", "Carte non enregistrée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        if (enregistrer())
+                            nouvelleCarte();
+                        break;
+                    case MessageBoxResult.No:
+                        nouvelleCarte();
+                        break;
+                    case MessageBoxResult.Cancel:
+                    default:
+                        break;
+                }
+            }
+            
+        }
+
+        private void nouvelleCarte()
+        {
             disableComboBox_SelectionChanged();
 
             monteur = new MonteurVide();
@@ -198,13 +222,15 @@ namespace InterfaceGraphique
 
             initCombo();
 
-            enableComboBox_SelectionChanged(); 
+            enableComboBox_SelectionChanged();
 
             canvasMap.Width = monteur.Carte.Largeur * 50;
             canvasMap.Height = monteur.Carte.Hauteur * 50;
             afficheCarte();
 
             controles.IsEnabled = true;
+            enregistrerMenuItem.IsEnabled = true;
+            enregistrerSousMenuItem.IsEnabled = true;
             saved = false;
             neverSaved = true;
         }
@@ -313,6 +339,29 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Ouvrir(object sender, RoutedEventArgs e)
         {
+            if (saved || monteur == null || monteur.Carte == null)
+                openDialog();
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Voulez-vous enregistrer cette carte avant de charger la nouvelle ?", "Carte non enregistrée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        if (enregistrer())
+                            openDialog();
+                        break;
+                    case MessageBoxResult.No:
+                        openDialog();
+                        break;
+                    case MessageBoxResult.Cancel:
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void openDialog()
+        {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             openFileDialog.FileName = null;
@@ -321,29 +370,61 @@ namespace InterfaceGraphique
             Nullable<bool> res = openFileDialog.ShowDialog();
 
             if (res == true)
-            {   
-                try
+                ouvrir(openFileDialog.FileName);
+        }
+
+        private void ouvrir(string filepath)
+        {
+            try
+            {
+                filename = filepath;
+                disableComboBox_SelectionChanged();
+
+                monteur = new MonteurFichier(filepath);
+                monteur.creerCarte();
+
+                initCombo();
+
+                canvasMap.Width = monteur.Carte.Largeur * 50;
+                canvasMap.Height = monteur.Carte.Hauteur * 50;
+                afficheCarte();
+
+                enableComboBox_SelectionChanged();
+                controles.IsEnabled = true;
+                enregistrerMenuItem.IsEnabled = true;
+                enregistrerSousMenuItem.IsEnabled = true;
+                saved = true;
+                neverSaved = false;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la carte.");
+            }
+        }
+
+        private void Map_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (saved || monteur == null || monteur.Carte == null)
+                    ouvrir(files[0]);
+                else
                 {
-                    filename = openFileDialog.FileName;
-                    disableComboBox_SelectionChanged();
-
-                    monteur = new MonteurFichier(openFileDialog.FileName);
-                    monteur.creerCarte();
-
-                    initCombo();
-
-                    canvasMap.Width = monteur.Carte.Largeur * 50;
-                    canvasMap.Height = monteur.Carte.Hauteur * 50;
-                    afficheCarte();
-
-                    enableComboBox_SelectionChanged();
-                    controles.IsEnabled = true;
-                    saved = true;
-                    neverSaved = false;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la carte.");
+                    MessageBoxResult result = MessageBox.Show("Voulez-vous enregistrer cette carte avant de charger la nouvelle ?", "Carte non enregistrée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            if (enregistrer())
+                                ouvrir(files[0]);
+                            break;
+                        case MessageBoxResult.No:
+                            ouvrir(files[0]);
+                            break;
+                        case MessageBoxResult.Cancel:
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -419,7 +500,7 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Quitter(object sender, RoutedEventArgs e)
         {
-            if (saved)
+            if (saved || monteur == null || monteur.Carte == null)
                 Close();
             else
             {
@@ -439,12 +520,6 @@ namespace InterfaceGraphique
                 }
             }
         }
-
-        /*private void EditeurCarte_Closing(object sender, FormClosingEventArgs e)
-        {
-            MessageBox.Show("Closing called");
-            e.Cancel = true;
-        }*/
 
         private void default_Click(object sender, RoutedEventArgs e)
         {

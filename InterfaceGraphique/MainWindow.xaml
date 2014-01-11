@@ -27,8 +27,8 @@
                 <MenuItem Header="_Nouvelle partie" Command="New"/>
                 <MenuItem Header="_Ouvrir..." Command="Open"/>
                 <Separator />
-                <MenuItem Header="_Sauvegarder" Command="Save"/>
-                <MenuItem Header="_Sauvegarder sous..." Command="SaveAs"/>
+                <MenuItem x:Name="sauvegarderMenuItem" Header="_Sauvegarder" Command="Save" IsEnabled="False"/>
+                <MenuItem x:Name="sauvegarderSousMenuItem" Header="_Sauvegarder sous..." Command="SaveAs" IsEnabled="False"/>
                 <Separator />
                 <MenuItem Header="_Editeur de cartes" Click="MenuItem_Click_Editeur" />
                 <Separator />
@@ -49,9 +49,16 @@
                 <Label x:Name="labelJoueurActuel" Content="C'est à ... de jouer !"/>
                 <Label x:Name="labelNbTour" Content="Tour : x/xx"/>
                 <StackPanel x:Name="panelListeJoueur"/>
-                <Button x:Name="boutonFinir" Content="Finir tour" Click="Button_Click" Width="100" Height="50" Background="Transparent" Foreground="White" Margin="50" FontWeight="Bold" FontSize="14"/>
+                <Button x:Name="boutonFinir" Content="Finir tour" Click="Button_Click" Width="100" Height="50" Margin="0,50,0,0" FontWeight="Bold" FontSize="14" Foreground="White">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#33E2E2E2" Offset="0.48"/>
+                            <GradientStop Color="#4CC1C1C1" Offset="0.52"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
             </StackPanel>
-            <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AllowDrop="True" Drop="Save_Drop">
                 <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Canvas.Effect>
                         <DropShadowEffect BlurRadius="35" Color="#877b77" Opacity="0.8" ShadowDepth="0"/>

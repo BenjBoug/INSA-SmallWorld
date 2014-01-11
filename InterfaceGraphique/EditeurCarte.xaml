@@ -24,18 +24,18 @@
                     <MenuItem Header="_Nouvelle carte" Click="MenuItem_Click_Nouvelle"/>
                     <MenuItem Header="_Ouvrir ..." Click="MenuItem_Click_Ouvrir"/>
                     <Separator />
-                    <MenuItem Header="_Enregistrer" Click="MenuItem_Click_Enregistrer"/>
-                    <MenuItem Header="_Enregistrer sous ..." Click="MenuItem_Click_EnregistrerSous"/>
+                    <MenuItem x:Name="enregistrerMenuItem" Header="_Enregistrer" Click="MenuItem_Click_Enregistrer" IsEnabled="False"/>
+                    <MenuItem x:Name="enregistrerSousMenuItem" Header="_Enregistrer sous ..." Click="MenuItem_Click_EnregistrerSous" IsEnabled="False"/>
                     <Separator />
                     <MenuItem Header="_Quitter" Click="MenuItem_Click_Quitter"/>
                 </MenuItem>
                 <MenuItem Header="_Options">
                     <MenuItem x:Name="affTileCheckbox" Header="Affichage" >
-                        <MenuItem x:Name="defaultStyle" Header="Style par défaut" Click="default_Click"/>
-                        <MenuItem x:Name="groovy" Header="Style Groovy" Click="groovy_Click"/>
-                        <MenuItem x:Name="tropical" Header="Style Tropical" Click="tropical_Click"/>
-                        <MenuItem x:Name="campaign" Header="Style Campagne" Click="campaign_Click"/>
-                        <MenuItem x:Name="noStyle" Header="Pas de style" Click="noStyle_Click"/>
+                        <MenuItem x:Name="defaultStyle" Header="Style par défaut" Click="default_Click" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem x:Name="groovy" Header="Style Groovy" Click="groovy_Click" IsCheckable="True"/>
+                        <MenuItem x:Name="tropical" Header="Style Tropical" Click="tropical_Click" IsCheckable="True"/>
+                        <MenuItem x:Name="campaign" Header="Style Campagne" Click="campaign_Click" IsCheckable="True"/>
+                        <MenuItem x:Name="noStyle" Header="Pas de style" Click="noStyle_Click" IsCheckable="True"/>
                     </MenuItem>
                 </MenuItem>
             </Menu>
@@ -122,7 +122,7 @@
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
-                <ScrollViewer x:Name="scrollMap" Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer x:Name="scrollMap" Width="550" Height="550" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AllowDrop="True" Drop="Map_Drop">
                     <Canvas x:Name="canvasMap" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Canvas.Effect>
                             <DropShadowEffect BlurRadius="35" Color="#877b77" Opacity="0.8" ShadowDepth="0"/>

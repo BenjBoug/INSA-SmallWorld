@@ -368,7 +368,26 @@ namespace InterfaceGraphique
         {
             NouvellePartie fen = new NouvellePartie();
             fen.Owner = this;
-            fen.ShowDialog();
+
+            if (saved || partie == null)
+                fen.ShowDialog();
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Voulez-vous sauvegarder cette partie avant d'en créer une nouvelle ?", "Partie non sauvegardée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        if (sauvegarder())
+                            fen.ShowDialog();
+                        break;
+                    case MessageBoxResult.No:
+                        fen.ShowDialog();
+                        break;
+                    case MessageBoxResult.Cancel:
+                    default:
+                        break;
+                }
+            }
             e.Handled = true;
         }
 
@@ -526,6 +545,29 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Ouvrir(object sender, RoutedEventArgs e)
         {
+            if (saved || partie == null)
+                openDialog();
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Voulez-vous sauvegarder cette partie avant de charger la nouvelle ?", "Partie non sauvegardée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        if (sauvegarder())
+                            openDialog();
+                        break;
+                    case MessageBoxResult.No:
+                        openDialog();
+                        break;
+                    case MessageBoxResult.Cancel:
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void openDialog()
+        {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.InitialDirectory = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             openFileDialog1.FileName = null;
@@ -534,31 +576,58 @@ namespace InterfaceGraphique
             Nullable<bool> res = openFileDialog1.ShowDialog();
 
             if (res == true)
+                ouvrir(openFileDialog1.FileName);
+        }
+
+        private void ouvrir(string filepath)
+        {
+            try
             {
-                try
+                filename = filepath;
+
+                Stream file = File.OpenRead(filepath);
+
+                XmlSerializer mySerializer = new XmlSerializer(typeof(PartieLocale));
+                partie = (Partie)mySerializer.Deserialize(file);
+
+                partie.associeJoueursUnite();
+                saved = true;
+                neverSaved = false;
+                sauvegarderMenuItem.IsEnabled = true;
+                sauvegarderSousMenuItem.IsEnabled = true;
+                initialiseInterface();
+                commencerJeu();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
+            }
+        }
+
+        private void Save_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (saved || partie == null)
+                    ouvrir(files[0]);
+                else
                 {
-                    filename = openFileDialog1.FileName;
-
-                    /*
-                    IFormatter formatter = new BinaryFormatter();
-                    Stream stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    partie = (Partie)formatter.Deserialize(stream);
-                    stream.Close();
-                    */
-
-                    XmlSerializer mySerializer = new XmlSerializer(typeof(PartieLocale));
-                    partie = (Partie)mySerializer.Deserialize(openFileDialog1.OpenFile());
-
-                    partie.associeJoueursUnite();
-                    saved = true;
-                    neverSaved = false;
-                    initialiseInterface();
-                    commencerJeu();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
-                }
+                    MessageBoxResult result = MessageBox.Show("Voulez-vous sauvegarder cette partie avant de charger la nouvelle ?", "Partie non sauvegardée", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            if (sauvegarder())
+                                ouvrir(files[0]);
+                            break;
+                        case MessageBoxResult.No:
+                            ouvrir(files[0]);
+                            break;
+                        case MessageBoxResult.Cancel:
+                        default:
+                            break;
+                    }
+                }           
             }
         }
 
@@ -642,7 +711,7 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Quitter(object sender, RoutedEventArgs e)
         {
-            if (saved)
+            if (saved || partie == null)
                 Close();
             else
             {
