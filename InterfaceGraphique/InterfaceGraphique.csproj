@@ -261,6 +261,7 @@
     <None Include="Resources\groovy\casePlaine.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\interface.psd" />
     <None Include="Resources\tropical\caseDesert.png" />
   </ItemGroup>
   <ItemGroup>
