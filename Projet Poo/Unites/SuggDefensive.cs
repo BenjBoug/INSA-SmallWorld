@@ -14,6 +14,7 @@ namespace Modele
             // on cherche la meilleur case possible la plus éloigné des ennemis
 
             List<Coordonnees> meilleursCases = new List<Coordonnees>();
+            Dictionary<Coordonnees, double> dictionary = new Dictionary<Coordonnees, double>();
 
             foreach (var pair in res)
             {
@@ -30,13 +31,8 @@ namespace Modele
                             coord = u.Coord;
                         }
                     }
-                    meilleursCases.Add(coordCase);
+                    res[coordCase].Sugg += (int)minDist;
                 }
-            }
-
-            foreach (Coordonnees c in meilleursCases)
-            {
-                Console.WriteLine(c);
             }
 
 

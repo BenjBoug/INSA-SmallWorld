@@ -20,7 +20,7 @@ namespace Modele
             Carte = new CarteClassique();
             Carte.Largeur = 5;
             Carte.Hauteur = 5;
-            Carte.NbToursMax = 3;
+            Carte.NbToursMax = 10;
             Carte.NbUniteClassique = 5;
             Carte.NbUniteElite = 3;
             Carte.NbUniteBlindee = 1;
