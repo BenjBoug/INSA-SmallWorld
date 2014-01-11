@@ -112,11 +112,16 @@ namespace InterfaceGraphique
         }
 
         /// <summary>
-        /// Affiche le gagnant
+        /// Affiche le classement dans une fenêtre
         /// </summary>
         private void finJeu()
         {
-            MessageBox.Show(partie.getGagnant().Nom+" gagne la partie !");  
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                Classement fen = new Classement(partie.Classement.ToList());
+                fen.Owner = this;
+                fen.ShowDialog();
+            }));
         }
 
         /// <summary>
@@ -642,7 +647,7 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Quitter(object sender, RoutedEventArgs e)
         {
-            if (saved)
+            if (saved || partie.Finpartie)
                 Close();
             else
             {

@@ -78,6 +78,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classement.xaml.cs">
+      <DependentUpon>Classement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="class\TileFactory\ImageFactory.cs" />
     <Compile Include="class\TileFactory\RectangleFactory.cs" />
     <Compile Include="class\TileFactory\TileFactory.cs" />
@@ -87,12 +90,19 @@
     <Compile Include="GroupeNouveauJoueur.xaml.cs">
       <DependentUpon>GroupeNouveauJoueur.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JoueurClassement.xaml.cs">
+      <DependentUpon>JoueurClassement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectedRect.xaml.cs">
       <DependentUpon>SelectedRect.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tile.xaml.cs">
       <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
+    <Page Include="Classement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditeurCarte.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -106,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GroupeUnite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JoueurClassement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -288,6 +302,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Trophy-bronze.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Trophy-gold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Trophy-silver.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -26,6 +26,12 @@ namespace Modele
 
         private Stack<Joueur> classement;
 
+        [XmlIgnore]
+        public Stack<Joueur> Classement
+        {
+            get { return classement;}
+        }
+
         private bool finpartie;
         /// <summary>
         /// Est vrai si la partie est fini (cad que le nombre de tours max a était atteind ou qu'il ne reste qu'un seul joueur vivant
@@ -114,9 +120,9 @@ namespace Modele
                 listJoueurs.Sort(CompareForClassemnt);
                 foreach (Joueur j in listJoueurs)
                 {
-                    if (!classement.Contains(j))
+                    if (!Classement.Contains(j))
                     {
-                        classement.Push(j);
+                        Classement.Push(j);
                     }
                 }
             }
@@ -126,9 +132,9 @@ namespace Modele
                 {
                     if (carte.getNombreUniteRestante(j) == 0)
                     {
-                        if (!classement.Contains(j))
+                        if (!Classement.Contains(j))
                         {
-                            classement.Push(j);
+                            Classement.Push(j);
                         }
                     }
                 }
@@ -142,7 +148,7 @@ namespace Modele
         {
             if (Finpartie)
             {
-                return classement.Peek();
+                return Classement.Peek();
             }
             else
             {

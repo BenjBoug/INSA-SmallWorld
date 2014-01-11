@@ -1,0 +1,17 @@
+﻿<Window x:Class="InterfaceGraphique.Classement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Classement" Height="337" Width="358" WindowStartupLocation="CenterOwner" ShowInTaskbar="False" SizeToContent="WidthAndHeight">
+    <Grid>
+        <StackPanel Name="classementPanel">
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#6C92BC" Offset="0"/>
+                    <GradientStop Color="#2F547E" Offset="1"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <TextBlock TextWrapping="Wrap" Text="Classement" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
