@@ -118,9 +118,19 @@ namespace InterfaceGraphique
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                boutonFinir.IsEnabled = false;
-                selectionRectangle.IsEnabled = false;
-                selectionRectangle.Visibility = Visibility.Collapsed;
+                canvasMap.Children.Clear();
+                for (int l = 0; l < partie.Carte.Hauteur; l++)
+                {
+                    for (int c = 0; c < partie.Carte.Largeur; c++)
+                    {
+                        var tile = partie.Carte.Cases[c][l];
+                        var unite = partie.Carte.getUniteFromCoord(new Coordonnees(c, l));
+                        var rect = creerTile(c, l, tile, unite);
+                        rect.rect1.StrokeThickness = 0;
+                        canvasMap.Children.Add(rect);
+                    }
+                }
+                actualisePanneauGauche();
                 Classement fen = new Classement(partie.Classement.ToList());
                 fen.Owner = this;
                 fen.ShowDialog();
@@ -180,12 +190,14 @@ namespace InterfaceGraphique
         /// </summary>
         private void actualisePanneauGauche()
         {
-            labelJoueurActuel.Content = "C'est à " + partie.joueurActuel().Nom + " de jouer !";
+            if (!partie.Finpartie)
+                labelJoueurActuel.Content = "C'est à " + partie.joueurActuel().Nom + " de jouer !";
+            else
+                labelJoueurActuel.Content = "La partie est terminée";
             labelNbTour.Content = "Tour: " + partie.NbTours + "/" + partie.Carte.NbToursMax;
 
-
             boutonFinir.IsEnabled = false;
-            if (partie.joueurActuel() is JoueurConcret)
+            if (partie.joueurActuel() is JoueurConcret && !partie.Finpartie)
             {
                 boutonFinir.IsEnabled = true;
             }
@@ -333,22 +345,22 @@ namespace InterfaceGraphique
         {
             if (!partie.Finpartie)
             {
-            var rect = sender as Tile;
-            int column = (int)Canvas.GetLeft(rect) / 50;
-            int row = (int)Canvas.GetTop(rect) / 50;
-            Canvas.SetLeft(selectionRectangle, Canvas.GetLeft(rect));
-            Canvas.SetTop(selectionRectangle, Canvas.GetTop(rect));
-            Canvas.SetZIndex(selectionRectangle, 3);
-            selectionRectangle.selectRect.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(partie.joueurActuel().Couleur);
-            selectionRectangle.Visibility = Visibility.Visible;
-            selectionRectangle.TileSelected = rect;
-            selectionRectangle.Coord = new Coordonnees(column, row);
+                var rect = sender as Tile;
+                int column = (int)Canvas.GetLeft(rect) / 50;
+                int row = (int)Canvas.GetTop(rect) / 50;
+                Canvas.SetLeft(selectionRectangle, Canvas.GetLeft(rect));
+                Canvas.SetTop(selectionRectangle, Canvas.GetTop(rect));
+                Canvas.SetZIndex(selectionRectangle, 3);
+                selectionRectangle.selectRect.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString(partie.joueurActuel().Couleur);
+                selectionRectangle.Visibility = Visibility.Visible;
+                selectionRectangle.TileSelected = rect;
+                selectionRectangle.Coord = new Coordonnees(column, row);
 
-            if (listUnitSelected.Count > 0 && allowedMouv.Count > 0)
-            {
-                partie.Carte.deplaceUnites(listUnitSelected, new Coordonnees(column, row), allowedMouv);
-                listUnitSelected.Clear();
-                saved = false;
+                if (listUnitSelected.Count > 0 && allowedMouv.Count > 0)
+                {
+                    partie.Carte.deplaceUnites(listUnitSelected, new Coordonnees(column, row), allowedMouv);
+                    listUnitSelected.Clear();
+                    saved = false;
             }
             else
             {
@@ -373,14 +385,14 @@ namespace InterfaceGraphique
                 nbUnite.Text = "Unités sur la case : " + partie.Carte.getUniteFromCoord(selectionRectangle.Coord).Count;
                 coord.Text = "Coordonnées : ( " + (column+1).ToString() + " ; " + (row+1).ToString() + " )";
             }
-       }
+        }
 
         private void MenuItem_Click_Nouvelle(object sender, RoutedEventArgs e)
         {
             NouvellePartie fen = new NouvellePartie();
             fen.Owner = this;
 
-            if (saved || partie == null)
+            if (saved || partie == null || partie.Finpartie)
             fen.ShowDialog();
             else
             {
@@ -520,13 +532,6 @@ namespace InterfaceGraphique
                     // Save document
                     filename = dlg.FileName;
 
-                    /*
-                    IFormatter formatter = new BinaryFormatter();
-                    Stream stream = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None);
-                    formatter.Serialize(stream, partie);
-                    stream.Close();
-                    */
-
                     XmlSerializer mySerializer = new XmlSerializer(partie.GetType());
                     StreamWriter myWriter = new StreamWriter(filename);
                     mySerializer.Serialize(myWriter, partie);
@@ -556,7 +561,7 @@ namespace InterfaceGraphique
 
         private void MenuItem_Click_Ouvrir(object sender, RoutedEventArgs e)
         {
-            if (saved || partie == null)
+            if (saved || partie == null || partie.Finpartie)
                 openDialog();
             else
             {
@@ -620,7 +625,7 @@ namespace InterfaceGraphique
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (saved || partie == null)
+                if (saved || partie == null || partie.Finpartie)
                     ouvrir(files[0]);
                 else
                 {

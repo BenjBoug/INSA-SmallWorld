@@ -46,8 +46,8 @@
         </Menu>
         <StackPanel Orientation="Horizontal">
             <StackPanel x:Name="controlGauche" Width="214" Height="550" Margin="10,0,3,0">
-                <Label x:Name="labelJoueurActuel" Content="C'est à ... de jouer !"/>
-                <Label x:Name="labelNbTour" Content="Tour : x/xx"/>
+                <Label x:Name="labelJoueurActuel" Content="C'est à ... de jouer !" Margin="5,10,0,0"/>
+                <Label x:Name="labelNbTour" Content="Tour : x/xx" Margin="5,0,0,0"/>
                 <StackPanel x:Name="panelListeJoueur"/>
                 <Button x:Name="boutonFinir" Content="Finir tour" Click="Button_Click" Width="100" Height="50" Margin="0,50,0,0" FontWeight="Bold" FontSize="14" Foreground="White">
                     <Button.Background>
