@@ -314,10 +314,13 @@
   <ItemGroup>
     <None Include="Resources\Trophy-silver.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\documentation\doc.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>copy "$(SolutionDir)$(ConfigurationName)\LibCpp.dll" "$(TargetDir)"
-</PreBuildEvent>
+xcopy /ey "$(ProjectDir)Resources" "$(TargetDir)Resources\"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

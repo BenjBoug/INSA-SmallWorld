@@ -12,6 +12,7 @@
         <CommandBinding Command="Save" Executed="MenuItem_Click_Sauvegarder"/>
         <CommandBinding Command="SaveAs" Executed="MenuItem_Click_SauvegarderSous"/>
         <CommandBinding Command="Close" Executed="MenuItem_Click_Quitter"/>
+        <CommandBinding Command="Help" Executed="help_Click"/>
     </Window.CommandBindings>
     <StackPanel Orientation="Vertical" Width="1001" Height="700">
         <StackPanel Height="104" Orientation="Horizontal" Margin="0" VerticalAlignment="Bottom" Width="83" HorizontalAlignment="Right">
@@ -42,6 +43,9 @@
                     <MenuItem x:Name="campaign" Header="Style Campagne" Click="campaign_Click" IsCheckable="True"/>
                     <MenuItem x:Name="noStyle" Header="Pas de style" Click="noStyle_Click" IsCheckable="True"/>
                 </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_?">
+                <MenuItem Header="Aide" Command="Help"/>
             </MenuItem>
         </Menu>
         <StackPanel Orientation="Horizontal">
