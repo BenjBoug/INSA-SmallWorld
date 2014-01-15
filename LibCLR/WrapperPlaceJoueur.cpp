@@ -15,12 +15,6 @@ WrapperPlaceJoueur::~WrapperPlaceJoueur(void)
 List<int> ^ WrapperPlaceJoueur::getEmplacementJoueur(List<int>^ map, int largeur, int hauteur,  List<int>^ peupleJoueur, int nbJoueur)
 {
 	int * coord =  place->placeJoueur(listToTab(map,largeur,hauteur),largeur,hauteur, listToTab2(peupleJoueur),nbJoueur);
-	
-	cout << coord[0] << " " << coord[1] << endl;
-	cout << coord[2] << " " << coord[3] << endl;
-	cout << coord[4] << " " << coord[5] << endl;
-	cout << coord[6] << " " << coord[7] << endl;
-
 	List<int>^res = gcnew List<int>();
 	for(int i=0;i<nbJoueur;i++)
 	{

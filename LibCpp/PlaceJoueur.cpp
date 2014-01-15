@@ -22,6 +22,8 @@ int * PlaceJoueur::placeJoueur(int ** carte, int largeur,int hauteur, int* peupl
 	}
 
 	vector<Coordonnees> zoneAccessible = getUnion(tabZones);
+	
+	int * coord = new int[2*nbJoueurs];
 
 	Coordonnees coordJ1, coordJ2;
 	int max=0;
@@ -33,87 +35,98 @@ int * PlaceJoueur::placeJoueur(int ** carte, int largeur,int hauteur, int* peupl
 		vector<Coordonnees>::iterator it2 = zoneAccessible.begin();
 		for(;it2!=zoneAccessible.end();it2++)
 		{
-			if (verif[peuple[0]][carte[(*it).x()][(*it).y()]])
+			if (!(*it==*it2))
 			{
-				vector<Node*>* res = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[0],largeur,hauteur,(*it),(*it2));
-				if (res->size()>max)
+				if (verif[peuple[0]][carte[(*it).x()][(*it).y()]])
 				{
-					max=res->size();
-					coordJ1 = (*it);
-					coordJ2 = (*it2);
+					vector<Node*>* res = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[0],largeur,hauteur,(*it),(*it2));
+					if (res->size()>max)
+					{
+						max=res->size();
+						coordJ1 = (*it);
+						coordJ2 = (*it2);
+					}
 				}
 			}
 		}
 	}
-	delete star;
-
-	int * coord = new int[2*nbJoueurs];
+	
 	coord[0]=coordJ1.x();
 	coord[1]=coordJ1.y();
 	coord[2] = coordJ2.x();
 	coord[3] = coordJ2.y();
 	
-	
 	Coordonnees coordJ3;
 
 	if (nbJoueurs>=3)
 	{
-		double max=0;
-		AStar * star = new AStar();
-		vector<Coordonnees>::iterator it = zoneAccessible.begin();
-		for(;it!=zoneAccessible.end();it++)
+		bool ok = false;
+		int sigmaRef = 2;
+		while (!ok)
 		{
-			if (!((*it) == coordJ1 || (*it) == coordJ2))
+			double max=0;
+			vector<Coordonnees>::iterator it = zoneAccessible.begin();
+			for(;it!=zoneAccessible.end();it++)
 			{
-				if (verif[peuple[2]][carte[(*it).x()][(*it).y()]])
+				if (!((*it) == coordJ1 || (*it) == coordJ2))
 				{
-					vector<Node*>* res = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[2],largeur,hauteur,(*it),(coordJ1));
-					vector<Node*>* res2 = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[2],largeur,hauteur,(*it),(coordJ2));
-					if (std::abs((int)res->size()-(int)res2->size())<=2 && (res->size()+res2->size())/2>max)
+					if (verif[peuple[2]][carte[(*it).x()][(*it).y()]])
 					{
-						max=(res->size()+res2->size())/2;
-						coordJ3 = (*it);
+						vector<Node*>* res = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[2],largeur,hauteur,(*it),(coordJ1));
+						vector<Node*>* res2 = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[2],largeur,hauteur,(*it),(coordJ2));
+						if (std::abs((int)res->size()-(int)res2->size())<=2 && (res->size()+res2->size())/2>max)
+						{
+							max=(res->size()+res2->size())/2;
+							coordJ3 = (*it);
+							ok = true;
+						}
 					}
 				}
 			}
+			sigmaRef++;
 		}
-		delete star;
 		coord[4] = coordJ3.x();
 		coord[5] = coordJ3.y();
-	}
-	
-	
-	if (nbJoueurs==4)
-	{
-		Coordonnees coordJ4;
-		double max=0;
-		AStar * star = new AStar();
-		vector<Coordonnees>::iterator it = zoneAccessible.begin();
-		for(;it!=zoneAccessible.end();it++)
+
+
+		if (nbJoueurs==4)
 		{
-			if (!((*it) == coordJ1 || (*it) == coordJ2 || (*it) == coordJ3))
+			Coordonnees coordJ4;
+			bool ok = false;
+			int sigmaRef = 3;
+			while (!ok)
 			{
-				if (verif[peuple[3]][carte[(*it).x()][(*it).y()]])
+				double max=0;
+				vector<Coordonnees>::iterator it = zoneAccessible.begin();
+				for(;it!=zoneAccessible.end();it++)
 				{
-					vector<Node*>* res = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[3],largeur,hauteur,(*it),(coordJ1));
-					vector<Node*>* res2 = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[3],largeur,hauteur,(*it),(coordJ2));
-					vector<Node*>* res3 = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[3],largeur,hauteur,(*it),(coordJ3));
-					int sigma = std::abs((int)res->size()-(int)res2->size());
-					int sigtmp = std::abs((int)res2->size()-(int)res3->size());
-					int sigtmp2 = std::abs((int)res->size()-(int)res3->size());
-					if ((sigma+sigtmp+sigtmp2)/3<=2 && (res->size()+res2->size()+res3->size())/3>max)
+					if (!((*it) == coordJ1 || (*it) == coordJ2 || (*it) == coordJ3))
 					{
-						max=(res->size()+res2->size()+res3->size())/3;
-						coordJ4 = (*it);
+						if (verif[peuple[3]][carte[(*it).x()][(*it).y()]])
+						{
+							vector<Node*>* res = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[3],largeur,hauteur,(*it),(coordJ1));
+							vector<Node*>* res2 = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[3],largeur,hauteur,(*it),(coordJ2));
+							vector<Node*>* res3 = star->pathFinding(tabToVecor(carte,largeur,hauteur),peuple[3],largeur,hauteur,(*it),(coordJ3));
+							int sigtmp1 = std::abs((int)res->size()-(int)res2->size());
+							int sigtmp2 = std::abs((int)res2->size()-(int)res3->size());
+							int sigtmp3 = std::abs((int)res->size()-(int)res3->size());
+							if ((sigtmp1+sigtmp2+sigtmp3)/3<=sigmaRef && (res->size()+res2->size()+res3->size())/3>max)
+							{
+								max=(res->size()+res2->size()+res3->size())/3;
+								coordJ4 = (*it);
+								ok = true;
+							}
+						}
 					}
 				}
+				sigmaRef++;
 			}
+			coord[6] = coordJ4.x();
+			coord[7] = coordJ4.y();
 		}
-		delete star;
-		coord[6] = coordJ4.x();
-		coord[7] = coordJ4.y();
 	}
 
+	delete star;
 	
 	/*
 	int nbJoueur = compteJoueurs(tabJoueurs,largeur,hauteur);
