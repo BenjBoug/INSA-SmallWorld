@@ -49,6 +49,18 @@ int ** listToTab(List<int>^tab, int largeur, int hauteur)
 }
 
 
+int * listToTab2(List<int>^tab)
+{
+	int * res = new int[tab->Count];
+
+	for(int i=0;i<tab->Count;i++)
+	{
+		res[i]=tab[i];
+	}
+
+	return res;
+}
+
 List<int>^ vectorToList(vector<int> tab)
 {
 	List<int>^ res = gcnew List<int>();

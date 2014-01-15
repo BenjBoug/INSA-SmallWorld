@@ -17,6 +17,8 @@ namespace Modele
         {
             if (p is PeupleGaulois)
                 return 0;
+            else if (p is PeupleElfe)
+                return 2;
             else
                 return base.bonusPoints(p);
         }

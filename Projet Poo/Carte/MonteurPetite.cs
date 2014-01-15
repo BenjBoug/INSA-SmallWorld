@@ -21,7 +21,7 @@ namespace Modele
             Carte.Largeur = 10;
             Carte.Hauteur = 10;
             Carte.NbToursMax = 20;
-            Carte.NbUniteClassique = 6;
+            Carte.NbUniteClassique = 8;
             Carte.NbUniteElite = 4;
             Carte.NbUniteBlindee = 2;
             creerStructureCarte();

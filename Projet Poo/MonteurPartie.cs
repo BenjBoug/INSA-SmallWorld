@@ -18,6 +18,6 @@ namespace Modele
         public abstract void creerPartie(MonteurCarte monteurCarte, List<Joueur> joueurs);
         public abstract void initJoueurs(List<Joueur> joueurs);
         public abstract Carte creerCarte(MonteurCarte monteur);
-        public abstract void creerUnite(Joueur j);
+        public abstract List<Unite> creerUnite(Joueur j);
     }
 }

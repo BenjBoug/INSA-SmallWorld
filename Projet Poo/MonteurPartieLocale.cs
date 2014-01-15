@@ -7,11 +7,12 @@ namespace Modele
 {
     public class MonteurPartieLocale : MonteurPartie
     {
-
+        List<Coordonnees> listCoordDepart;
         public override void creerPartie(MonteurCarte monteurCarte, List<Joueur> joueurs)
         {
             partie = new PartieLocale();
             partie.Carte = creerCarte(monteurCarte);
+            listCoordDepart = partie.Carte.getCoordonneesDepart(joueurs);
             initJoueurs(joueurs);
         }
         public override void initJoueurs(List<Joueur> joueurs)
@@ -19,7 +20,7 @@ namespace Modele
             foreach (Joueur j in joueurs)
             {
                 partie.ajoutJoueur(j);
-                creerUnite(j);
+                partie.Carte.placeUnite(creerUnite(j), listCoordDepart[joueurs.IndexOf(j)]);
             }
         }
 
@@ -29,7 +30,7 @@ namespace Modele
             return monteur.Carte;
         }
 
-        public override void creerUnite(Joueur j)
+        public override List<Unite> creerUnite(Joueur j)
         {
             List<Unite> list = new List<Unite>();
             for (int i = 0; i < partie.Carte.NbUniteClassique; i++)
@@ -50,7 +51,7 @@ namespace Modele
                 unit.Proprietaire = j;
                 list.Add(unit);
             }
-            partie.Carte.placeUnite(list);
+            return list;
         }
     }
 }

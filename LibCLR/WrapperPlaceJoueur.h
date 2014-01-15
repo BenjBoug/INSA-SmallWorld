@@ -12,7 +12,7 @@ namespace LibCLR {
 		WrapperPlaceJoueur(void);
 		~WrapperPlaceJoueur(void);
 
-		List<int> ^ getEmplacementJoueur(List<int>^ emplJoueur, List<int>^ map, int largeur, int hauteur, int peupleJoueur);
+		List<int> ^ getEmplacementJoueur(List<int>^ map, int largeur, int hauteur, List<int>^ peupleJoueur, int nbJoueur);
 
 	private:
 		PlaceJoueur * place;
