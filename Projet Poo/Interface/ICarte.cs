@@ -49,7 +49,7 @@ namespace Modele
         }
         
         void calculerPoints();
-        void placeUnite(List<Unite> l);
+        void placeUnite(List<Unite> l, Coordonnees c);
         void setCase(int x, int y, Case _case);
         void actualiseDeplacement();
         void deplaceUnites(List<Unite> u, Coordonnees coord, SuggMap sugg);

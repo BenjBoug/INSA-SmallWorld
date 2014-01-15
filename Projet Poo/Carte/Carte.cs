@@ -141,20 +141,33 @@ namespace Modele
             }
         }
         /// <summary>
-        /// Place les unités de façon aléatoire sur la carte
+        /// Place les unités sur la carte à la coordonnees indiqué
         /// </summary>
         /// <param name="list">la liste des unités à placées</param>
-        public void placeUnite(List<Unite> list)
+        /// <param name="c">la coordonnees où placer les unités</param>
+        public void placeUnite(List<Unite> list, Coordonnees c)
+        {
+            foreach (Unite u in list)
+            {
+                u.Coord = c;
+                unites.Add(u);
+            }
+        }
+
+        public List<Coordonnees> getCoordonneesDepart(List<Joueur> listJoueur)
         {
             WrapperPlaceJoueur wrap = new WrapperPlaceJoueur();
             List<int> emplUnites = getUnitesToListInt();
-            int peuple = list[0].Proprietaire.Peuple.toInt();
-            List<int> coord = wrap.getEmplacementJoueur(emplUnites, toList(), Largeur,Hauteur, peuple);
-            foreach (Unite u in list)
+            List<int> peuple = new List<int>();
+            for(int i=0;i<listJoueur.Count;i++)
+                peuple.Add(listJoueur[i].Peuple.toInt());
+            List<int> coord = wrap.getEmplacementJoueur(toList(), Largeur,Hauteur, peuple, listJoueur.Count());
+            List<Coordonnees> res = new List<Coordonnees>();
+            for (int i = 0; i < coord.Count(); i+=2)
             {
-                u.Coord = new Coordonnees(coord[0], coord[1]);
-                unites.Add(u);
+                res.Add(new Coordonnees(coord[i], coord[i + 1]));
             }
+            return res;
         }
 
         private List<int> getUnitesToListInt()

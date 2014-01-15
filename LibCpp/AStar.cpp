@@ -113,5 +113,19 @@ vector<Node*>* AStar::neighbor_nodes(Node *current)
 		res->push_back(factory.getNode(Coordonnees(coordCurrent.x(), coordCurrent.y()+1)));
     }
 
+	if (peupleUnite == Nain && carte[coordCurrent.x() * hauteur + coordCurrent.y()]==Montagne)
+	{
+        for (int i=0;i<largeur;i++)
+        {
+            for (int j=0;j<hauteur;j++)
+            {
+                if(carte[i * hauteur + j]==Montagne)
+                {
+					res->push_back(factory.getNode(Coordonnees(i, j)));
+                }
+            }
+        }
+	}
+
     return res;
 }

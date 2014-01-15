@@ -140,21 +140,7 @@ namespace Modele
                 }
             }
         }
-        /// <summary>
-        /// retourne le gagnant de la partie
-        /// </summary>
-        /// <returns></returns>
-        public Joueur getGagnant()
-        {
-            if (Finpartie)
-            {
-                return Classement.Peek();
-            }
-            else
-            {
-                return null;
-            }
-        }
+
         /// <summary>
         /// Retourne le nombre de joueur encore vivant
         /// </summary>

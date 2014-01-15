@@ -41,6 +41,7 @@ namespace TestUnitaire
         [TestMethod]
         public void TestDeplacement()
         {
+            
             Carte c = creerCarteRapide();
 
             Unite unite = new Unite();
@@ -52,7 +53,7 @@ namespace TestUnitaire
             
             c.deplaceUnite(unite,new Coordonnees(0,1),sugg);
             Assert.AreEqual<Coordonnees>(unite.Coord, new Coordonnees(0, 1));
-
+            
         }
 
         private Carte creerCarteRapide()
