@@ -295,7 +295,7 @@ namespace InterfaceGraphique
                     {
                         var rect = creerRectSugg(pair.Key.X, pair.Key.Y);
                         rect.StrokeThickness = 3;
-                        rect.Stroke = SuggCouleurFactory.getCouleur(pair.Value.Sugg);
+                        rect.Stroke = new SolidColorBrush(SuggCouleurFactory.getCouleur(pair.Value.Sugg-1));
                         canvasMap.Children.Add(rect);
                     }
                 }
@@ -334,10 +334,10 @@ namespace InterfaceGraphique
             rectangle.StrokeDashOffset = 4;
             if (selectionRectangle.Coord == new Coordonnees(c, l))
                 rectangle.Opacity = 0;
-            rectangle.Width = 50;
-            rectangle.Height = 50;
-            rectangle.RadiusX = 3;
-            rectangle.RadiusY = 3;
+            rectangle.Width = TAILLE;
+            rectangle.Height = TAILLE;
+            //rectangle.RadiusX = 3;
+            //rectangle.RadiusY = 3;
 
             return rectangle;
         }

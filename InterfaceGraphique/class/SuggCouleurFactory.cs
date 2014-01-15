@@ -9,8 +9,10 @@ namespace InterfaceGraphique
 {
     class SuggCouleurFactory
     {
-        public static Brush getCouleur(int i)
+        public static Color getCouleur(int i)
         {
+            return Color.FromRgb(255,255,(byte)(85*i));
+            /*
             switch (i)
             {
                 case 0:
@@ -23,7 +25,7 @@ namespace InterfaceGraphique
                     return Brushes.Red;
                 default:
                     return Brushes.Black;
-            }
+            }*/
         }
     }
 }
