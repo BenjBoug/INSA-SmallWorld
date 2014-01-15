@@ -294,7 +294,8 @@ namespace InterfaceGraphique
                     if (pair.Value.Sugg >= 1)
                     {
                         var rect = creerRectSugg(pair.Key.X, pair.Key.Y);
-                        rect.StrokeThickness = pair.Value.Sugg + 1;
+                        rect.StrokeThickness = 3;
+                        rect.Stroke = SuggCouleurFactory.getCouleur(pair.Value.Sugg);
                         canvasMap.Children.Add(rect);
                     }
                 }

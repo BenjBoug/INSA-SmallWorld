@@ -111,22 +111,22 @@ void Suggestion::calculDeplClassique(int **carte, int **unites, int xActuel, int
 			if (xActuel-1>=0)
 			{
 				if (carte[xActuel-1][yActuel]==Eau)
-					sugg[xActuel][yActuel][0]=5;
+					sugg[xActuel][yActuel][0]=3;
 			}
 			if (xActuel+1<largeur)
 			{
 				if (carte[xActuel+1][yActuel]==Eau)
-					sugg[xActuel][yActuel][0]=5;
+					sugg[xActuel][yActuel][0]=3;
 			}
 			if (yActuel-1>=0)
 			{
 				if (carte[xActuel][yActuel-1]==Eau)
-					sugg[xActuel][yActuel][0]=5;
+					sugg[xActuel][yActuel][0]=3;
 			}
 			if (yActuel+1<hauteur)
 			{
 				if (carte[xActuel][yActuel+1]==Eau)
-					sugg[xActuel][yActuel][0]=5;
+					sugg[xActuel][yActuel][0]=3;
 			}
 		}
 	}

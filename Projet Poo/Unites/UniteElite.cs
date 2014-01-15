@@ -13,7 +13,7 @@ namespace Modele
             pointsAttaque = 3;
             pointsDefense = 1;
             pointsDepl = 1;
-            pointsVie = 1;
+            pointsVie = 2;
             pointsVieMax = pointsVie;
             strategySuggestion = new SuggAgressif();
         }
