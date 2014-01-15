@@ -757,5 +757,11 @@ namespace InterfaceGraphique
         {
             DragMove();
         }
+
+        private void help_Click(object sender, RoutedEventArgs e)
+        {
+            WebBrowser wb = new WebBrowser();
+            wb.Navigate("http://wwww.google.fr/");
+        }
     }
 }

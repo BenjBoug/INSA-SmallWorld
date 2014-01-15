@@ -14,6 +14,7 @@ using System.IO;
 using System.Threading;
 using Microsoft.Win32;
 
+
 namespace InterfaceGraphique
 {
     /// <summary>
@@ -594,6 +595,12 @@ namespace InterfaceGraphique
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
+        }
+
+        private void help_Click(object sender, RoutedEventArgs e)
+        {
+            WebBrowser wb = new WebBrowser();
+            wb.Navigate("pack://siteoforigin:,,,/Resources/documentation/doc.html");
         }
     }
 }
