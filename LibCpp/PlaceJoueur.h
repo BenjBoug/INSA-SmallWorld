@@ -25,6 +25,8 @@ private:
 	int compteJoueurs(int ** tabJoueurs, int largeur, int hauteur);
 	int * getCoordJoueur1(int ** tabJoueurs, int largeur, int hauteur);
 
+	void getZone(int **carte, int largeur, int hauteur, int **depl, vector<Coordonnees>* zone);
+
 	vector<int> tabToVecor(int ** tab, int largeur, int hauteur);
 };
 
