@@ -1,7 +1,7 @@
 ﻿<Window x:Class="InterfaceGraphique.EditeurCarte"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Editeur de cartes" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Background="#135EB2" Icon="pack://siteoforigin:,,,/Resources/map.png" WindowStyle="None" AllowsTransparency="True" BorderBrush="Black" BorderThickness="2" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        Title="Editeur de cartes" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Background="#135EB2" Icon="pack://siteoforigin:,,,/Resources/map.png" WindowStyle="None" AllowsTransparency="True" BorderBrush="Black" BorderThickness="1" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="MenuItem_Click_Nouvelle"/>
         <CommandBinding Command="Open" Executed="MenuItem_Click_Ouvrir"/>
