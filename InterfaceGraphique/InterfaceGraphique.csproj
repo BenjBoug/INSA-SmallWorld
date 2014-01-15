@@ -100,6 +100,9 @@
     <Compile Include="Tile.xaml.cs">
       <DependentUpon>Tile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Aide.xaml.cs">
+      <DependentUpon>Aide.xaml</DependentUpon>
+    </Compile>
     <Page Include="Classement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -155,6 +158,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Tile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Aide.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,21 +239,6 @@
     <None Include="Resources\campaign\casePlaine.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\default\caseDesert.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\default\caseEau.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\default\caseForet.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\default\caseMontagne.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\default\casePlaine.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\groovy\caseDesert.png" />
   </ItemGroup>
   <ItemGroup>
@@ -262,7 +254,23 @@
     <None Include="Resources\groovy\casePlaine.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\default\caseDesert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\default\caseEau.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\default\caseForet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\default\caseMontagne.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\default\casePlaine.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\interface.psd" />
+    <None Include="Resources\sword.ani" />
     <None Include="Resources\tropical\caseDesert.png" />
   </ItemGroup>
   <ItemGroup>

@@ -36,6 +36,7 @@ namespace InterfaceGraphique
         private bool saved;
         private bool neverSaved;
         private bool release;
+        private Coordonnees souris;
 
         public EditeurCarte()
         { 
@@ -137,6 +138,23 @@ namespace InterfaceGraphique
             }
         }
 
+        private void actualiseCase(int column, int row)
+        {
+            UIElement tmp = new UIElement();
+            foreach (UIElement t in canvasMap.Children) {
+                if (Canvas.GetLeft(t) / 50 == column && Canvas.GetTop(t) / 50 == row)
+                {
+                    tmp = t;
+                    break;
+                }
+            }
+            canvasMap.Children.Remove(tmp);
+            var tile = monteur.Carte.Cases[column][row];
+            var unite = monteur.Carte.getUniteFromCoord(new Coordonnees(column, row));
+            var rect = creerTile(column, row, tile, unite);
+            canvasMap.Children.Add(rect);
+        }
+
         private Tile creerTile(int c, int l, ICase tile, List<Unite> listUnite)
         {
             var rectangle = new Tile(tile, tileFactory, listUnite, Brushes.White);
@@ -160,8 +178,11 @@ namespace InterfaceGraphique
                 var rect = sender as Tile;
                 int column = (int)Canvas.GetLeft(rect) / 50;
                 int row = (int)Canvas.GetTop(rect) / 50;
-                monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
-                afficheCarte();
+                if (souris != new Coordonnees(column, row))
+                {
+                    monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
+                    actualiseCase(column, row);
+                }
             }
             e.Handled = true;
         }
@@ -172,9 +193,10 @@ namespace InterfaceGraphique
             int column = (int)Canvas.GetLeft(rect) / 50;
             int row = (int)Canvas.GetTop(rect) / 50;
             monteur.Carte.setCase(column, row, monteur.Carte.FabriqueCase.getCase(terrain));
-            afficheCarte();
+            actualiseCase(column, row);
             release = false;
             saved = false;
+            souris = new Coordonnees(column, row);
             e.Handled = true;
         }
 
@@ -522,13 +544,21 @@ namespace InterfaceGraphique
             }
         }
 
-        private void default_Click(object sender, RoutedEventArgs e)
+        private void styleUncheck()
         {
-            tileFactory = new ImageFactory();
+            defaultStyle.IsChecked = false;
             groovy.IsChecked = false;
             tropical.IsChecked = false;
             noStyle.IsChecked = false;
             campaign.IsChecked = false;
+        }
+
+        private void default_Click(object sender, RoutedEventArgs e)
+        {
+            tileFactory = new ImageFactory();
+            styleUncheck();
+            defaultStyle.IsChecked = true;
+
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -538,10 +568,9 @@ namespace InterfaceGraphique
         private void groovy_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("groovy");
-            defaultStyle.IsChecked = false;
-            tropical.IsChecked = false;
-            noStyle.IsChecked = false;
-            campaign.IsChecked = false;
+            styleUncheck();
+            groovy.IsChecked = true;
+
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -551,10 +580,9 @@ namespace InterfaceGraphique
         private void tropical_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("tropical");
-            defaultStyle.IsChecked = false;
-            groovy.IsChecked = false;
-            noStyle.IsChecked = false;
-            campaign.IsChecked = false;
+            styleUncheck();
+            tropical.IsChecked = true;
+
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -564,10 +592,9 @@ namespace InterfaceGraphique
         private void noStyle_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new RectangleFactory();
-            defaultStyle.IsChecked = false;
-            groovy.IsChecked = false;
-            tropical.IsChecked = false;
-            campaign.IsChecked = false;
+            styleUncheck();
+            noStyle.IsChecked = true;
+
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -577,10 +604,9 @@ namespace InterfaceGraphique
         private void campaign_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("campaign");
-            defaultStyle.IsChecked = false;
-            groovy.IsChecked = false;
-            tropical.IsChecked = false;
-            noStyle.IsChecked = false;
+            styleUncheck();
+            campaign.IsChecked = true;
+
             affichePalette();
             if (monteur != null && monteur.Carte != null)
                 afficheCarte();
@@ -599,8 +625,9 @@ namespace InterfaceGraphique
 
         private void help_Click(object sender, RoutedEventArgs e)
         {
-            WebBrowser wb = new WebBrowser();
-            wb.Navigate("pack://siteoforigin:,,,/Resources/documentation/doc.html");
+            Aide a = new Aide();
+            a.browser.Source = new Uri("pack://siteoforigin:,,,/Resources/documentation/doc.html#editeur");
+            a.ShowDialog();
         }
     }
 }

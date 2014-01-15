@@ -12,7 +12,7 @@ namespace Modele
         public UniteBlindee()
         {
             pointsAttaque = 1;
-            pointsDefense = 3;
+            pointsDefense = 2;
             pointsDepl = 1;
             pointsVie = 3;
             pointsVieMax = pointsVie;
