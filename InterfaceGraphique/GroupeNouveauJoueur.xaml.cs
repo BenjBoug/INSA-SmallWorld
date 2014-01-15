@@ -24,10 +24,12 @@ namespace InterfaceGraphique
     {
         
         List<String> listCouleur = new List<string>();
+        int numJoueur;
 
         public GroupeNouveauJoueur(int i)
         {
             InitializeComponent();
+            numJoueur = i+1;
 
             listCouleur.Add("Blue");
             listCouleur.Add("Red");
@@ -45,7 +47,7 @@ namespace InterfaceGraphique
             couleurJoueur.SelectedIndex = i;
             peupleJoueur.SelectedIndex = i;
 
-            nomJoueur.Text = "Joueur " + (i+1);
+            nomJoueur.Text = "Joueur " + numJoueur;
         }
         public Joueur Joueur
         {
@@ -83,6 +85,15 @@ namespace InterfaceGraphique
                 return new JoueurCOM();
             else
                 return null; // throw exception en temps normal ...
+        }
+
+        private void typeChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (typeJoueur.SelectedIndex == 1)
+            {
+                nomJoueur.Text = "COM" + numJoueur;
+                nomJoueur.IsEnabled = false;
+            }
         }
     }
 }

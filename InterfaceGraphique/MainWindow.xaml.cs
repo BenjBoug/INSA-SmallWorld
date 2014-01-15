@@ -656,14 +656,22 @@ namespace InterfaceGraphique
             e.Handled = true;
         }
 
-        private void default_Click(object sender, RoutedEventArgs e)
+        private void styleUncheck()
         {
-            tileFactory = new ImageFactory();
+            defaultStyle.IsChecked = false;
             groovy.IsChecked = false;
             tropical.IsChecked = false;
             noStyle.IsChecked = false;
             campaign.IsChecked = false;
-            
+        }
+
+
+        private void default_Click(object sender, RoutedEventArgs e)
+        {
+            tileFactory = new ImageFactory();
+            styleUncheck();
+            defaultStyle.IsChecked = true;
+
             if (partie != null && partie.Carte != null)
                 afficheCarte();
             actualiseData();
@@ -673,10 +681,8 @@ namespace InterfaceGraphique
         private void groovy_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("groovy");
-            defaultStyle.IsChecked = false;
-            tropical.IsChecked = false;
-            noStyle.IsChecked = false;
-            campaign.IsChecked = false;
+            styleUncheck();
+            groovy.IsChecked = true;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -687,10 +693,8 @@ namespace InterfaceGraphique
         private void tropical_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("tropical");
-            defaultStyle.IsChecked = false;
-            groovy.IsChecked = false;
-            noStyle.IsChecked = false;
-            campaign.IsChecked = false;
+            styleUncheck();
+            tropical.IsChecked = true;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -701,10 +705,8 @@ namespace InterfaceGraphique
         private void noStyle_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new RectangleFactory();
-            defaultStyle.IsChecked = false;
-            groovy.IsChecked = false;
-            tropical.IsChecked = false;
-            campaign.IsChecked = false;
+            styleUncheck();
+            noStyle.IsChecked = true;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -715,10 +717,8 @@ namespace InterfaceGraphique
         private void campaign_Click(object sender, RoutedEventArgs e)
         {
             tileFactory = new ImageFactory("campaign");
-            defaultStyle.IsChecked = false;
-            groovy.IsChecked = false;
-            tropical.IsChecked = false;
-            noStyle.IsChecked = false;
+            styleUncheck();
+            campaign.IsChecked = true;
             
             if (partie != null && partie.Carte != null)
                 afficheCarte();
@@ -761,8 +761,8 @@ namespace InterfaceGraphique
 
         private void help_Click(object sender, RoutedEventArgs e)
         {
-            WebBrowser wb = new WebBrowser();
-            wb.Navigate("http://wwww.google.fr/");
+            Aide a = new Aide();
+            a.ShowDialog();
         }
     }
 }

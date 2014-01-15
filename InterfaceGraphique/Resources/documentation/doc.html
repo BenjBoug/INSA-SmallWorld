@@ -6,8 +6,91 @@
     <title>Documentaion SmallWorld</title>
 </head>
 <body>
-    <h1>Règles du jeu</h1>
-    <h1>Partie</h1>
-    <h1>Editeur de cartes</h1>
+    <h1 id="but">Principe et But du jeu</h1>
+    <p>
+        Il s’agit d’un jeu tour-par-tour où chaque joueur dirige un peuple. Le but du jeu est de gérer des
+        unités sur une carte pour obtenir le plus de points possible à la fin d’un certain nombre de tours.
+        Le placement de chaque unité rapporte plus ou moins de points. Les unités d’un joueur peuvent également
+        attaquer les unités d’un autre joueur pour détruire des unités (limitant ainsi l’acquisition de points
+        de l’adversaire) et occuper une case de la carte. A chaque tour les points sont mis à jour. 
+        Le jeu se déroule sur une carte constituée de différent terrains sur laquelle les unités se déplacent.
+    </p>
+    <h1 id="regles">Règles du jeu</h1>
+    <h2 id="peuples">Les peuples</h2>
+    <p>
+        Il existe quatres peuples, Gaulois, Viking, Nains et Elfes ayant des caractéristiques différentes influant
+        sur les stratégies de jeu :<br /><br />
+        <b>Gaulois:</b><br />
+        – Une unité Gauloise rapporte 1 point de plus lorsqu’elle occupe une case du type plaine.<br />
+        – Une unité Gauloise n’acquière aucun point sur les cases de type montagne.<br />
+
+        <b>Vikings:</b><br />
+        – L’unité Viking a la capacité de se déplacer sur l’eau. L’occupation d’une case eau ne rapporte cependant aucun point.<br />
+        – Une unité Viking rapporte 1 point de plus lorsqu’elle occupe une case au bord de l’eau.<br />
+        – Une unité Viking n’acquière aucun point sur les cases de type désert.<br />
+
+        <b>Nains:</b><br />
+        – Lorsqu’elle se trouve sur une case montagne, une unité Nain a la capacité de se déplacer
+        sur n’importe quelle case montage de la carte à condition qu’elle ne soit pas occupée par
+        une unité adverse.<br />
+        – Une unité Nain rapporte 1 point de plus lorsqu’elle occupe une case de type forêt.<br />
+        – Une unité Nain n’acquière aucun point sur les cases de type plaine.<br />
+
+        <b>Elfes:</b><br />
+        – Une unité Elfe rapporte 1 point de plus lorsqu’elle occupe une case de type montagne.<br />
+        – Une unité Elfe peut se déplacer sans utiliser de point de déplacement quand elle est sur une case de type forêt.<br />
+        – Une unité Elfe n’acquière aucun point sur les cases de type forêt.<br />
+    </p>
+    <h2 id="unites">Les unités</h2>
+    <p>
+        Chaque joueur débute la partie avec un certain nombre d'unités placées sur la carte de manière automatique.<br /><br />
+
+        Il existe 3 types d'unités :<br />
+    – <b>les unités classique</b> : 2 points de vie, 2 points d'attaque, 1 point de défense, elle gagne 1 point de déplacement par tour.<br />
+    – <b>les unités élites</b> : 2 points de vie, 3 points d'attaque, 1 point de défense, elle gagne 2 point de déplacement par tour.<br />
+    – <b>les unités blindées</b> : 3 points de vie, 1 points d'attaque, 2 point de défense, elle gagne 1 point de déplacement ptout les deux tours.<br />
+    </p>
+    <h2 id="carte">La carte du monde</h2>
+    <p>
+        La carte est une case rectangulaire composée de cases carrées. Il existe différents types de case : montagne, plaine, désert, eau, forêt.<br /><br />
+
+    En début de partie la carte peut soit être créée de manière aléatoire soit être chargée à partir d'une carte créée dans <a href="#editeur">l'éditeur de cartes</a>.<br /><br />
+
+    Il existe 3 types de cartes aléatoires :<br />
+    – <b>la carte Démo</b> : 5×5 cases, 10 tours, 5 unités classique, 3 unités élites et 1 unité blindée par joueur.<br />
+    – <b>la carte Petite</b> : 10×10 cases, 20 tours, 8 unités classique, 4 unités élites et 2 unités blindées par joueur.<br />
+    – <b>la carte Normale</b> : 15×15 cases, 30 tours, 12 unités classique, 5 unités élites et 3 unités blindées par joueur.<br />
+
+    </p>
+    <h2 id="combats">Les combats</h2>
+    <p>
+
+    </p>
+    <h2 id="partie">Déroulement de la partie</h2>
+    <h3 id="ouverture">Commencer une partie</h3>
+    <p>
+
+    </p>
+    <h3 id="tour">Tour de jeu</h3>
+    <p>
+
+    </p>
+    <h3 id="fin">Fin de partie</h3>
+    <p>
+
+    </p>
+    <h3 id="sauvegarde">Sauvegarde et chargement</h3>
+    <p>
+
+    </p>
+    <h1 id="autre">Autre fonctionnalités</h1>
+    <h2 id="editeur">Editeur de cartes</h2>
+    <p>
+
+    </p>
+    <h1 id="credit">Crédits</h1>
+    <p>
+
+    </p>
 </body>
 </html>

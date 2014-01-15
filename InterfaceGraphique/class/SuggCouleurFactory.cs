@@ -10,22 +10,18 @@ namespace InterfaceGraphique
     class SuggCouleurFactory
     {
         public static Color getCouleur(int i)
-        {
-            return Color.FromRgb(255,255,(byte)(85*i));
-            /*
+        {     
             switch (i)
             {
                 case 0:
-                    return Brushes.White;
+                    return Colors.White;
                 case 1:
-                    return Brushes.Yellow;
+                    return Colors.Yellow;
                 case 2:
-                    return Brushes.Orange;
-                case 3:
-                    return Brushes.Red;
+                    return Colors.Orange;
                 default:
-                    return Brushes.Black;
-            }*/
+                    return Colors.Transparent;
+            }
         }
     }
 }
