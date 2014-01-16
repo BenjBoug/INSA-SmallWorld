@@ -46,9 +46,9 @@
         Chaque joueur débute la partie avec un certain nombre d'unités placées sur la carte de manière automatique.<br /><br />
 
         Il existe 3 types d'unités :<br />
-    – <b>les unités classique</b> : 2 points de vie, 2 points d'attaque, 1 point de défense, elle gagne 1 point de déplacement par tour.<br />
-    – <b>les unités élites</b> : 2 points de vie, 3 points d'attaque, 1 point de défense, elle gagne 2 point de déplacement par tour.<br />
-    – <b>les unités blindées</b> : 3 points de vie, 1 points d'attaque, 2 point de défense, elle gagne 1 point de déplacement ptout les deux tours.<br />
+    – <b>Les unités classique</b> : 2 points de vie, 2 points d'attaque, 1 point de défense, elle gagne 1 point de déplacement par tour.<br />
+    – <b>Les unités élites</b> : 2 points de vie, 3 points d'attaque, 1 point de défense, elle gagne 2 point de déplacement par tour.<br />
+    – <b>Les unités blindées</b> : 3 points de vie, 1 points d'attaque, 2 point de défense, elle gagne 1 point de déplacement ptout les deux tours.<br />
     </p>
     <h2 id="carte">La carte du monde</h2>
     <p>
@@ -57,14 +57,16 @@
     En début de partie la carte peut soit être créée de manière aléatoire soit être chargée à partir d'une carte créée dans <a href="#editeur">l'éditeur de cartes</a>.<br /><br />
 
     Il existe 3 types de cartes aléatoires :<br />
-    – <b>la carte Démo</b> : 5×5 cases, 10 tours, 5 unités classique, 3 unités élites et 1 unité blindée par joueur.<br />
-    – <b>la carte Petite</b> : 10×10 cases, 20 tours, 8 unités classique, 4 unités élites et 2 unités blindées par joueur.<br />
-    – <b>la carte Normale</b> : 15×15 cases, 30 tours, 12 unités classique, 5 unités élites et 3 unités blindées par joueur.<br />
+    – <b>La carte Démo</b> : 5×5 cases, 10 tours, 5 unités classique, 3 unités élites et 1 unité blindée par joueur.<br />
+    – <b>La carte Petite</b> : 10×10 cases, 20 tours, 8 unités classique, 4 unités élites et 2 unités blindées par joueur.<br />
+    – <b>La carte Normale</b> : 15×15 cases, 30 tours, 12 unités classique, 5 unités élites et 3 unités blindées par joueur.<br />
 
     </p>
     <h2 id="combats">Les combats</h2>
     <p>
-
+        Lorsqu'un joueur tente de déplacer une unité sur une case occupée par une ou plusieurs unités adverses un combat est engagée entre cette unité et l'unité adverse.
+        Le combat est géré de manière automatique par le jeu en fonction des caractéristiques des deux unités. Si l'unité attaquante gagne le combat et qu'il n'y a plus d'unités sur la case elle s'y déplace, 
+        s'il reste des unités elle reste sur la case mais perd tout de même 1 point de déplacement.
     </p>
     <h2 id="partie">Déroulement de la partie</h2>
     <h3 id="ouverture">Commencer une partie</h3>

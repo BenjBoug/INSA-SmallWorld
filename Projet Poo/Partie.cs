@@ -108,7 +108,7 @@ namespace Modele
         /// <returns></returns>
         private int CompareForClassemnt(Joueur j1, Joueur j2)
         {
-            return j1.Points - j2.Points;
+            return j2.Points - j1.Points;
         }
         /// <summary>
         /// Créer le classement
