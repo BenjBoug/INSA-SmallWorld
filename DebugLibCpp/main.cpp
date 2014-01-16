@@ -4,7 +4,7 @@
 #include "MapAleatoire.h"
 using namespace std;
 
-#define TAILLE 5
+#define TAILLE 10
  
 int main() 
 { 
