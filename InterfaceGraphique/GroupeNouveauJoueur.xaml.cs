@@ -94,6 +94,14 @@ namespace InterfaceGraphique
                 nomJoueur.Text = "COM" + numJoueur;
                 nomJoueur.IsEnabled = false;
             }
+            else
+            {
+                if (nomJoueur != null)
+                {
+                    nomJoueur.Text = "Joueur" + numJoueur;
+                    nomJoueur.IsEnabled = true;
+                }
+            }
         }
     }
 }
