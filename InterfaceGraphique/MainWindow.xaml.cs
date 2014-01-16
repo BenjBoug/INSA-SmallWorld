@@ -597,29 +597,32 @@ namespace InterfaceGraphique
         }
 
         private void ouvrir(string filepath)
+        {
+            Stream file = null; 
+            try
             {
-                try
-                {
-                filename = filepath;
+                file = File.OpenRead(filepath);
 
-                Stream file = File.OpenRead(filepath);
-
-                    XmlSerializer mySerializer = new XmlSerializer(typeof(PartieLocale));
+                XmlSerializer mySerializer = new XmlSerializer(typeof(PartieLocale));
                 partie = (Partie)mySerializer.Deserialize(file);
 
-                    partie.associeJoueursUnite();
-                    saved = true;
-                    neverSaved = false;
+                file.Close();
+
+                partie.associeJoueursUnite();
+                filename = filepath;
+                saved = true;
+                neverSaved = false;
                 sauvegarderMenuItem.IsEnabled = true;
                 sauvegarderSousMenuItem.IsEnabled = true;
-                    initialiseInterface();
-                    commencerJeu();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
-                }
+                initialiseInterface();
+                commencerJeu();
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Un erreur s'est produite pendant l'ouverture de la sauvegarde.");
+                file.Close();
+            }
+        }
 
         private void Save_Drop(object sender, DragEventArgs e)
         {

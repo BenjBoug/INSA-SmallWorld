@@ -31,31 +31,31 @@ namespace InterfaceGraphique
             {
                 case 1 :
                     packUri = "../../Resources/Trophy-gold.png";
-                    img.Width = 100;
-                    img.Height = 100;
-                    nbPoint.FontSize = 28;
-                    nom.FontSize = 28;
+                    img.Width = 75;
+                    img.Height = 75;
+                    nbPoint.FontSize = 25;
+                    nom.FontSize = 25;
                     break;
                 case 2:
                     packUri = "../../Resources/Trophy-silver.png";
-                    img.Width = 75;
-                    img.Height = 75;
-                    nbPoint.FontSize = 22;
-                    nom.FontSize = 22;
+                    img.Width = 60;
+                    img.Height = 60;
+                    nbPoint.FontSize = 20;
+                    nom.FontSize = 20;
                     break;
                 case 3:
                     packUri = "../../Resources/Trophy-bronze.png";
                     img.Width = 50;
                     img.Height = 50;
-                    nbPoint.FontSize = 18;
-                    nom.FontSize = 18;
+                    nbPoint.FontSize = 17;
+                    nom.FontSize = 17;
                     break;
                 case 4:
                     packUri = "../../Resources/chocolate.png";
-                    img.Width = 35;
-                    img.Height = 35;
-                    nbPoint.FontSize = 12;
-                    nom.FontSize = 12;
+                    img.Width = 45;
+                    img.Height = 45;
+                    nbPoint.FontSize = 14;
+                    nom.FontSize = 14;
                     break;
 
             }

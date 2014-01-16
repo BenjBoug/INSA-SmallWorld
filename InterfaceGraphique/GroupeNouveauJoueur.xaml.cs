@@ -98,7 +98,7 @@ namespace InterfaceGraphique
             {
                 if (nomJoueur != null)
                 {
-                    nomJoueur.Text = "Joueur" + numJoueur;
+                    nomJoueur.Text = "Joueur " + numJoueur;
                     nomJoueur.IsEnabled = true;
                 }
             }

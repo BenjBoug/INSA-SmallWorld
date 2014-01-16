@@ -108,7 +108,7 @@ namespace Modele
         /// <returns></returns>
         private int CompareForClassemnt(Joueur j1, Joueur j2)
         {
-            return j2.Points - j1.Points;
+            return j1.Points - j2.Points;
         }
         /// <summary>
         /// Créer le classement
@@ -121,9 +121,7 @@ namespace Modele
                 foreach (Joueur j in listJoueurs)
                 {
                     if (!Classement.Contains(j))
-                    {
                         Classement.Push(j);
-                    }
                 }
             }
             else
@@ -133,9 +131,7 @@ namespace Modele
                     if (carte.getNombreUniteRestante(j) == 0)
                     {
                         if (!Classement.Contains(j))
-                        {
                             Classement.Push(j);
-                        }
                     }
                 }
             }

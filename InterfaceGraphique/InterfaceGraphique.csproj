@@ -93,6 +93,11 @@
     <Compile Include="JoueurClassement.xaml.cs">
       <DependentUpon>JoueurClassement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SelectedRect.xaml.cs">
       <DependentUpon>SelectedRect.xaml</DependentUpon>
     </Compile>
@@ -173,11 +178,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -239,6 +239,7 @@
     <None Include="Resources\campaign\casePlaine.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\documentation\doc.html" />
     <None Include="Resources\groovy\caseDesert.png" />
   </ItemGroup>
   <ItemGroup>
@@ -269,8 +270,6 @@
     <None Include="Resources\default\casePlaine.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\interface.psd" />
-    <None Include="Resources\sword.ani" />
     <None Include="Resources\tropical\caseDesert.png" />
   </ItemGroup>
   <ItemGroup>
@@ -290,9 +289,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bouclier13.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\casque23.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\epee14.png" />
@@ -323,7 +319,7 @@
     <None Include="Resources\Trophy-silver.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\documentation\doc.html" />
+    <None Include="Resources\chocolate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -24,12 +24,14 @@ namespace InterfaceGraphique
         {
             InitializeComponent();
             int i = 0;
+            int k = 1;
             foreach (Joueur j in classement)
             {
                 classementPanel.Children.Add(new JoueurClassement(j,i+1));
                 int index = classement.IndexOf(j);
                 if (index+1 < classement.Count && classement[index + 1].Points < j.Points)
-                    i++;
+                    i=k;
+                k++;
             }
         }
     }

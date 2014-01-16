@@ -49,6 +49,7 @@ namespace InterfaceGraphique
             filename = "carteSmallWorld.card";
             remplirCombo();
             affichePalette();
+            nouvelleCarte();
         }
 
         private void affichePalette()
@@ -400,7 +401,6 @@ namespace InterfaceGraphique
         {
             try
             {
-                filename = filepath;
                 disableComboBox_SelectionChanged();
 
                 monteur = new MonteurFichier(filepath);
@@ -416,6 +416,7 @@ namespace InterfaceGraphique
                 controles.IsEnabled = true;
                 enregistrerMenuItem.IsEnabled = true;
                 enregistrerSousMenuItem.IsEnabled = true;
+                filename = filepath;
                 saved = true;
                 neverSaved = false;
             }

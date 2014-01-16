@@ -47,15 +47,16 @@ namespace InterfaceGraphique
                 MessageBox.Show("Erreur: le fichier n'existe pas.");
                 return;
             }
-
-
+            Label t = new Label();
+            t.Content = "test";
+            ((MainWindow)Owner).canvasMap.Children.Add(t);
             ((MainWindow)Owner).chargerPartie(monteur, joueurs);
             ((MainWindow)Owner).Saved = false;
             ((MainWindow)Owner).NeverSaved = true;
             ((MainWindow)Owner).sauvegarderMenuItem.IsEnabled = true;
             ((MainWindow)Owner).sauvegarderSousMenuItem.IsEnabled = true;
             ((MainWindow)Owner).Filename = "saveSmallWorld";
-
+            ((MainWindow)Owner).canvasMap.Children.Clear();
             e.Handled = true;
             this.Close();
         }

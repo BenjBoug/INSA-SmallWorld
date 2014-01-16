@@ -25,7 +25,7 @@ namespace InterfaceGraphique
             }
             else if (tile is CaseForet)
             {
-                return Brushes.Green;
+                return Brushes.DarkGreen;
             }
             else if (tile is CaseMontagne)
             {

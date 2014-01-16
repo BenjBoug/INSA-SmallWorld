@@ -61,16 +61,6 @@ namespace InterfaceGraphique.Properties {
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
-        internal static byte[] _interface {
-            get {
-                object obj = ResourceManager.GetObject("_interface", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap botte {
@@ -243,9 +233,9 @@ namespace InterfaceGraphique.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap casque {
+        internal static System.Drawing.Bitmap chocolate {
             get {
-                object obj = ResourceManager.GetObject("casque", resourceCulture);
+                object obj = ResourceManager.GetObject("chocolate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +246,16 @@ namespace InterfaceGraphique.Properties {
         internal static System.Drawing.Bitmap epee {
             get {
                 object obj = ResourceManager.GetObject("epee", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fermer {
+            get {
+                object obj = ResourceManager.GetObject("fermer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -326,6 +326,26 @@ namespace InterfaceGraphique.Properties {
         internal static System.Drawing.Bitmap loupe {
             get {
                 object obj = ResourceManager.GetObject("loupe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap map {
+            get {
+                object obj = ResourceManager.GetObject("map", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap reduire {
+            get {
+                object obj = ResourceManager.GetObject("reduire", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
