@@ -1,17 +1,3 @@
-﻿<!DOCTYPE html>
-
-<html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Documentation SmallWorld</title>
-    <style type="text/css">
-        h2 {margin-left:20px;}
-        h3 {margin-left:40px;}
-        p  {text-align:justify;margin-left:60px;}
-        th {min-width: 100px;}
-    </style>
-</head>
-<body>
     <center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/titre.png" title="SmallWorld"/></center><br /><br />
 
     <h1 id="but">Principe et But du jeu</h1>
@@ -234,5 +220,3 @@
         dans le cadre du Module Projet de POO/MOO,<br />
         4ème année - Département Informatique à l'INSA de Rennes.
     </p>
-</body>
-</html>
