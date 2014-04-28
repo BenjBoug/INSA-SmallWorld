@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/titre.png" title="SmallWorld"/>
+<img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/titre.png" title="SmallWorld" align="center"/>
 <br /><br />
 
 <h1 id="but">Principe et But du jeu</h1>
@@ -87,7 +87,7 @@
     A l'ouverture du jeu aucune partie n'est lancée. La cration d'une nouvelle partie se fait en passant par le menu 
     <em>Fichier->Nouvelle partie</em> ou en utilisant le raccourci clavier <em>Ctrl+N</em>.<br />
 </p>
-    <center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/nouvelle.png"  title="Fenêtre de création d'une nouvelle partie"/></center><br />
+<center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/nouvelle.png"  title="Fenêtre de création d'une nouvelle partie"/></center><br />
 <p>
     La fenêtre de création d'une nouvelle partie, visible ci-dessus, permet de choisir :<br />
     – Le type de carte, soit une carte aléatoire soit une carte créée à l'aide de <a href="#editeur">l'éditeur de cartes</a><br />
@@ -111,7 +111,7 @@
     le joueur doit appuyer sur le bouton <em>Finir tour</em> du menu de gauche pour passer la main au joueur suivant.<br /><br />
     Ci-dessous un apercu de la fenètre au cours d'une partie à 4 joueurs.<br />
 </p>
-    <center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/fenetre.png" title="Partie en cours"/></center><br />
+<center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/fenetre.png" title="Partie en cours"/></center><br />
 
 <h3 id="fin">Fin de partie</h3>
 <p>
@@ -119,7 +119,7 @@
     Un classement des joueurs est alors effectué et affiché dans une fenêtre telle que celle visible ci-dessous 
     (exemple d'une partie à 3 joueurs).<br /><br />
 </p>
-    <center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/classement.png" title="Partie en cours"/></center><br />
+<center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/classement.png" title="Partie en cours"/></center><br />
 
 <h3 id="sauvegarde">Sauvegarde et chargement</h3>
 
@@ -139,7 +139,7 @@
     En passant par le menu <em>Fichier->Editeur de carte</em> il est possible d'accéder à un éditeur permettant de créer des 
     cartes personnalisées. L'interface de l'éditeur est visible ci-dessous.<br />
 </p>
-    <center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/editeur.png" title="Editeur de cartes" /></center><br />
+<img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/editeur.png" title="Editeur de cartes"  /><br />
 <p>
     Dans la partie supérieure du menu de gauche, il est possible de régler les paramètre de la carte :<br />
     – La taille de la carte (largeur et hauteur, en nombre de cases, comprises en 5 et 30 pour garder des cartes de 
@@ -166,44 +166,39 @@
 <p>
     5 styles différent sont proposé pour l'affichage des différents <a href="#carte">terrains</a> :
 </p>
-    <center><table>
-    <tr><th>Terrains\Styles</th><th>Par defaut</th><th>Groovy</th><th>Tropical</th><th>Campagne</th><th>Pas de style</th></tr>
+<table>
+    <tr><th>Terrains\Styles</th><th>Par defaut</th><th>Groovy</th><th>Tropical</th><th>Campagne</th></tr>
     <tr><th>Montagne</th>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/default/caseMontagne.png"  title="Case montagne par default" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/groovy/caseMontagne.png"  title="Case montagne groovy" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/tropical/caseMontagne.png"  title="Case montagne tropical" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/campaign/caseMontagne.png"  title="Case montagne campagne" /></center></td>
-        <td><center><div style="width:50px;height:50px;background-color:SaddleBrown;" /></center></td>
     </tr>
     <tr><th>Plaine</th>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/default/casePlaine.png"  title="Case plaine par default" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/groovy/casePlaine.png"  title="Case plaine groovy" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/tropical/casePlaine.png"  title="Case plaine tropical" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/campaign/casePlaine.png"  title="Case plaine campagne" /></center></td>
-        <td><center><div style="width:50px;height:50px;background-color:LightGreen;" /></td>
     </tr>
     <tr><th>Désert</th>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/default/caseDesert.png"  title="Case désert par default" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/groovy/caseDesert.png"  title="Case désert groovy" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/tropical/caseDesert.png"  title="Case désert tropical" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/campaign/caseDesert.png"  title="Case désert campagne" /></center></td>
-        <td><center><div style="width:50px;height:50px;background-color:LightGoldenrodYellow;" /></td>
     </tr>
     <tr><th>Eau</th>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/default/caseEau.png"  title="Case eau par default" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/groovy/caseEau.png"  title="Case eau groovy" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/tropical/caseEau.png"  title="Case eau tropical" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/campaign/caseEau.png"  title="Case eau campagne" /></center></td>
-        <td><center><div style="width:50px;height:50px;background-color:LightBlue;" /></td>
     </tr>
     <tr><th>Forêt</th>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/default/caseForet.png"  title="Case forêt par default" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/groovy/caseForet.png"  title="Case forêt groovy" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/tropical/caseForet.png"  title="Case forêt tropical" /></center></td>
         <td><center><img src="https://raw.githubusercontent.com/BenjBoug/INSA-SmallWorld/master/Doc/documentation/campaign/caseForet.png"  title="Case forêt campagne" /></center></td>
-        <td><center><div style="width:50px;height:50px;background-color:DarkGreen;" /></td>
     </tr>
-    </table></center>
+    </table>
 <p>
     Il est possible de changer de style à tout moment que ce soit dans la fenêtre de jeu ou dans l'éditeur en passant par le menu 
     <em>Options->Affichage->nom du style</em> de la fenêtre pour laquelle vous voulez changer le style.
